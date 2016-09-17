@@ -26,7 +26,7 @@ class ReactionTableSeeder extends Seeder
 				continue;
 			}
 
-			$reaction = $all_reactions->where('alias', $alias_sans_colons)->first() ?: new Reaction();
+			$reaction 			 = $all_reactions->where('alias', $alias_sans_colons)->first() ?: new Reaction();
 			$reaction->team_id   = null;
 			$reaction->alias   	 = $alias_sans_colons;
 			$reaction->image   	 = $image_url;
