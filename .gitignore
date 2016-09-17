@@ -65,3 +65,4 @@ mavenlink_token.txt
 Homestead.yaml
 Homestead.json
 .env
+.env.*
