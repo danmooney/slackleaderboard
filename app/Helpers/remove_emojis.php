@@ -22,7 +22,7 @@ function remove_emojis($text)
     $regex_dingbats = '/[\x{2700}-\x{27BF}]/u';
     $clean_text = preg_replace($regex_dingbats, '', $clean_text);
 
-	$clean_text = trim(preg_replace('#([^a-z0-9 ])#i', '', $clean_text));
+	$clean_text = trim(preg_replace('#([^a-z0-9\' ])#i', '', $clean_text));
 
     return $clean_text;
 }
