@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Collections\Collection;
 
 abstract class ModelAbstract extends Model
 {
@@ -37,7 +38,7 @@ abstract class ModelAbstract extends Model
             return $this->table;
         }
 
-        return strtolower(class_basename($this));
+        return strtolower(snake_case(class_basename($this)));
     }
 
     /**
@@ -51,5 +52,10 @@ abstract class ModelAbstract extends Model
         }
 
         return $this->getTable() . '_' . 'id';
+    }
+
+    public function newCollection(array $models = [])
+    {
+        return new Collection($models);
     }
 }
