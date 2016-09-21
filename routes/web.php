@@ -11,6 +11,7 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'SlackController@fetchData');
+Route::get('/{team_domain}', 'TeamController@showLeaderboardAction');
+Route::get('/{team_domain}/u/{user_handle}', 'UserController@showLeaderboardAction');
+Route::get('/{team_domain}/r/{reaction_alias}', 'ReactionController@showLeaderboardAction');
