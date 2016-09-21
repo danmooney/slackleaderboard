@@ -135,7 +135,7 @@ return [
     |
     */
 
-    'providers' => [
+    'providers' => array_filter([
 
         /*
          * Laravel Framework Service Providers...
@@ -178,8 +178,9 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 		App\Providers\HelperServiceProvider::class,
+		isset($_SERVER['HTTP_HOST']) && $_SERVER['HTTP_HOST'] === 'slackleaderboard.local' ? Barryvdh\Debugbar\ServiceProvider::class : null,
 
-    ],
+    ]),
 
     /*
     |--------------------------------------------------------------------------
