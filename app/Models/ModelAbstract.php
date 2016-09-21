@@ -58,4 +58,14 @@ abstract class ModelAbstract extends Model
     {
         return new Collection($models);
     }
+
+    public function hasGetMutator($key)
+	{
+		return false;
+	}
+
+    public function getDates()
+	{
+		return [];
+	}
 }
