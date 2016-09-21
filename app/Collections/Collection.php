@@ -32,4 +32,14 @@ class Collection extends LaravelCollection
 
 		return $items;
 	}
+
+	public function generateFlatArrayByKey()
+	{
+		$flat_items = [];
+		foreach ($this->items as $item) {
+			$flat_items[$item->getKey()] = $item;
+		}
+
+		return $flat_items;
+	}
 }
