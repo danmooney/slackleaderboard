@@ -1,12 +1,14 @@
 <?php
 /**
- * @var $users App\Collections\Collection
+ * @var $users App\Collections\User
  * @var $user App\Models\User
  * @var $team App\Models\Team
  * @var $emojis App\Collections\Reaction
  * @var $reaction App\Models\Reaction
  */
 use App\Models\User;
+$emojis_by_reaction_id = $emojis->generateFlatArrayByKey();
+$total_reaction_count_among_all_users = $users->getTotalReactionCountAmongAllUsers();
 ?>
 
 <table>
@@ -20,7 +22,8 @@ use App\Models\User;
 	<tbody>
 	<?php
 		foreach ($users as $user):
-			if (!$user->isEligibleToBeOnLeaderBoard() /*|| !$user->total_reaction_count*/) continue
+			if (!$user->isEligibleToBeOnLeaderBoard() /*|| !$user->total_reaction_count*/) continue;
+			$total_reaction_count_title = sprintf('%s%% of all team\'s reactions', round(($user->total_reaction_count / $total_reaction_count_among_all_users) * 100, 2));
 			?>
 			<tr>
 				<td>
@@ -28,7 +31,9 @@ use App\Models\User;
 						<img width="<?= User::DEFAULT_AVATAR_SIZE ?>" src="<?= htmlspecialchars($user->getAvatar()) ?>" /><?= htmlspecialchars($user->name_binary) ?>
 					</a>
 				</td>
-				<td><a href="#"><?= htmlspecialchars($user->total_reaction_count) ?></a></td>
+				<td title="<?= $total_reaction_count_title ?>">
+					<strong><?= htmlspecialchars($user->total_reaction_count) ?></strong>
+				</td>
 				<td>
 					<?php
 						$emojis_output_for_this_user_count = 0;
@@ -38,14 +43,14 @@ use App\Models\User;
 								break;
 							}
 
-							$reaction = $emojis->find($reaction_id);
+							$reaction = $emojis_by_reaction_id[$reaction_id];
 
 							if (!$reaction) {
 								continue;
 							}
 
 							$emojis_output_for_this_user_count += 1;
-							$anchor_title = sprintf('%s &#013;%s%% of all user\'s reactions', $reaction->getMainAlias()->alias, round(($total_count / $user->total_reaction_count) * 100, 2));
+							$anchor_title = sprintf('%s &#013;%s%% of all user\'s reactions', htmlspecialchars($reaction->getMainAlias()->alias), round(($total_count / $user->total_reaction_count) * 100, 2));
 						?>
 							<a title="<?= $anchor_title ?>" href="<?= action('ReactionController@showLeaderboardAction', [$team->domain, $reaction->getMainAlias()->alias]) ?>">
 								<img width="32" src="<?= $reaction->image ?>">
