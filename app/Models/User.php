@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Models;
+use App\Collections\User as Collection;
 
 class User extends ModelAbstract
 {
@@ -33,4 +34,9 @@ class User extends ModelAbstract
 
 		return $avatar;
 	}
+
+	public function newCollection(array $models = [])
+    {
+        return new Collection($models);
+    }
 }
