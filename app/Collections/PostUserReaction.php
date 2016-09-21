@@ -2,7 +2,6 @@
 
 namespace App\Collections;
 use App\Models\Team;
-use App\Models\User;
 use DB;
 use Reaction;
 
