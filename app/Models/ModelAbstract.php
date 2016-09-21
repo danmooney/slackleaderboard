@@ -28,6 +28,11 @@ abstract class ModelAbstract extends Model
         return $this->casts;
     }
 
+    public function hasCast($key, $types = null)
+	{
+		return false;
+	}
+
     /**
      * Override Model::getTable so we can avoid nasty/inconsistent pluralization
      * @return string
@@ -68,4 +73,11 @@ abstract class ModelAbstract extends Model
 	{
 		return [];
 	}
+
+	public function getAttributeValue($key)
+    {
+        $value = $this->getAttributeFromArray($key);
+
+        return $value;
+    }
 }
