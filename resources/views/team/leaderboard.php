@@ -10,7 +10,8 @@ use App\Models\User;
 $emojis_by_reaction_id = $emojis->generateFlatArrayByKey();
 $total_reaction_count_among_all_users = $users->getTotalReactionCountAmongAllUsers();
 ?>
-
+<br>
+<h3>Top Reactors All-Time</h3>
 <table>
 	<thead>
 		<tr>
@@ -28,10 +29,10 @@ $total_reaction_count_among_all_users = $users->getTotalReactionCountAmongAllUse
 			<tr>
 				<td>
 					<a href="<?= action('UserController@showLeaderboardAction', [$team->domain, $user->handle]) ?>">
-						<img width="<?= User::DEFAULT_AVATAR_SIZE ?>" src="<?= htmlspecialchars($user->getAvatar()) ?>" /><?= htmlspecialchars($user->name_binary) ?>
+						<img class="user-avatar" width="<?= User::DEFAULT_AVATAR_SIZE ?>" src="<?= htmlspecialchars($user->getAvatar()) ?>" /><?= htmlspecialchars($user->name_binary) ?>
 					</a>
 				</td>
-				<td title="<?= $total_reaction_count_title ?>">
+				<td align="right" title="<?= $total_reaction_count_title ?>">
 					<strong><?= htmlspecialchars($user->total_reaction_count) ?></strong>
 				</td>
 				<td>
@@ -52,9 +53,9 @@ $total_reaction_count_among_all_users = $users->getTotalReactionCountAmongAllUse
 							$emojis_output_for_this_user_count += 1;
 							$anchor_title = sprintf('%s &#013;%s%% of all user\'s reactions', htmlspecialchars($reaction->getMainAlias()->alias), round(($total_count / $user->total_reaction_count) * 100, 2));
 						?>
-							<a title="<?= $anchor_title ?>" href="<?= action('ReactionController@showLeaderboardAction', [$team->domain, $reaction->getMainAlias()->alias]) ?>">
-								<img width="32" src="<?= $reaction->image ?>">
-								<?= htmlspecialchars($total_count) ?>
+							<a class="reaction-anchor" title="<?= $anchor_title ?>" href="<?= action('ReactionController@showLeaderboardAction', [$team->domain, $reaction->getMainAlias()->alias]) ?>">
+								<span class="reaction-img" style="background-image:url('<?= $reaction->image ?>')"></span>
+								<span class="reaction-count"><?= htmlspecialchars($total_count) ?></span>
 							</a>
 					<?php
 						endforeach ?>
