@@ -200,6 +200,7 @@ class SlackController extends Controller
 					$url         			= $item['file']['permalink'];
 
 					$meta 					= $item['comment'];
+					$timestamp 				= $meta['timestamp'];
 
 					break;
 				default:
@@ -218,6 +219,14 @@ class SlackController extends Controller
 			}
 
 			if (!isset($meta['user'])) {
+				continue;
+			}
+
+			if (!isset($url)) {
+				continue;
+			}
+
+			if (!isset($timestamp)) {
 				continue;
 			}
 

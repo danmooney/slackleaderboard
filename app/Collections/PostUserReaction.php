@@ -4,6 +4,7 @@ namespace App\Collections;
 use App\Collections\User as UserCollection;
 use App\Models\Team;
 use App\Models\User as UserModel;
+use App\Models\Reaction as ReactionModel;
 use DB;
 use Reaction;
 
@@ -69,10 +70,9 @@ class PostUserReaction extends Collection
 		}
 	}
 
-	public static function getTotalReactionsToASingleUsersPostsGroupedByAllUsersAndAddToUsers(UserModel $user_of_interest, UserCollection $users)
+	public static function getTotalReactionsToASingleUsersPostsGroupedByAllUsers(UserModel $user_of_interest, UserCollection $users)
 	{
 		$rows = DB::table('post_user_reaction AS pur')
-//			->join('user AS u', 'pur.user_id', '=', 'u.user_id')
 			->join('post', 'pur.post_id', '=', 'post.post_id')
 			->where('post.user_id', '=', $user_of_interest->getKey())
 			->groupBy('pur.user_id')
@@ -96,5 +96,57 @@ class PostUserReaction extends Collection
 		});
 
 		return new static($rows);
+	}
+
+	public static function getMutualReactionsToASingleUsersReactions(UserModel $user_of_interest)
+	{
+		$rows = DB::select("
+				SELECT
+					pur.reaction_id,
+					COUNT(pur.reaction_id) AS total_mutual_reaction_count,
+					pur.user_id
+				FROM
+					post_user_reaction pur
+				INNER JOIN (
+					SELECT
+						pur2.post_id,
+						pur2.reaction_id
+					FROM
+						post_user_reaction pur2
+					WHERE
+						user_id = {$user_of_interest->getKey()}
+				) pur2 
+				ON pur.post_id = pur2.post_id
+				AND pur.reaction_id = pur2.reaction_id
+				AND pur.user_id != {$user_of_interest->getKey()}
+				GROUP BY pur.user_id, pur.reaction_id"
+			)
+		;
+
+		$total_mutual_reactions_for_this_user_by_user_id_and_reaction_id = [];
+
+		foreach ($rows as $row) {
+			if (!isset($total_mutual_reactions_for_this_user_by_user_id_and_reaction_id[$row->user_id])) {
+				$total_mutual_reactions_for_this_user_by_user_id_and_reaction_id[$row->user_id] = [];
+			}
+
+			if (!isset($total_mutual_reactions_for_this_user_by_user_id_and_reaction_id[$row->user_id]['total'])) {
+				$total_mutual_reactions_for_this_user_by_user_id_and_reaction_id[$row->user_id]['total'] = 0;
+			}
+
+			$total_mutual_reactions_for_this_user_by_user_id_and_reaction_id[$row->user_id]['total']           += $row->total_mutual_reaction_count;
+			$total_mutual_reactions_for_this_user_by_user_id_and_reaction_id[$row->user_id]['reactions'][$row->reaction_id]  = $row->total_mutual_reaction_count;
+		}
+
+		uasort($total_mutual_reactions_for_this_user_by_user_id_and_reaction_id, function ($a, $b) {
+			return $b['total'] - $a['total'];
+		});
+
+		return $total_mutual_reactions_for_this_user_by_user_id_and_reaction_id;
+	}
+
+	public static function getEmojiReactionCountByReactionGroupedByAllUsersAndAddToUsers(ReactionModel $reaction, UserCollection $users)
+	{
+
 	}
 }
