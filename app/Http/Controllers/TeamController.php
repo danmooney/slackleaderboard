@@ -30,10 +30,13 @@ class TeamController extends Controller
 		$users     = $users->sortByDesc('total_reaction_count');
 		$emojis    = ReactionCollection::getReactionsAndReactionAliasesByTeam($team, true);
 
-		return view('team.leaderboard', [
+		$this->_layout->team = $team;
+		$this->_layout->content = view('team.leaderboard', [
 			'team'   => $team,
 			'users'  => $users,
 			'emojis' => $emojis
 		]);
+
+		return $this->_layout;
 	}
 }
