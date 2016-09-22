@@ -35,8 +35,9 @@ class UserController extends Controller
 		}
 
 		$emojis    									   = ReactionCollection::getReactionsAndReactionAliasesByTeam($team, true);
-		$reactions_to_this_users_posts_grouped_by_user = PostUserReactionCollection::getTotalReactionsToASingleUsersPostsGroupedByAllUsersAndAddToUsers($user, $users);
+		$reactions_to_this_users_posts_grouped_by_user = PostUserReactionCollection::getTotalReactionsToASingleUsersPostsGroupedByAllUsers($user, $users);
 
+		$total_mutual_reactions_for_this_user_by_user_id_and_reaction_id = PostUserReactionCollection::getMutualReactionsToASingleUsersReactions($user);
 
 		$this->_layout->team = $team;
 		$this->_layout->content = view('user.leaderboard', [
@@ -44,7 +45,8 @@ class UserController extends Controller
 			'users'  => $users,
 			'user'   => $user,
 			'emojis' => $emojis,
-			'reactions_to_this_users_posts_grouped_by_user' => $reactions_to_this_users_posts_grouped_by_user
+			'reactions_to_this_users_posts_grouped_by_user' => $reactions_to_this_users_posts_grouped_by_user,
+			'total_mutual_reactions_for_this_user_by_user_id_and_reaction_id' => $total_mutual_reactions_for_this_user_by_user_id_and_reaction_id
 		]);
 
 		return $this->_layout;
