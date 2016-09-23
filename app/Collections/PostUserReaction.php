@@ -145,8 +145,15 @@ class PostUserReaction extends Collection
 		return $total_mutual_reactions_for_this_user_by_user_id_and_reaction_id;
 	}
 
-	public static function getEmojiReactionCountByReactionGroupedByAllUsersAndAddToUsers(ReactionModel $reaction, UserCollection $users)
+	public static function getEmojiReactionCountByReactionGroupedByAllUsers(ReactionModel $reaction)
 	{
+		$rows = DB::table('post_user_reaction AS pur')
+			->where('pur.reaction_id', '=', $reaction->getKey())
+			->groupBy('pur.user_id')
+			->select('pur.user_id', DB::raw('COUNT(*) AS total_count_using_this_reaction'))
+			->get()
+		;
 
+		return $rows;
 	}
 }
