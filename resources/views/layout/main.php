@@ -15,14 +15,14 @@
 	<?php
 		if (isset($__data['team'])): ?>
 			<h2>
-				<a href="<?= action('TeamController@showLeaderboardAction', [$team->domain]) ?>"><img class="user-avatar" width="32" src="<?= $__data['team']->icon ?>" /><?= $__data['team']->name ?></a>
+				<a href="<?= action('TeamController@showLeaderboardAction', [$__data['team']->domain]) ?>"><img class="user-avatar" width="32" src="<?= $__data['team']->icon ?>" /><?= $__data['team']->name ?></a>
 			</h2>
 	<?php
 		endif ?>
 </header>
 <main>
 	<?= $__data['content'] ?>
-	<script src="/js/jquery.min.js"></script>
+	<script src="/js/jquery-3.1.1.js"></script>
 </main>
 </body>
 </html>
