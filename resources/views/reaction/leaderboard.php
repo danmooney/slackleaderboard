@@ -18,6 +18,7 @@ $users_by_user_id = [];
 		<span class="reaction-img" style="background-image:url('<?= $reaction->image ?>')"></span>
 		<span class="reaction-count"><?= htmlspecialchars($total_count) ?></span>
 	</a>
+	<span>:<?= $reaction->getMainAlias()->alias ?>:</span>
 </div>
 <br>
 <h3><strong>Top Reactors</strong></h3>
