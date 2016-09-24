@@ -229,5 +229,7 @@ return [
 
     ],
 
-	'slack_access_token' => env('SLACK_TOKEN')
+	'slack_access_token'  => env('SLACK_TOKEN'),
+	'slack_client_id'     => env('SLACK_CLIENT_ID'),
+	'slack_client_secret' => env('SLACK_CLIENT_SECRET'),
 ];
