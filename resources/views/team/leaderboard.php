@@ -9,6 +9,7 @@
 use App\Models\User;
 $emojis_by_reaction_id = $emojis->generateFlatArrayByKey();
 $total_reaction_count_among_all_users = $users->getTotalReactionCountAmongAllUsers();
+$users_by_id = [];
 ?>
 <br>
 <h3>Top Reactors All-Time</h3>
@@ -23,6 +24,7 @@ $total_reaction_count_among_all_users = $users->getTotalReactionCountAmongAllUse
 	<tbody>
 	<?php
 		foreach ($users as $user):
+			$users_by_id[$user->getKey()] = $user;
 			if (!$user->isEligibleToBeOnLeaderBoard() /*|| !$user->total_reaction_count*/) continue;
 			$total_reaction_count_title = sprintf('%s%% of all team\'s reactions', round(($user->total_reaction_count / $total_reaction_count_among_all_users) * 100, 2));
 			?>
@@ -59,6 +61,42 @@ $total_reaction_count_among_all_users = $users->getTotalReactionCountAmongAllUse
 							</a>
 					<?php
 						endforeach ?>
+				</td>
+			</tr>
+	<?php
+		endforeach ?>
+	</tbody>
+</table>
+
+<br>
+<h3>Top React Receivers All-Time</h3>
+<table>
+	<thead>
+		<tr>
+			<th>Name</th>
+			<th>Total Reaction Count</th>
+		</tr>
+	</thead>
+	<tbody>
+	<?php
+		foreach ($single_user_reaction_counts as $data):
+			if (!isset($users_by_id[$data->posting_user])) {
+				$users_by_id[$data->posting_user] = $users->find($data->posting_user);
+			}
+
+			$user = $users_by_id[$data->posting_user];
+
+			if (!$user->isEligibleToBeOnLeaderBoard() /*|| !$user->total_reaction_count*/) continue;
+			$total_reaction_count_title = sprintf('%s%% of all team\'s reactions', round(($user->total_reaction_count / $total_reaction_count_among_all_users) * 100, 2));
+			?>
+			<tr>
+				<td>
+					<a href="<?= action('UserController@showLeaderboardAction', [$team->domain, $user->handle]) ?>">
+						<img class="user-avatar" width="<?= User::DEFAULT_AVATAR_SIZE ?>" src="<?= htmlspecialchars($user->getAvatar()) ?>" /><?= htmlspecialchars($user->name_binary) ?>
+					</a>
+				</td>
+				<td align="right">
+					<strong><?= htmlspecialchars($data->total_reaction_count) ?></strong>
 				</td>
 			</tr>
 	<?php
