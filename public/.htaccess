@@ -5,6 +5,9 @@
 
     RewriteEngine On
 
+    RewriteCond %{HTTP_HOST} ^slackleaderboard.com [NC]
+    RewriteRule ^(.*)$ https://www.slackleaderboard.com/$1 [L,R=301,NC]
+
     # Redirect Trailing Slashes If Not A Folder...
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteRule ^(.*)/$ /$1 [L,R=301]
