@@ -17,6 +17,10 @@ class TeamController extends Controller
 {
 	public function showLeaderboardAction($team_domain)
 	{
+		if (!isset($_COOKIE['slack'])) {
+			App::abort(404);
+		}
+
 		$team = Team::where(['domain' => $team_domain])->first();
 
 		if (!$team) {
@@ -30,11 +34,15 @@ class TeamController extends Controller
 		$users     = $users->sortByDesc('total_reaction_count');
 		$emojis    = ReactionCollection::getReactionsAndReactionAliasesByTeam($team, true);
 
+		$single_user_reaction_counts = PostUserReactionCollection::getCountsOfReactionsToASingleUsersPostsGroupedByUser($team, $users);
+//		$single_user_reaction_counts = $single_user_reaction_counts->sortByDesc('total_reaction_count');
+
 		$this->_layout->team = $team;
 		$this->_layout->content = view('team.leaderboard', [
 			'team'   => $team,
 			'users'  => $users,
-			'emojis' => $emojis
+			'emojis' => $emojis,
+			'single_user_reaction_counts' => $single_user_reaction_counts
 		]);
 
 		return $this->_layout;

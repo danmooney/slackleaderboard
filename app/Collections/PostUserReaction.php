@@ -36,6 +36,26 @@ class PostUserReaction extends Collection
 		}
 	}
 
+	public static function getCountsOfReactionsToASingleUsersPostsGroupedByUser(Team $team, UserCollection $users)
+	{
+		$rows = DB::select("SELECT
+	p.user_id AS posting_user,
+	
+	COUNT(pur.reaction_id) AS total_reaction_count
+FROM
+	post_user_reaction pur
+INNER JOIN post p USING (post_id)
+INNER JOIN `user` u ON p.user_id = u.user_id
+INNER JOIN team t ON u.team_id = t.team_id
+GROUP BY
+	p.user_id
+ORDER BY total_reaction_count DESC
+			")
+		;
+
+		return $rows;
+	}
+
 	public static function getAllPostUserReactionsByEachUserOnTeamAndAddToUsers(Team $team, UserCollection $users)
 	{
 		$rows = DB::table('post_user_reaction AS pur')
