@@ -232,4 +232,5 @@ return [
 	'slack_access_token'  => env('SLACK_TOKEN'),
 	'slack_client_id'     => env('SLACK_CLIENT_ID'),
 	'slack_client_secret' => env('SLACK_CLIENT_SECRET'),
+	'slack_oauth_url'     => env('SLACK_OAUTH_URL', "https://slack.com/oauth/authorize?client_id=2342865809.77308010755&scope=identify users:read reactions:read team:read identity.basic&redirect_uri=http://{$_SERVER['HTTP_HOST']}/c")
 ];

@@ -42,6 +42,10 @@ class TokenController extends Controller
 
 		setcookie('slack', md5($token->token), strtotime('now + 1 year'));
 
+		// TODO - get users.identity
+		$response = $commander->execute('users.identity');
+
+
 		return redirect()->action(
 			'TeamController@showLeaderboardAction', ['domain' => 'digitalsurgeons']
 		);

@@ -15,6 +15,12 @@ use DB;
 
 class UserController extends Controller
 {
+	public function loginAction()
+	{
+		$slack_oauth_url = config('app.slack_oauth_url');
+		return redirect()->away($slack_oauth_url);
+	}
+
 	public function showLeaderboardAction($team_domain, $user_handle)
 	{
 		$team = Team::where(['domain' => $team_domain])->first();
