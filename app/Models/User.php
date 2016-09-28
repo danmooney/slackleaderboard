@@ -31,7 +31,6 @@ class User extends ModelAbstract
 			$avatar = preg_replace('#(192|original)\.(png|jpe?g)$#', "$size.$2", $this->avatar);
 		}
 
-
 		return $avatar;
 	}
 
@@ -39,4 +38,9 @@ class User extends ModelAbstract
     {
         return new Collection($models);
     }
+
+    public static function saveIntoSession(User $user)
+	{
+		session()->put('user', $user);
+	}
 }
