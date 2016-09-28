@@ -15,6 +15,10 @@ class ReactionController extends Controller
 {
 	public function showLeaderboardAction($team_domain, $reaction_alias)
 	{
+		if (!isset($_COOKIE['slack'])) {
+			App::abort(404);
+		}
+
 		$team = Team::where(['domain' => $team_domain])->first();
 
 		if (!$team) {
