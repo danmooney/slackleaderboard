@@ -6,6 +6,10 @@ use App\Models\Token;
 use App;
 use DB;
 use Input;
+use App\Models\User;
+use App\Models\Team;
+use App\Collections\User as UserCollection;
+
 use Frlnc\Slack\Http\SlackResponseFactory;
 use Frlnc\Slack\Http\CurlInteractor;
 use Frlnc\Slack\Core\Commander;
@@ -42,12 +46,29 @@ class TokenController extends Controller
 
 		setcookie('slack', md5($token->token), strtotime('now + 1 year'));
 
-		// TODO - get users.identity
-		$response = $commander->execute('users.identity');
 
+
+		DB::beginTransaction();
+
+		// add team if it doesn't already exist
+		$response = $commander->execute('team.info');
+		$team     = Team::importFromSlackResponseBody($response->getBody());
+
+		// add users
+		$response = $commander->execute('users.list');
+		$users    = UserCollection::importFromSlackResponseBody($response->getBody());
+
+		// get current user's identity and store in session
+		$response      		   = $commander->execute('auth.test');
+		$current_user_slack_id = $response->getBody()['user_id'];
+		$user 	       		   = $users->where('slack_user_id', $current_user_slack_id)->first() ?: new User();
+
+		User::saveIntoSession($user);
 
 		return redirect()->action(
-			'TeamController@showLeaderboardAction', ['domain' => 'digitalsurgeons']
+			'TeamController@showLeaderboardAction', ['domain' => $team->domain]
 		);
+
+		DB::commit();
 	}
 }
