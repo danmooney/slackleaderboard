@@ -1,0 +1,1 @@
+<a href="<?= $sign_in_url ?>"><img src="https://api.slack.com/img/sign_in_with_slack.png" /></a>

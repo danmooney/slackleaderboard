@@ -15,6 +15,17 @@ use DB;
 
 class SlackController extends Controller
 {
+	public function homepageAction()
+	{
+		$sign_in_url = config('app.slack_oauth_url');
+
+		$this->_layout->content = view('home.page', [
+			'sign_in_url' => $sign_in_url
+		]);
+
+		return $this->_layout;
+	}
+
 	public function fetchData()
 	{
 		ini_set('max_execution_time', 0);
