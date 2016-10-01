@@ -80,4 +80,12 @@ abstract class ModelAbstract extends Model
 
         return $value;
     }
+
+    public function isSameAs(Model $model)
+	{
+		return (
+			get_class($this) === get_class($model) &&
+			$this->getKey() === $model->getKey()
+		);
+	}
 }
