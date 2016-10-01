@@ -2,6 +2,7 @@
 
 namespace App\Models;
 use App\Collections\User as Collection;
+use App\Models\User as UserModel;
 
 class User extends ModelAbstract
 {
@@ -42,5 +43,13 @@ class User extends ModelAbstract
     public static function saveIntoSession(User $user)
 	{
 		session()->put('user', $user);
+	}
+
+	public function isLoggedIn()
+	{
+		return (
+			($user = session()->get('user')) &&
+			$this->isSameAs($user)
+		);
 	}
 }
