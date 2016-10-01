@@ -21,6 +21,14 @@ class UserController extends Controller
 		return redirect()->away($slack_oauth_url);
 	}
 
+	public function logoutAction()
+	{
+		session()->flush();
+		return redirect()->action(
+			'SlackController@guestHomepageAction'
+		);
+	}
+
 	public function showLeaderboardAction($team_domain, $user_handle)
 	{
 		if (!isset($_COOKIE['slack'])) {
