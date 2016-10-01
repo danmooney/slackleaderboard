@@ -11,7 +11,9 @@ use App\Models\User;
 use App\Models\Reaction;
 use App\Models\Post;
 use App\Models\PostUserReaction;
+use App\Models\Token;
 use DB;
+use App;
 
 class SlackController extends Controller
 {
@@ -20,7 +22,7 @@ class SlackController extends Controller
 		$current_user = session()->get('user');
 
 		if ($current_user) {
-			$team = Team::find($current_user->team_id)->first();
+			$team = Team::find($current_user->team_id);
 			if ($team) {
 				return redirect()->action(
 					'TeamController@showLeaderboardAction', ['domain' => $team->domain]
@@ -42,11 +44,18 @@ class SlackController extends Controller
 		ini_set('max_execution_time', 0);
 		ini_set('xdebug.max_nesting_level', 99999999);
 
-		$slack_token = config('app.slack_access_token');
+		$current_user   = session()->get('user');
+
+		if (!$current_user) {
+			App::abort(403);
+			return;
+		}
+
+		$slack_token    = Token::find($current_user->getKey());
 
 		$interactor     = new CurlInteractor;
         $interactor->setResponseFactory(new SlackResponseFactory());
-        $commander      = new Commander($slack_token, $interactor);
+        $commander      = new Commander($slack_token->token, $interactor);
 
 //		DB::beginTransaction();
 
