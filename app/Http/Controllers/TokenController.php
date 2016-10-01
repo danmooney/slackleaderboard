@@ -23,11 +23,11 @@ class TokenController extends Controller
 		$client_secret = config('app.slack_client_secret');
 		$redirect_uri  = "http://{$_SERVER['HTTP_HOST']}/c";
 
-		$slack_token   = config('app.slack_access_token');
+		$my_slack_access_token   = config('app.slack_access_token');
 
 		$interactor    = new CurlInteractor;
         $interactor->setResponseFactory(new SlackResponseFactory());
-        $commander     = new Commander($slack_token, $interactor);
+        $commander     = new Commander($my_slack_access_token, $interactor);
 
 		$data = [
 			'code' 		    => $code,
@@ -37,16 +37,9 @@ class TokenController extends Controller
 		];
 
 		$response = $commander->execute('oauth.access', $data);
-
 		$response = $response->getBody();
 
-		$token = new Token();
-		$token->token = isset($response['access_token']) ? $response['access_token'] : '';
-		$token->save();
-
-		setcookie('slack', md5($token->token), strtotime('now + 1 year'));
-
-
+		$their_slack_access_token = isset($response['access_token']) ? $response['access_token'] : '';
 
 		DB::beginTransaction();
 
@@ -62,13 +55,20 @@ class TokenController extends Controller
 		$response      		   = $commander->execute('auth.test');
 		$current_user_slack_id = $response->getBody()['user_id'];
 		$user 	       		   = $users->where('slack_user_id', $current_user_slack_id)->first() ?: new User();
-
+		
+		$token = Token::find($user->getKey()) ?: new Token();
+		$token->user_id = $user->getKey();
+		$token->token   = $their_slack_access_token;
+		$token->save();
+		
+		setcookie('slack', md5($token->token), strtotime('now + 1 year'));
+		
 		User::saveIntoSession($user);
+
+		DB::commit();
 
 		return redirect()->action(
 			'TeamController@showLeaderboardAction', ['domain' => $team->domain]
 		);
-
-		DB::commit();
 	}
 }
