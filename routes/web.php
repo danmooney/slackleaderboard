@@ -12,8 +12,6 @@
 */
 
 
-//Route::get('/', 'SlackController@fetchData');
-
 //Route::get('/', function () {
 //	$current_user = session()->get('user');
 //
@@ -27,6 +25,7 @@
 //});
 
 Route::get('/', 'SlackController@guestHomepageAction');
+Route::get('/+/fetch', 'SlackController@fetchData');
 Route::get('/c', 'TokenController@getAndStoreTokenFromOauthFlow');
 Route::get('/messages', 'MessageController@getThem');
 Route::get('/+/login', 'UserController@loginAction');
