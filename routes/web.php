@@ -11,11 +11,26 @@
 |
 */
 
+
 //Route::get('/', 'SlackController@fetchData');
-Route::get('/', 'SlackController@homepageAction');
+
+//Route::get('/', function () {
+//	$current_user = session()->get('user');
+//
+//	if ($current_user) {
+//		$request = Request::create('TeamController@showLeaderboardAction', 'GET', array());
+//	} else {
+//		$request = Request::create('SlackController@guestHomepageAction', 'GET', array());
+//	}
+//
+//	return Route::dispatch($request)->getContent();
+//});
+
+Route::get('/', 'SlackController@guestHomepageAction');
 Route::get('/c', 'TokenController@getAndStoreTokenFromOauthFlow');
 Route::get('/messages', 'MessageController@getThem');
 Route::get('/+/login', 'UserController@loginAction');
+Route::post('/+/logout', 'UserController@logoutAction');
 Route::get('/{team_domain}', 'TeamController@showLeaderboardAction');
 Route::get('/{team_domain}/u/{user_handle}', 'UserController@showLeaderboardAction');
 Route::get('/{team_domain}/r/{reaction_alias}', 'ReactionController@showLeaderboardAction');
