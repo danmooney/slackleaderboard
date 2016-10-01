@@ -22,8 +22,6 @@ $font-size-base: 14px;
 $line-height-base: 1.6;
 $text-color: #636b6f;
 
-// Navbar
-$navbar-default-bg: #fff;
 
 // Buttons
 $btn-default-color: $text-color;
@@ -35,3 +33,13 @@ $input-color-placeholder: lighten($text-color, 30%);
 
 // Panels
 $panel-default-heading-bg: #fff;
+
+// Colors
+$black: #000;
+$white: #fff;
+
+// widths
+$large-screen: 68em;
+$small-screen: 48em;
+
+$max-width: $large-screen;

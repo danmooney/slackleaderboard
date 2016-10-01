@@ -1,0 +1,58 @@
+header {
+	background: $black;
+	color: $white;
+}
+
+header h1, header h2 {
+	margin: 0;
+}
+
+header .icon {
+	background: url('/img/logo.png') no-repeat;
+	background-size: contain;
+	display: inline-block;
+	width: 40px;
+	height: 40px;
+	vertical-align: middle;
+}
+
+header .nav-container {
+	padding: .5em 0;
+}
+
+header .logo-container {
+	float: left;
+}
+
+header nav {
+	float: right;
+
+	span {
+		cursor: default;
+	}
+
+	.sublist {
+		display: none;
+		position: absolute;
+		background: $black;
+		border: 1px solid $white;
+	}
+
+	.list:hover .sublist {
+		display: block;
+	}
+}
+
+header a {
+	color: $white;
+
+	&:hover {
+		text-decoration: none;
+		color: inherit;
+	}
+}
+
+header .button-logout {
+	background: 0;
+	border: 0;
+}

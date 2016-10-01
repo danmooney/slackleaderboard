@@ -5,17 +5,22 @@
  * @var $team App\Models\Team
  * @var $emojis App\Collections\Reaction
  * @var $reaction App\Models\Reaction
+ * @var $current_user App\Models\User
  */
 use App\Models\User;
 
 $emojis_by_reaction_id = $emojis->generateFlatArrayByKey();
 //$total_reaction_count_among_all_users = $users->getTotalReactionCountAmongAllUsers();
 $users_by_user_id = [];
+
+$current_user = session()->get('user') ?: new User();
 ?>
 <h3>
 	User:
 	<a href="<?= action('UserController@showLeaderboardAction', [$team->domain, $user->handle]) ?>">
-		<img class="user-avatar" width="<?= User::DEFAULT_AVATAR_SIZE ?>" src="<?= htmlspecialchars($user->getAvatar()) ?>" /><?= htmlspecialchars($user->name_binary) ?>
+		<img class="user-avatar" width="<?= User::DEFAULT_AVATAR_SIZE ?>" src="<?= htmlspecialchars($user->getAvatar()) ?>" />
+		<?= htmlspecialchars($user->name_binary) ?>
+		<?= $user->isSameAs($current_user) ? '(That\'s You!)' : '' ?>
 	</a>
 </h3>
 <br>

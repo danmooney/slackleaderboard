@@ -1,0 +1,15 @@
+.u-hideOnDesktop {
+	@media screen and (min-width: $large-screen) {
+		display: none !important;
+	}
+}
+
+.u-hideOnMobile {
+	@media screen and (min-width: $small-screen) {
+		display: none !important;
+	}
+}
+
+.u-outerContainer {
+	@include outer-container();
+}
