@@ -5858,8 +5858,6 @@ header .logo-container {
 
 header nav {
   float: right; }
-  header nav span {
-    cursor: default; }
   header nav .sublist {
     display: none;
     position: absolute;
