@@ -149,4 +149,6 @@ $current_user = session()->get('user') ?: new User();
 	</tbody>
 </table>
 
+<?php /*
 <h3><strong>Top Followers to This User's First Reactions</strong></h3>
+ */
