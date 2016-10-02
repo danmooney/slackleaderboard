@@ -5845,7 +5845,8 @@ header, footer, main > .u-outerContainer > * {
 
 header {
   background: #000;
-  color: #fff; }
+  color: #fff;
+  position: relative; }
 
 header h1, header h2 {
   margin: 0; }
@@ -5870,11 +5871,14 @@ header nav {
   float: right; }
   header nav .sublist {
     display: none;
-    position: absolute;
     background: #000;
-    border: 1px solid #fff; }
+    border: 1px solid #fff;
+    position: absolute;
+    z-index: 2; }
   header nav .list:hover .sublist {
     display: block; }
+  header nav .sublist li {
+    padding: 5px; }
 
 header a {
   color: #fff; }
@@ -5883,8 +5887,11 @@ header a {
     color: inherit; }
 
 header .button-logout {
-  background: 0;
-  border: 0; }
+  width: 100%;
+  color: #000; }
+
+.header-main-container {
+  padding-bottom: 20px; }
 
 main > .u-outerContainer > h3, main > .u-outerContainer > div {
   text-align: center; }
