@@ -11,8 +11,13 @@ $emojis_by_reaction_id = $emojis->generateFlatArrayByKey();
 $total_reaction_count_among_all_users = $users->getTotalReactionCountAmongAllUsers();
 $users_by_id = [];
 ?>
+<h3>
+	Team:
+	<a href="<?= action('TeamController@showLeaderboardAction', [$team->domain]) ?>"><img class="user-avatar" width="<?= User::DEFAULT_AVATAR_SIZE ?>" src="<?= htmlspecialchars($team->icon) ?>" /><?= htmlspecialchars($team->name) ?></a>
+</h3>
+
 <br>
-<h3>Top Reactors All-Time</h3>
+<h3><strong>Top React Givers All-Time</strong></h3>
 <table>
 	<thead>
 		<tr>
@@ -29,15 +34,16 @@ $users_by_id = [];
 			$total_reaction_count_title = sprintf('%s%% of all team\'s reactions', round(($user->total_reaction_count / $total_reaction_count_among_all_users) * 100, 2));
 			?>
 			<tr>
-				<td>
+				<td class="table-cell-user">
 					<a href="<?= action('UserController@showLeaderboardAction', [$team->domain, $user->handle]) ?>">
 						<img class="user-avatar" width="<?= User::DEFAULT_AVATAR_SIZE ?>" src="<?= htmlspecialchars($user->getAvatar()) ?>" /><?= htmlspecialchars($user->name_binary) ?>
 					</a>
 				</td>
-				<td align="right" title="<?= $total_reaction_count_title ?>">
-					<strong><?= htmlspecialchars($user->total_reaction_count) ?></strong>
+				<td class="table-cell-total-reaction-count" align="right" title="<?= $total_reaction_count_title ?>">
+					<?= htmlspecialchars($user->total_reaction_count) ?>
 				</td>
-				<td>
+				<td class="table-cell-reaction-list">
+					<div>
 					<?php
 						$emojis_output_for_this_user_count = 0;
 
@@ -61,6 +67,7 @@ $users_by_id = [];
 							</a>
 					<?php
 						endforeach ?>
+					</div>
 				</td>
 			</tr>
 	<?php
@@ -69,7 +76,7 @@ $users_by_id = [];
 </table>
 
 <br>
-<h3>Top React Receivers All-Time</h3>
+<h3><strong>Top React Receivers All-Time</strong></h3>
 <table>
 	<thead>
 		<tr>
@@ -90,13 +97,16 @@ $users_by_id = [];
 			$total_reaction_count_title = sprintf('%s%% of all team\'s reactions', round(($user->total_reaction_count / $total_reaction_count_among_all_users) * 100, 2));
 			?>
 			<tr>
-				<td>
+				<td class="table-cell-user">
 					<a href="<?= action('UserController@showLeaderboardAction', [$team->domain, $user->handle]) ?>">
-						<img class="user-avatar" width="<?= User::DEFAULT_AVATAR_SIZE ?>" src="<?= htmlspecialchars($user->getAvatar()) ?>" /><?= htmlspecialchars($user->name_binary) ?>
+						<img class="user-avatar" width="<?= User::DEFAULT_AVATAR_SIZE ?>" src="<?= htmlspecialchars($user->getAvatar()) ?>" />
+						<span class="user-name">
+							<?= htmlspecialchars($user->name_binary) ?>
+						</span>
 					</a>
 				</td>
-				<td align="right">
-					<strong><?= htmlspecialchars($data->total_reaction_count) ?></strong>
+				<td class="table-cell-total-reaction-count" align="right">
+					<?= htmlspecialchars($data->total_reaction_count) ?>
 				</td>
 			</tr>
 	<?php

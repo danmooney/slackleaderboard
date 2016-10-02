@@ -1,10 +1,50 @@
+main > .u-outerContainer > * {
+	@extend %rowPadd;
+}
+
+main > .u-outerContainer > h3, main > .u-outerContainer > div {
+	text-align: center;
+}
+
+table {
+	padding-left: 0;
+	padding-right: 0;
+	width: 100%;
+}
+
 table tr > * {
 	border: 1px solid #CCC;
 	padding: 5px;
+
+	vertical-align: middle;
+}
+
+table tr > th {
+	font-weight: bold;
+}
+
+.table-cell-reaction-list {
+	max-width: 0;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+	width: 40%;
+}
+
+.table-cell-reaction-list > div {
+    overflow: auto;
+	padding-top: 15px;
+	padding-bottom: 15px;
+}
+
+.table-cell-total-reaction-count,
+.table-cell-percentage-reaction-count
+{
+	width: 20%;
 }
 
 .user-avatar {
 	margin-right: 5px;
+	box-shadow: 0 0 1px #E8E8E8;
 }
 
 .reaction-anchor {

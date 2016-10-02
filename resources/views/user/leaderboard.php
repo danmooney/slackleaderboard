@@ -20,11 +20,11 @@ $current_user = session()->get('user') ?: new User();
 	<a href="<?= action('UserController@showLeaderboardAction', [$team->domain, $user->handle]) ?>">
 		<img class="user-avatar" width="<?= User::DEFAULT_AVATAR_SIZE ?>" src="<?= htmlspecialchars($user->getAvatar()) ?>" />
 		<?= htmlspecialchars($user->name_binary) ?>
-		<?= $user->isSameAs($current_user) ? '(That\'s You!)' : '' ?>
 	</a>
+	<?= $user->isSameAs($current_user) ? '(That\'s You!)' : '' ?>
 </h3>
 <br>
-<h3><strong>Top Reactors to this User's Posts</strong></h3>
+<h3><strong>Top React Givers to this User's Posts</strong></h3>
 <table>
 	<thead>
 		<tr>
@@ -43,18 +43,22 @@ $current_user = session()->get('user') ?: new User();
 			$total_reaction_count_title = sprintf('%s%% of all user\'s reactions', round(($reaction_user->total_reactions_to_this_users_posts / $user->total_reaction_count) * 100, 2));
 			?>
 			<tr>
-				<td>
+				<td class="table-cell-user">
 					<a href="<?= action('UserController@showLeaderboardAction', [$team->domain, $user->handle]) ?>">
-						<img class="user-avatar" width="<?= User::DEFAULT_AVATAR_SIZE ?>" src="<?= htmlspecialchars($user->getAvatar()) ?>" /><?= htmlspecialchars($user->name_binary) ?>
+						<img class="user-avatar" width="<?= User::DEFAULT_AVATAR_SIZE ?>" src="<?= htmlspecialchars($user->getAvatar()) ?>" />
+						<span class="user-name">
+							<?= htmlspecialchars($user->name_binary) ?>
+						</span>
 					</a>
 				</td>
-				<td align="right">
+				<td class="table-cell-total-reaction-count" align="right">
 					<strong><?= htmlspecialchars($reaction_user->total_reactions_to_this_users_posts) ?></strong>
 				</td>
-				<td align="right">
+				<td class="table-cell-percentage-reaction-count" align="right">
 					<?= round(($reaction_user->total_reactions_to_this_users_posts / $user->total_reaction_count) * 100, 2) ?>%
 				</td>
-				<td>
+				<td class="table-cell-reaction-list">
+					<div>
 					<?php
 						$emojis_output_for_this_user_count = 0;
 
@@ -78,14 +82,15 @@ $current_user = session()->get('user') ?: new User();
 							</a>
 					<?php
 						endforeach ?>
+					</div>
 				</td>
 			</tr>
 	<?php
 		endforeach ?>
 	</tbody>
 </table>
-
-<h3><strong>Top Mutual Post Reactor Reactions</strong></h3>
+<br><br>
+<h3><strong>Top Mutual Post React Givers</strong></h3>
 <table>
 	<thead>
 		<tr>
@@ -107,18 +112,19 @@ $current_user = session()->get('user') ?: new User();
 			arsort($data['reactions'], SORT_NUMERIC);
 			?>
 			<tr>
-				<td>
+				<td class="table-cell-user">
 					<a href="<?= action('UserController@showLeaderboardAction', [$team->domain, $user->handle]) ?>">
 						<img class="user-avatar" width="<?= User::DEFAULT_AVATAR_SIZE ?>" src="<?= htmlspecialchars($user->getAvatar()) ?>" /><?= htmlspecialchars($user->name_binary) ?>
 					</a>
 				</td>
-				<td align="right">
+				<td class="table-cell-total-reaction-count" align="right">
 					<strong><?= htmlspecialchars($data['total']) ?></strong>
 				</td>
-				<td align="right">
+				<td class="table-cell-percentage-reaction-count" align="right">
 					<?= round(($data['total'] / $user->total_reaction_count) * 100, 2) ?>%
 				</td>
-				<td>
+				<td class="table-cell-reaction-list">
+					<div>
 					<?php
 						$emojis_output_for_this_user_count = 0;
 
@@ -142,6 +148,7 @@ $current_user = session()->get('user') ?: new User();
 							</a>
 					<?php
 						endforeach ?>
+					</div>
 				</td>
 			</tr>
 	<?php

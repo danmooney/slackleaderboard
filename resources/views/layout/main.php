@@ -18,58 +18,64 @@ $current_user = session()->get('user') ?: new User();
     <?= View::yieldContent('style') ?>
 </head>
 <body>
-<header>
-	<div class="nav-container u-outerContainer">
-		<div class="logo-container">
-			<h1>
-				<a href="/">
-					<span class="icon"></span>
-					#slackleaderboard
-				</a>
-			</h1>
+<div class="header-main-container">
+	<header>
+		<div class="nav-container u-outerContainer">
+			<div class="logo-container">
+				<h1>
+					<a href="/">
+						<span class="icon"></span>
+						<span class="title u-hideOnMobile">#slackleaderboard</span>
+					</a>
+				</h1>
+			</div>
+			<nav>
+				<?php
+					if ($current_user->isLoggedIn()): ?>
+						<ul class="list">
+							<li>
+								<a href="<?= action('UserController@showLeaderboardAction', [$team->domain, $current_user->handle]) ?>" class="user-container">
+									<img class="user-avatar" width="32" src="<?= $current_user->avatar ?>" />
+									<span class="user-name"><?= htmlspecialchars($current_user->name_binary) ?></span>
+								</a>
+								<ul class="sublist">
+									<li>
+										<a href="<?= action('TeamController@showLeaderboardAction', [$team->domain]) ?>">
+											<img class="user-avatar" width="32" src="<?= $team->icon ?>" />
+											Logged into <?= htmlspecialchars($team->name) ?>
+										</a>
+									</li>
+									<li>
+										<form method="POST" action="<?= action('UserController@logoutAction') ?>">
+											<button class="button-logout" type="submit">Logout</button>
+										</form>
+									</li>
+								</ul>
+							</li>
+						</ul>
+				<?php
+					endif ?>
+				<?php
+					if (false/*isset($team)*/): ?>
+						<h2>
+							<a href="<?= action('TeamController@showLeaderboardAction', [$team->domain]) ?>"><?= $team->name ?></a>
+						</h2>
+				<?php
+					endif ?>
+			</nav>
 		</div>
-		<nav>
-			<?php
-				if ($current_user->isLoggedIn()): ?>
-					<ul class="list">
-						<li>
-							<a href="<?= action('UserController@showLeaderboardAction', [$team->domain, $current_user->handle]) ?>" class="user-container">
-								<img class="user-avatar" width="32" src="<?= $current_user->avatar ?>" />
-								<span class="user-name"><?= htmlspecialchars($current_user->name_binary) ?></span>
-							</a>
-							<ul class="sublist">
-								<li>
-									<img class="user-avatar" width="32" src="<?= $team->icon ?>" />
-									Logged into <?= htmlspecialchars($team->name) ?>
-								</li>
-								<li>
-									<form method="POST" action="<?= action('UserController@logoutAction') ?>">
-										<button class="button-logout" type="submit">Logout</button>
-									</form>
-								</li>
-							</ul>
-						</li>
-					</ul>
-			<?php
-				endif ?>
-			<?php
-				if (false/*isset($team)*/): ?>
-					<h2>
-						<a href="<?= action('TeamController@showLeaderboardAction', [$team->domain]) ?>"><?= $team->name ?></a>
-					</h2>
-			<?php
-				endif ?>
-		</nav>
-	</div>
-</header>
-<main>
-	<div class="u-outerContainer">
-		<?= $__data['content'] ?>
-		<script src="/js/jquery-3.1.1.js"></script>
-	</div>
-</main>
+	</header>
+	<main>
+		<div class="u-outerContainer">
+			<?= $__data['content'] ?>
+			<script src="/js/jquery-3.1.1.js"></script>
+		</div>
+	</main>
+</div>
 <footer>
-	&copy; <?= date('Y') ?>
+	<div class="u-outerContainer">
+		&copy; <?= date('Y') ?>
+	</div>
 </footer>
 </body>
 </html>
