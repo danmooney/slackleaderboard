@@ -23,7 +23,7 @@ $users_by_user_id = [];
 	<span>:<?= $reaction->getMainAlias()->alias ?>:
 </div>
 <br>
-<h3><strong>Top React Givers</strong></h3>
+<h3><strong>Top Reaction Givers</strong></h3>
 <table>
 	<thead>
 		<tr>

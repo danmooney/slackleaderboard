@@ -13,11 +13,16 @@ $users_by_id = [];
 ?>
 <h3>
 	Team:
-	<a href="<?= action('TeamController@showLeaderboardAction', [$team->domain]) ?>"><img class="user-avatar" width="<?= User::DEFAULT_AVATAR_SIZE ?>" src="<?= htmlspecialchars($team->icon) ?>" /><?= htmlspecialchars($team->name) ?></a>
+	<a href="<?= action('TeamController@showLeaderboardAction', [$team->domain]) ?>">
+		<img class="user-avatar" width="<?= User::DEFAULT_AVATAR_SIZE ?>" src="<?= htmlspecialchars($team->icon) ?>" />
+		<span class="user-name">
+			<?= htmlspecialchars($team->name) ?>
+		</span>
+	</a>
 </h3>
 
 <br>
-<h3><strong>Top React Givers All-Time</strong></h3>
+<h3><strong>Top Reaction Givers All-Time</strong></h3>
 <table>
 	<thead>
 		<tr>
@@ -76,7 +81,7 @@ $users_by_id = [];
 </table>
 
 <br>
-<h3><strong>Top React Receivers All-Time</strong></h3>
+<h3><strong>Top Reaction Receivers All-Time</strong></h3>
 <table>
 	<thead>
 		<tr>

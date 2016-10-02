@@ -17,14 +17,15 @@ $current_user = session()->get('user') ?: new User();
 ?>
 <h3>
 	User:
-	<a href="<?= action('UserController@showLeaderboardAction', [$team->domain, $user->handle]) ?>">
-		<img class="user-avatar" width="<?= User::DEFAULT_AVATAR_SIZE ?>" src="<?= htmlspecialchars($user->getAvatar()) ?>" />
-		<?= htmlspecialchars($user->name_binary) ?>
+	<a href="<?= action('UserController@showLeaderboardAction', [$team->domain, $user->handle]) ?>"><img class="user-avatar" width="<?= User::DEFAULT_AVATAR_SIZE ?>" src="<?= htmlspecialchars($user->getAvatar()) ?>" />
+		<span class="user-name">
+			<?= htmlspecialchars($user->name_binary) ?>
+		</span>
 	</a>
 	<?= $user->isSameAs($current_user) ? '(That\'s You!)' : '' ?>
 </h3>
 <br>
-<h3><strong>Top React Givers to this User's Posts</strong></h3>
+<h3><strong>Top Reaction Givers to this User's Posts</strong></h3>
 <table>
 	<thead>
 		<tr>
@@ -90,7 +91,7 @@ $current_user = session()->get('user') ?: new User();
 	</tbody>
 </table>
 <br><br>
-<h3><strong>Top Mutual Post React Givers</strong></h3>
+<h3><strong>Top Mutual Post Reaction Givers</strong></h3>
 <table>
 	<thead>
 		<tr>

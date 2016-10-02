@@ -74,7 +74,6 @@ $current_user = session()->get('user') ?: new User();
 </div>
 <footer>
 	<div class="u-outerContainer">
-		&copy; <?= date('Y') ?>
 	</div>
 </footer>
 </body>

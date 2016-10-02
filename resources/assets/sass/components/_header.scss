@@ -1,6 +1,7 @@
 header {
 	background: $black;
 	color: $white;
+	position: relative;
 	@extend %rowPadd;
 }
 
@@ -36,13 +37,20 @@ header nav {
 
 	.sublist {
 		display: none;
-		position: absolute;
 		background: $black;
 		border: 1px solid $white;
+		position: absolute;
+		z-index: 2;
 	}
 
-	.list:hover .sublist {
-		display: block;
+	.list {
+		&:hover .sublist {
+			display: block;
+		}
+	}
+
+	.sublist li {
+		padding: 5px;
 	}
 }
 
@@ -56,6 +64,9 @@ header a {
 }
 
 header .button-logout {
-	background: 0;
-	border: 0;
+	//background: 0;
+	//border: 0;
+    width: 100%;
+	color: $black;
+    //text-align: left;
 }
