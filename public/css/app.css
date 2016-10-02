@@ -5821,7 +5821,7 @@ ul, li {
   .u-hideOnDesktop {
     display: none !important; } }
 
-@media screen and (min-width: 48em) {
+@media screen and (max-width: 48em) {
   .u-hideOnMobile {
     display: none !important; } }
 
@@ -5834,6 +5834,14 @@ ul, li {
     display: table; }
   .u-outerContainer:after {
     clear: both; }
+
+header, footer, main > .u-outerContainer > * {
+  padding-left: 1.25em;
+  padding-right: 1.25em; }
+  @media screen and (min-width: 58.5em) {
+    header, footer, main > .u-outerContainer > * {
+      padding-left: 0;
+      padding-right: 0; } }
 
 header {
   background: #000;
@@ -5851,12 +5859,14 @@ header .icon {
   vertical-align: middle; }
 
 header .nav-container {
-  padding: .5em 0; }
+  padding-top: .5em;
+  padding-bottom: .5em; }
 
 header .logo-container {
   float: left; }
 
 header nav {
+  margin-top: 5px;
   float: right; }
   header nav .sublist {
     display: none;
@@ -5876,12 +5886,40 @@ header .button-logout {
   background: 0;
   border: 0; }
 
+main > .u-outerContainer > h3, main > .u-outerContainer > div {
+  text-align: center; }
+
+table {
+  padding-left: 0;
+  padding-right: 0;
+  width: 100%; }
+
 table tr > * {
   border: 1px solid #CCC;
-  padding: 5px; }
+  padding: 5px;
+  vertical-align: middle; }
+
+table tr > th {
+  font-weight: bold; }
+
+.table-cell-reaction-list {
+  max-width: 0;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 40%; }
+
+.table-cell-reaction-list > div {
+  overflow: auto;
+  padding-top: 15px;
+  padding-bottom: 15px; }
+
+.table-cell-total-reaction-count,
+.table-cell-percentage-reaction-count {
+  width: 20%; }
 
 .user-avatar {
-  margin-right: 5px; }
+  margin-right: 5px;
+  box-shadow: 0 0 1px #E8E8E8; }
 
 .reaction-anchor {
   display: inline-block;
