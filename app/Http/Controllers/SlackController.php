@@ -53,7 +53,7 @@ class SlackController extends Controller
 
 		$slack_token    = Token::find($current_user->getKey());
 
-		$interactor     = new CurlInteractor;
+		$interactor     = new CurlInteractor();
         $interactor->setResponseFactory(new SlackResponseFactory());
         $commander      = new Commander($slack_token->token, $interactor);
 
