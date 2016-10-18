@@ -7,9 +7,9 @@ use App\Collections\Collection;
 
 abstract class ModelAbstract extends Model
 {
-	protected $primaryKey;
+    protected $primaryKey;
 
-	public function __construct(array $attributes = [])
+    public function __construct(array $attributes = [])
     {
         if (!isset($this->primaryKey)) {
             $this->primaryKey = $this->getKeyName();
@@ -29,9 +29,9 @@ abstract class ModelAbstract extends Model
     }
 
     public function hasCast($key, $types = null)
-	{
-		return false;
-	}
+    {
+        return false;
+    }
 
     /**
      * Override Model::getTable so we can avoid nasty/inconsistent pluralization
@@ -65,16 +65,16 @@ abstract class ModelAbstract extends Model
     }
 
     public function hasGetMutator($key)
-	{
-		return false;
-	}
+    {
+        return false;
+    }
 
     public function getDates()
-	{
-		return [];
-	}
+    {
+        return [];
+    }
 
-	public function getAttributeValue($key)
+    public function getAttributeValue($key)
     {
         $value = $this->getAttributeFromArray($key);
 
@@ -82,10 +82,10 @@ abstract class ModelAbstract extends Model
     }
 
     public function isSameAs(Model $model)
-	{
-		return (
-			get_class($this) === get_class($model) &&
-			$this->getKey() === $model->getKey()
-		);
-	}
+    {
+        return (
+            get_class($this) === get_class($model) &&
+            $this->getKey() === $model->getKey()
+        );
+    }
 }

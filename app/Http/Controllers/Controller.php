@@ -12,10 +12,10 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-	protected $_layout = 'layout.main';
+    protected $_layout = 'layout.main';
 
-	public function __construct()
-	{
-		$this->_layout = View::make($this->_layout);
-	}
+    public function __construct()
+    {
+        $this->_layout = View::make($this->_layout);
+    }
 }

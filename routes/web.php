@@ -27,7 +27,6 @@
 Route::get('/', 'SlackController@guestHomepageAction');
 Route::get('/+/fetch', 'SlackController@fetchData');
 Route::get('/c', 'TokenController@getAndStoreTokenFromOauthFlow');
-Route::get('/messages', 'MessageController@getThem');
 Route::get('/+/login', 'UserController@loginAction');
 Route::post('/+/logout', 'UserController@logoutAction');
 Route::get('/{team_domain}', 'TeamController@showLeaderboardAction');

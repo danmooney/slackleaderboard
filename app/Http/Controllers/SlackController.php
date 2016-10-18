@@ -19,6 +19,10 @@ class SlackController extends Controller
 {
 	public function guestHomepageAction()
 	{
+	    if (!isset($_COOKIE['slack'])) {
+			App::abort(404);
+		}
+
 		$current_user = session()->get('user');
 
 		if ($current_user) {
@@ -79,25 +83,25 @@ class SlackController extends Controller
 		$users          = User::where(['team_id' => $team->getKey()])->get();
 
 		foreach ($users_response as $member) {
-			$user 			 		= $users->where('slack_user_id', $member['id'])->first() ?: new User();
-			$user['slack_user_id']  = $member['id'];
-			$user['team_id'] 		= $team->getKey();
-			$user['name_binary']  	= isset($member['real_name']) ? $member['real_name'] : $member['profile']['real_name'];
-			$user['name']    		= remove_emojis($user['name_binary']);
-			$user['handle']  		= $member['name'];
-			$user['avatar']			= isset($member['profile']['image_original']) ? $member['profile']['image_original'] : $member['profile']['image_192'];
-			$user['email'] 			= isset($member['profile']['email']) ? $member['profile']['email'] : null;
-			$user['slack_deleted']  = $member['deleted'];
+			$user                 = $users->where('slack_user_id', $member['id'])->first() ?: new User();
+			$user->slack_user_id  = $member['id'];
+			$user->team_id        = $team->getKey();
+			$user->name_binary    = isset($member['real_name']) ? $member['real_name'] : $member['profile']['real_name'];
+			$user->name    		  = remove_emojis($user->name_binary);
+			$user->handle         = $member['name'];
+			$user->avatar         = isset($member['profile']['image_original']) ? $member['profile']['image_original'] : $member['profile']['image_192'];
+			$user->email 		  = isset($member['profile']['email']) ? $member['profile']['email'] : null;
+			$user->slack_deleted  = $member['deleted'];
 
 			if ($member['deleted']) {
-				$user['slack_restricted'] = $user['slack_ultra_restricted'] = true;
+				$user->slack_restricted = $user->slack_ultra_restricted = true;
 			} else {
-				$user['slack_admin'] 		 	= $member['is_admin'];
-				$user['slack_owner']		 	= $member['is_owner'];
-				$user['slack_primary_owner'] 	= $member['is_primary_owner'];
-				$user['slack_restricted']    	= $member['is_restricted'];
-				$user['slack_ultra_restricted'] = $member['is_ultra_restricted'];
-				$user['slack_bot']			 	= $member['is_bot'];
+				$user->slack_admin 		 	    = $member['is_admin'];
+				$user->slack_owner		 	    = $member['is_owner'];
+				$user->slack_primary_owner 	    = $member['is_primary_owner'];
+				$user->slack_restricted    	    = $member['is_restricted'];
+				$user->slack_ultra_restricted   = $member['is_ultra_restricted'];
+				$user->slack_bot			 	= $member['is_bot'];
 			}
 
 			$user->save();

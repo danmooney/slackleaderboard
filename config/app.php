@@ -177,8 +177,8 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-		App\Providers\HelperServiceProvider::class,
-		isset($_SERVER['HTTP_HOST']) && $_SERVER['HTTP_HOST'] === 'slackleaderboard.local' ? Barryvdh\Debugbar\ServiceProvider::class : null,
+        App\Providers\HelperServiceProvider::class,
+        isset($_SERVER['HTTP_HOST']) && $_SERVER['HTTP_HOST'] === 'slackleaderboard.local' ? Barryvdh\Debugbar\ServiceProvider::class : null,
 
     ]),
 
@@ -229,8 +229,8 @@ return [
 
     ],
 
-	'slack_access_token'  => env('SLACK_TOKEN'),
-	'slack_client_id'     => env('SLACK_CLIENT_ID'),
-	'slack_client_secret' => env('SLACK_CLIENT_SECRET'),
-	'slack_oauth_url'     => env('SLACK_OAUTH_URL', sprintf('https://slack.com/oauth/authorize?client_id=%s&scope=identify users:read reactions:read team:read&redirect_uri=http://%s/c', env('SLACK_CLIENT_ID'), isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : null))
+    'slack_access_token'  => env('SLACK_TOKEN'),
+    'slack_client_id'     => env('SLACK_CLIENT_ID'),
+    'slack_client_secret' => env('SLACK_CLIENT_SECRET'),
+    'slack_oauth_url'     => env('SLACK_OAUTH_URL', sprintf('https://slack.com/oauth/authorize?client_id=%s&scope=identify users:read reactions:read team:read&redirect_uri=http://%s/c', env('SLACK_CLIENT_ID'), isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : null))
 ];
