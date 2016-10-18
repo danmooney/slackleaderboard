@@ -5,6 +5,7 @@
 
     RewriteEngine On
 
+    # Force www
     RewriteCond %{HTTP_HOST} ^slackleaderboard.com [NC]
     RewriteRule ^(.*)$ https://www.slackleaderboard.com/$1 [L,R=301,NC]
 
