@@ -25,14 +25,14 @@ $current_user = session()->get('user') ?: new User();
     <?= $user->isSameAs($current_user) ? '(That\'s You!)' : '' ?>
 </h3>
 <br>
-<h3><strong>Top Reaction Givers to this User's Posts</strong></h3>
+<h3><strong>Top Reaction Givers<?php /* to this User's Posts */ ?></strong></h3>
 <table>
     <thead>
         <tr>
             <th>Name</th>
-            <th>Total Reaction Count</th>
-            <th>Percentage of Reaction Giver's Total Reactions</th>
-            <th>Top Reactions Given to this User</th>
+            <th># Reactions Given</th>
+            <th>% of this Giver's Total Reactions<?php /*Reaction Giver's Total Reactions */ ?></th>
+            <th>Top Reactions Given<?php /* to this User */ ?></th>
         </tr>
     </thead>
     <tbody>
@@ -96,9 +96,9 @@ $current_user = session()->get('user') ?: new User();
     <thead>
         <tr>
             <th>Name</th>
-            <th>Total Mutual Reaction Count</th>
-            <th>Percentage of This User's Total Reactions</th>
-            <th>Top Mutual Reactions (to the same posts)</th>
+            <th># Mutual Reactions Given<?php /*Total Mutual Reaction Count*/ ?></th>
+            <th>% of this Giver's Total Reactions</th>
+            <th>Top Mutual Reactions Given (to the same posts)</th>
         </tr>
     </thead>
     <tbody>
