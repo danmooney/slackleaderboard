@@ -11,5 +11,8 @@
     "laravel-elixir": "^6.0.0-9",
     "laravel-elixir-webpack-official": "^1.0.2",
     "lodash": "^4.14.0"
+  },
+  "dependencies": {
+    "qtip2": "^3.0.3"
   }
 }
