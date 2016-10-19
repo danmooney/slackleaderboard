@@ -27,7 +27,7 @@ class TokenController extends Controller
 
 		$interactor    = new CurlInteractor;
         $interactor->setResponseFactory(new SlackResponseFactory());
-        $commander     = new Commander($my_slack_access_token, $interactor);
+        $commander     = new Commander('', $interactor);
 
         $data = [
             'code' 		    => $code,
@@ -40,6 +40,7 @@ class TokenController extends Controller
         $response = $response->getBody();
 
         $their_slack_access_token = isset($response['access_token']) ? $response['access_token'] : '';
+        $commander                = new Commander($their_slack_access_token, $interactor);
 
         DB::beginTransaction();
 
