@@ -76,5 +76,6 @@ $current_user = session()->get('user') ?: new User();
     <div class="u-outerContainer">
     </div>
 </footer>
+<script src="/js/app.js"></script>
 </body>
 </html>
