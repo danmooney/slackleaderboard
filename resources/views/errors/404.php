@@ -67,9 +67,9 @@
         </style>
     </head>
     <body>
-			<div id="sf-resetcontent" class="sf-reset">
+            <div id="sf-resetcontent" class="sf-reset">
                 <h1>Sorry, the page you are looking for could not be found.</h1>
             </div>
-			<script src="/js/jquery-3.1.1.js"></script>
+            <script src="/js/jquery-3.1.1.js"></script>
     </body>
 </html>
