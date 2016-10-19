@@ -31,8 +31,8 @@ $current_user = session()->get('user') ?: new User();
         <tr>
             <th>Name</th>
             <th>Total Reaction Count</th>
-            <th>Percentage of This User's Total Reactions</th>
-            <th>Top Reactions Used for this User</th>
+            <th>Percentage of Reaction Giver's Total Reactions</th>
+            <th>Top Reactions Given to this User</th>
         </tr>
     </thead>
     <tbody>
