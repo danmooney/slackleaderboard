@@ -87,6 +87,7 @@ $users_by_id = [];
         <tr>
             <th>Name</th>
             <th>Total Reactions Received</th>
+            <th>Top Reactions Received</th>
         </tr>
     </thead>
     <tbody>
@@ -112,6 +113,32 @@ $users_by_id = [];
                 </td>
                 <td class="table-cell-total-reaction-count" align="right">
                     <?= htmlspecialchars($data->total_reaction_count) ?>
+                </td>
+                <td class="table-cell-reaction-list">
+                    <div>
+                        <?php
+                        $emojis_output_for_this_user_count = 0;
+
+                        foreach ((array) $data->total_reactions_by_reaction_id as $reaction_id => $total_count):
+                            if ($emojis_output_for_this_user_count === 10) {
+                                break;
+                            }
+
+                            $reaction = $emojis_by_reaction_id[$reaction_id];
+
+                            if (!$reaction) {
+                                continue;
+                            }
+
+                            $emojis_output_for_this_user_count += 1;
+                            ?>
+                            <a class="reaction-anchor" href="<?= action('ReactionController@showLeaderboardAction', [$team->domain, $reaction->getMainAlias()->alias]) ?>">
+                                <span class="reaction-img" style="background-image:url('<?= $reaction->image ?>')"></span>
+                                <span class="reaction-count"><?= htmlspecialchars($total_count) ?></span>
+                            </a>
+                            <?php
+                        endforeach ?>
+                    </div>
                 </td>
             </tr>
     <?php

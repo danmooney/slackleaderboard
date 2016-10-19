@@ -45,11 +45,24 @@ class PostUserReaction extends Collection
             ->where('u.team_id', '=', $team->getKey())
             ->whereIn('u.user_id', $users->modelKeys())
             ->groupBy('p.user_id')
-            ->select('p.user_id AS posting_user', DB::raw('COUNT(pur.reaction_id) AS total_reaction_count'))
+            ->select(
+                'p.user_id AS posting_user',
+                DB::raw('GROUP_CONCAT(pur.reaction_id) AS reaction_list'),
+                DB::raw('COUNT(pur.reaction_id) AS total_reaction_count')
+            )
             ->orderBy('total_reaction_count', 'DESC')
             ->get()
         ;
-        
+
+        foreach ($rows as $row) {
+            $reaction_list                  = explode(',', $row->reaction_list);
+            $total_reactions_by_reaction_id = array_count_values($reaction_list);
+            unset($row->reaction_list);
+
+            arsort($total_reactions_by_reaction_id);
+            $row->total_reactions_by_reaction_id = $total_reactions_by_reaction_id;
+        }
+
         return $rows;
     }
 
