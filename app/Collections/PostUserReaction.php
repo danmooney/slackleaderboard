@@ -38,21 +38,18 @@ class PostUserReaction extends Collection
 
     public static function getCountsOfReactionsToASingleUsersPostsGroupedByUser(Team $team, UserCollection $users)
     {
-        $rows = DB::select("SELECT
-    p.user_id AS posting_user,
-    
-    COUNT(pur.reaction_id) AS total_reaction_count
-FROM
-    post_user_reaction pur
-INNER JOIN post p USING (post_id)
-INNER JOIN `user` u ON p.user_id = u.user_id
-INNER JOIN team t ON u.team_id = t.team_id
-GROUP BY
-    p.user_id
-ORDER BY total_reaction_count DESC
-            ")
+        //  TODO - to get most reacted posts group by p.post_id instead
+        $rows = DB::table('post_user_reaction AS pur')
+            ->join('post AS p', 'pur.post_id', '=', 'p.post_id')
+            ->join('user AS u', 'p.user_id', '=', 'u.user_id')
+            ->where('u.team_id', '=', $team->getKey())
+            ->whereIn('u.user_id', $users->modelKeys())
+            ->groupBy('p.user_id')
+            ->select('p.user_id AS posting_user', DB::raw('COUNT(pur.reaction_id) AS total_reaction_count'))
+            ->orderBy('total_reaction_count', 'DESC')
+            ->get()
         ;
-
+        
         return $rows;
     }
 
