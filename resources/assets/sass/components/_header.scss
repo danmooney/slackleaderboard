@@ -1,72 +1,72 @@
 header {
-	background: $black;
-	color: $white;
-	position: relative;
-	@extend %rowPadd;
+    background: $black;
+    color: $white;
+    position: relative;
+    @extend %rowPadd;
 }
 
 header h1, header h2 {
-	margin: 0;
+    margin: 0;
 }
 
 header .icon {
-	background: url('/img/logo.png') no-repeat;
-	background-size: contain;
-	display: inline-block;
-	width: 40px;
-	height: 40px;
-	vertical-align: middle;
+    background: url('/img/logo.png') no-repeat;
+    background-size: contain;
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    vertical-align: middle;
 }
 
 header .nav-container {
-	padding-top: .5em;
-	padding-bottom: .5em;
+    padding-top: .5em;
+    padding-bottom: .5em;
 }
 
 header .logo-container {
-	float: left;
+    float: left;
 }
 
 header nav {
     margin-top: 5px;
-	float: right;
+    float: right;
 
-	span {
-		//cursor: default;
-	}
+    span {
+        //cursor: default;
+    }
 
-	.sublist {
-		display: none;
-		background: $black;
-		border: 1px solid $white;
-		position: absolute;
-		z-index: 2;
-	}
+    .sublist {
+        display: none;
+        background: $black;
+        border: 1px solid $white;
+        position: absolute;
+        z-index: 2;
+    }
 
-	.list {
-		&:hover .sublist {
-			display: block;
-		}
-	}
+    .list {
+        &:hover .sublist {
+            display: block;
+        }
+    }
 
-	.sublist li {
-		padding: 5px;
-	}
+    .sublist li {
+        padding: 5px;
+    }
 }
 
 header a {
-	color: $white;
+    color: $white;
 
-	&:hover {
-		text-decoration: none;
-		color: inherit;
-	}
+    &:hover {
+        text-decoration: none;
+        color: inherit;
+    }
 }
 
 header .button-logout {
-	//background: 0;
-	//border: 0;
+    //background: 0;
+    //border: 0;
     width: 100%;
-	color: $black;
+    color: $black;
     //text-align: left;
 }

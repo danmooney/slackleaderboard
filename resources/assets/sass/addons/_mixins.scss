@@ -1,16 +1,16 @@
 @mixin clearfix {
-	&::after {
-		clear: both;
-		content: "";
-		display: table;
-	}
+    &::after {
+        clear: both;
+        content: "";
+        display: table;
+    }
 }
 
 @mixin outer-container($local-max-width: $max-width) {
-	@include clearfix;
-	max-width: $local-max-width;
-	margin: {
-		left: auto;
-		right: auto;
-	}
+    @include clearfix;
+    max-width: $local-max-width;
+    margin: {
+        left: auto;
+        right: auto;
+    }
 }
