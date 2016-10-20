@@ -29,7 +29,7 @@ class ReactionController extends Controller
         $reaction = Reaction::getReactionByAlias($reaction_alias);
 
         PostUserReactionCollection::getTotalReactionCountsByEachUserOnTeamAndAddToUsers($team, $users);
-        $reaction_counts_by_users = PostUserReactionCollection::getEmojiReactionCountByReactionGroupedByAllUsers($reaction, $users);
+        $reaction_counts_by_users = PostUserReactionCollection::getEmojiReactionGivenCountByReactionGroupedByAllUsers($reaction, $users);
         $reaction_counts_by_users = $reaction_counts_by_users->sortByDesc('total_count_using_this_reaction');
 
         $total_count = 0;
