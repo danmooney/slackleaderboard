@@ -28,8 +28,8 @@ $users_by_user_id = [];
     <thead>
         <tr>
             <th>Name</th>
-            <th>Total Reaction Count</th>
-            <th class="nosort">Percentage of This User's Total Reactions</th>
+            <th># Reactions Given</th>
+            <th>% of this Giver's Total Reactions</th>
         </tr>
     </thead>
     <tbody>
