@@ -5907,13 +5907,38 @@ table tr > * {
   vertical-align: middle; }
 
 table tr > th {
-  font-weight: bold; }
+  font-weight: bold;
+  cursor: pointer; }
+
+.nosort {
+  cursor: default; }
 
 .table-cell-reaction-list {
   max-width: 0;
   text-overflow: ellipsis;
   white-space: nowrap;
+  width: 40%;
+  overflow: hidden;
+  position: relative;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   width: 40%; }
+  .table-cell-reaction-list--left-shadow::before {
+    position: absolute;
+    content: '';
+    width: 0px;
+    top: 0;
+    height: 100%;
+    left: 0;
+    box-shadow: 0 0px 20px 5px rgba(0, 0, 0, 0.3); }
+  .table-cell-reaction-list--right-shadow::after {
+    position: absolute;
+    content: '';
+    width: 0px;
+    top: 0;
+    height: 100%;
+    right: 0;
+    box-shadow: 0 0px 20px 5px rgba(0, 0, 0, 0.3); }
 
 .table-cell-reaction-list > div {
   overflow: auto;
