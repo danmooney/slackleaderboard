@@ -29,7 +29,7 @@ $users_by_user_id = [];
         <tr>
             <th>Name</th>
             <th>Total Reaction Count</th>
-            <th>Percentage of This User's Total Reactions</th>
+            <th class="nosort">Percentage of This User's Total Reactions</th>
         </tr>
     </thead>
     <tbody>
@@ -60,4 +60,3 @@ $users_by_user_id = [];
         endforeach ?>
     </tbody>
 </table>
-

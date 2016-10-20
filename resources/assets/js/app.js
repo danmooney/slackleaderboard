@@ -6,6 +6,7 @@
  */
 
 require('./bootstrap');
+require('tablesorter');
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -15,6 +16,22 @@ require('./bootstrap');
 
 var tablescroller_selector = $('.table-cell-reaction-list');
 
+var tables = $('table');
+
+tables.each(function() {
+    console.log(this);
+    $(this).tablesorter({
+        headers: {
+          // disable sorting of the first & second column - before we would have to had made two entries
+          // note that "first-name" is a class on the span INSIDE the first column th cell
+          '.nosort' : {
+            // disable it by setting the property sorter to false
+            sorter: false
+          }
+        }
+    });
+})
+
 tablescroller_selector.each(function() {
     var parent_scroll = this.offsetWidth;
 
@@ -23,22 +40,25 @@ tablescroller_selector.each(function() {
     }
 
     $(this).children().eq(0).scroll(function() {
-        console.log('ITEM', (this.scrollLeft + parent_scroll));
-        console.log('CONTAINER', this.scrollWidth + 10);
 
-        if (this.scrollLeft == 0) {
+        var scroll_num = ((this.scrollLeft + parent_scroll) - (this.scrollWidth + 10));
+
+
+        console.log(((this.scrollLeft + parent_scroll) - (this.scrollWidth + 10)));
+
+        if (this.scrollLeft < 10) {
             $(this).parent().removeClass('table-cell-reaction-list--left-shadow');
         }
 
-        if (this.scrollLeft > 0) {
+        if (this.scrollLeft > 10) {
             $(this).parent().addClass('table-cell-reaction-list--left-shadow');
         }
 
-        if ((this.scrollLeft + parent_scroll) == (this.scrollWidth + 10)) {
+        if ( scroll_num > -10) {
             $(this).parent().removeClass('table-cell-reaction-list--right-shadow');
         }
 
-        if ((this.scrollLeft + parent_scroll) != (this.scrollWidth + 10)) {
+        if ( scroll_num < -10) {
             $(this).parent().addClass('table-cell-reaction-list--right-shadow');
         }
     });

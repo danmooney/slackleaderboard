@@ -28,7 +28,7 @@ $users_by_id = [];
         <tr>
             <th>Name</th>
             <th>Total Reactions Given</th>
-            <th>Top Reactions Given</th>
+            <th class="nosort">Top Reactions Given</th>
         </tr>
     </thead>
     <tbody>
@@ -87,7 +87,7 @@ $users_by_id = [];
         <tr>
             <th>Name</th>
             <th>Total Reactions Received</th>
-            <th>Top Reactions Received</th>
+            <th class="nosort">Top Reactions Received</th>
         </tr>
     </thead>
     <tbody>

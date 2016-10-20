@@ -32,7 +32,7 @@ $current_user = session()->get('user') ?: new User();
             <th>Name</th>
             <th># Reactions Given</th>
             <th>% of this Giver's Total Reactions<?php /*Reaction Giver's Total Reactions */ ?></th>
-            <th>Top Reactions Given<?php /* to this User */ ?></th>
+            <th class="nosort">Top Reactions Given<?php /* to this User */ ?></th>
         </tr>
     </thead>
     <tbody>
@@ -98,7 +98,7 @@ $current_user = session()->get('user') ?: new User();
             <th>Name</th>
             <th># Mutual Reactions Given<?php /*Total Mutual Reaction Count*/ ?></th>
             <th>% of this Giver's Total Reactions</th>
-            <th>Top Mutual Reactions Given (to the same posts)</th>
+            <th class="nosort">Top Mutual Reactions Given (to the same posts)</th>
         </tr>
     </thead>
     <tbody>

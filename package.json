@@ -13,6 +13,7 @@
     "lodash": "^4.14.0"
   },
   "dependencies": {
-    "qtip2": "^3.0.3"
+    "qtip2": "^3.0.3",
+    "tablesorter": "^2.27.8"
   }
 }

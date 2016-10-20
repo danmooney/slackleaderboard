@@ -25,6 +25,11 @@ table tr > * {
 
 table tr > th {
     font-weight: bold;
+    cursor: pointer;
+}
+
+.nosort {
+    cursor: default;
 }
 
 .table-cell-reaction-list {
