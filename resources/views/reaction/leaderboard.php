@@ -60,3 +60,22 @@ $users_by_user_id = [];
         endforeach ?>
     </tbody>
 </table>
+
+<?php /*
+<br>
+<h3><strong>Top Reaction Receivers</strong></h3>
+<table>
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Total Reactions Received</th>
+    </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>&nbsp;</td>
+            <td class="table-cell-total-reaction-count" align="right">&nbsp;</td>
+        </tr>
+    </tbody>
+</table>
+*/
