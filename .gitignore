@@ -57,8 +57,6 @@ gulp/.vhost
 # Composer
 composer.lock
 vendor/*
-!vendor/mavenlink/*
-mavenlink_token.txt
 
 # Laravel
 /public/storage
