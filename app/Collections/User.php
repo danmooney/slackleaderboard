@@ -33,7 +33,7 @@ class User extends Collection
                 $teams_by_slack_team_id[$slack_team_id] = TeamModel::where(['slack_team_id' => $slack_team_id])->first();
             }
 
-            $team     = $teams_by_slack_team_id[$slack_team_id];
+            $team    = $teams_by_slack_team_id[$slack_team_id];
             $team_id = $team->getKey();
 
             if (!isset($users_by_team_id[$team_id])) {
