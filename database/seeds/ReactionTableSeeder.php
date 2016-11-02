@@ -7,7 +7,7 @@ use App\Models\ReactionAlias;
 class ReactionTableSeeder extends Seeder
 {
     /**
-     * Run the database seeds.
+     * Seed reaction/reaction_alias
      *
      * @return void
      */
