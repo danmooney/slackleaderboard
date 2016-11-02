@@ -31,7 +31,14 @@ class TeamController extends Controller
 
         PostUserReactionCollection::getTotalReactionCountsByEachUserOnTeamAndAddToUsers($team, $users);
         PostUserReactionCollection::getAllPostUserReactionsByEachUserOnTeamAndAddToUsers($team, $users);
-        $users     = $users->sortByDesc('total_reaction_count');
+		$users = $users->sort(function ($a, $b) {
+			if ($a->total_reaction_count !== $b->total_reaction_count) {
+				return $b->total_reaction_count - $a->total_reaction_count; // sort by total reaction count desc
+			}
+
+			return strcasecmp($a->name, $b->name); // sort by name asc
+		});
+
         $emojis    = ReactionCollection::getReactionsAndReactionAliasesByTeam($team, true);
 
         $single_user_reaction_counts = PostUserReactionCollection::getCountsOfReactionsToASingleUsersPostsGroupedByUser($team, $users);
