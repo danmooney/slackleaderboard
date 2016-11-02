@@ -4,13 +4,18 @@ $reactionListTableCells.each(function () {
     var tableCellContainerVisibleWidth = this.clientWidth;
     var $tableCellContents = $(this).children(0);
     var tableCellContents = $tableCellContents.get(0);
+    
+    // add right shadow if cell width is larger than visible cell width
+    if ($tableCellContents.html().indexOf('agreed') !== -1) {
+        debugger;
+    }
 
-    if (tableCellContents.scrollLeft + tableCellContainerVisibleWidth !== tableCellContents.scrollWidth + 10) {
+    if (tableCellContents.scrollLeft + tableCellContainerVisibleWidth !== tableCellContents.scrollWidth) {
         $(this).addClass('table-cell-reaction-list--right-shadow');
     }
 
     $tableCellContents.scroll(function () {
-        var scrollNum = (this.scrollLeft + tableCellContainerVisibleWidth) - (this.scrollWidth + 10);
+        var scrollNum = (this.scrollLeft + tableCellContainerVisibleWidth) - (this.scrollWidth);
         var $parent = $(this).parent();
 
         console.log(scrollNum);
