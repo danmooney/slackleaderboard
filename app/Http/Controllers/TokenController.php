@@ -9,6 +9,7 @@ use Input;
 use App\Models\User;
 use App\Models\Team;
 use App\Collections\User as UserCollection;
+use App\Console\Commands\SlackDataFetch;
 
 use Frlnc\Slack\Http\SlackResponseFactory;
 use Frlnc\Slack\Http\CurlInteractor;
@@ -65,6 +66,17 @@ class TokenController extends Controller
         User::saveIntoSession($user);
 
         DB::commit();
+
+		if (!$team->posts_from_beginning_of_time_fetched) {
+		    $slack_data_fetch_artisan_command = sprintf(
+		        '%s %s %s > /dev/null 2>/dev/null &',
+                base_path(),
+                (new SlackDataFetch())->getSignature(),
+                $team->getKey()
+            );
+
+			shell_exec($slack_data_fetch_artisan_command);
+		}
 
         return redirect()->action(
             'TeamController@showLeaderboardAction', ['domain' => $team->domain]
