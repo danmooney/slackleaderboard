@@ -1,4 +1,3 @@
-
 /**
  * First we will load all of this project's JavaScript dependencies which
  * include Vue and Vue Resource. This gives a great starting point for
@@ -14,52 +13,53 @@ require('tablesorter');
  * the application, or feel free to tweak this setup for your needs.
  */
 
-var tablescroller_selector = $('.table-cell-reaction-list');
+var $reactionListTableCells = $('.table-cell-reaction-list');
 
-var tables = $('table');
+var $tables = $('table');
 
-tables.each(function() {
+$tables.each(function () {
     console.log(this);
     $(this).tablesorter({
         headers: {
-          // disable sorting of the first & second column - before we would have to had made two entries
-          // note that "first-name" is a class on the span INSIDE the first column th cell
-          '.nosort' : {
-            // disable it by setting the property sorter to false
-            sorter: false
-          }
+            // disable sorting of the first & second column - before we would have to had made two entries
+            // note that "first-name" is a class on the span INSIDE the first column th cell
+            '.nosort': {
+                // disable it by setting the property sorter to false
+                sorter: false
+            }
         }
     });
-})
+});
 
-tablescroller_selector.each(function() {
-    var parent_scroll = this.offsetWidth;
+$reactionListTableCells.each(function () {
+    var tableCellContainerVisibleWidth = this.clientWidth;
+    var $tableCellContents = $(this).children(0);
+    var tableCellContents = $tableCellContents.get(0);
 
-    if (($(this).children(0).get().scrollLeft + parent_scroll) != ($(this).children(0).get().scrollWidth + 10)) {
+    if (tableCellContents.scrollLeft + tableCellContainerVisibleWidth !== tableCellContents.scrollWidth + 10) {
         $(this).addClass('table-cell-reaction-list--right-shadow');
     }
 
-    $(this).children().eq(0).scroll(function() {
+    $tableCellContents.scroll(function () {
+        var scrollNum = (this.scrollLeft + tableCellContainerVisibleWidth) - (this.scrollWidth + 10);
+        var $parent = $(this).parent();
 
-        var scroll_num = ((this.scrollLeft + parent_scroll) - (this.scrollWidth + 10));
-
-
-        console.log(((this.scrollLeft + parent_scroll) - (this.scrollWidth + 10)));
+        console.log(scrollNum);
 
         if (this.scrollLeft < 10) {
-            $(this).parent().removeClass('table-cell-reaction-list--left-shadow');
+            $parent.removeClass('table-cell-reaction-list--left-shadow');
         }
 
         if (this.scrollLeft > 10) {
-            $(this).parent().addClass('table-cell-reaction-list--left-shadow');
+            $parent.addClass('table-cell-reaction-list--left-shadow');
         }
 
-        if ( scroll_num > -10) {
-            $(this).parent().removeClass('table-cell-reaction-list--right-shadow');
+        if (scrollNum > -10) {
+            $parent.removeClass('table-cell-reaction-list--right-shadow');
         }
 
-        if ( scroll_num < -10) {
-            $(this).parent().addClass('table-cell-reaction-list--right-shadow');
+        if (scrollNum < -10) {
+            $parent.addClass('table-cell-reaction-list--right-shadow');
         }
     });
 });
