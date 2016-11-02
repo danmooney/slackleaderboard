@@ -36,7 +36,7 @@ $users_by_id = [];
         foreach ($users as $user):
             $users_by_id[$user->getKey()] = $user;
             if (!$user->isEligibleToBeOnLeaderBoard() /*|| !$user->total_reaction_count*/) continue;
-            $total_reaction_count_title = sprintf('%s%% of all team\'s reactions', round(($user->total_reaction_count / $total_reaction_count_among_all_users) * 100, 2));
+            $total_reaction_count_title = $total_reaction_count_among_all_users ? sprintf('%s%% of all team\'s reactions', round(($user->total_reaction_count / $total_reaction_count_among_all_users) * 100, 2)) : '';
             ?>
             <tr>
                 <td class="table-cell-user">
@@ -100,7 +100,7 @@ $users_by_id = [];
             $user = $users_by_id[$data->posting_user];
 
             if (!$user->isEligibleToBeOnLeaderBoard() /*|| !$user->total_reaction_count*/) continue;
-            $total_reaction_count_title = sprintf('%s%% of all team\'s reactions', round(($user->total_reaction_count / $total_reaction_count_among_all_users) * 100, 2));
+            $total_reaction_count_title = $total_reaction_count_among_all_users ? sprintf('%s%% of all team\'s reactions', round(($user->total_reaction_count / $total_reaction_count_among_all_users) * 100, 2)) : '';
             ?>
             <tr>
                 <td class="table-cell-user">

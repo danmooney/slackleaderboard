@@ -41,7 +41,7 @@ $current_user = session()->get('user') ?: new User();
             $user = $users->find($reaction_user->user_id);
             $users_by_user_id[$reaction_user->user_id] = $user;
             if (!$user->isEligibleToBeOnLeaderBoard()) continue;
-            $total_reaction_count_title = sprintf('%s%% of all user\'s reactions', round(($reaction_user->total_reactions_to_this_users_posts / $user->total_reaction_count) * 100, 2));
+            $total_reaction_count_title = $user->total_reaction_count ? sprintf('%s%% of all user\'s reactions', round(($reaction_user->total_reactions_to_this_users_posts / $user->total_reaction_count) * 100, 2)) : '';
             ?>
             <tr>
                 <td class="table-cell-user">
@@ -109,7 +109,7 @@ $current_user = session()->get('user') ?: new User();
             }
             $user = $users_by_user_id[$user_id];
             if (!$user->isEligibleToBeOnLeaderBoard()) continue;
-            $total_reaction_count_title = sprintf('%s%% of all user\'s reactions', round(($reaction_user->total_reactions_to_this_users_posts / $user->total_reaction_count) * 100, 2));
+            $total_reaction_count_title = $user->total_reaction_count ? sprintf('%s%% of all user\'s reactions', round(($reaction_user->total_reactions_to_this_users_posts / $user->total_reaction_count) * 100, 2)) : '';
             arsort($data['reactions'], SORT_NUMERIC);
             ?>
             <tr>
@@ -141,7 +141,7 @@ $current_user = session()->get('user') ?: new User();
                             }
 
                             $emojis_output_for_this_user_count += 1;
-                            $anchor_title = sprintf('%s &#013;%s%% of all user\'s reactions', htmlspecialchars($reaction->getMainAlias()->alias), round(($total_count / $user->total_reaction_count) * 100, 2));
+                            $anchor_title = $user->total_reaction_count ? sprintf('%s &#013;%s%% of all user\'s reactions', htmlspecialchars($reaction->getMainAlias()->alias), round(($total_count / $user->total_reaction_count) * 100, 2)) : '';
                         ?>
                             <a class="reaction-anchor" title="<?= $anchor_title ?>" href="<?= action('ReactionController@showLeaderboardAction', [$team->domain, $reaction->getMainAlias()->alias]) ?>">
                                 <span class="reaction-img" style="background-image:url('<?= $reaction->image ?>')"></span>

@@ -38,7 +38,7 @@ $users_by_user_id = [];
             $user = $users->find($reaction_user->user_id);
             $users_by_user_id[$reaction_user->user_id] = $user;
             if (!$user->isEligibleToBeOnLeaderBoard()) continue;
-            $total_reaction_count_title = sprintf('%s%% of all user\'s reactions', round(($reaction_user->total_count_using_this_reaction / $user->total_reaction_count) * 100, 2));
+            $total_reaction_count_title = $user->total_reaction_count ? sprintf('%s%% of all user\'s reactions', round(($reaction_user->total_count_using_this_reaction / $user->total_reaction_count) * 100, 2)) : '';
             ?>
             <tr>
                 <td>
