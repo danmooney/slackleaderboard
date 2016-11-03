@@ -6,8 +6,14 @@ use Illuminate\Console\Command;
 
 abstract class CommandAbstract extends Command
 {
-    public function getSignature()
+    public function getSignature($remove_arguments = true)
     {
-        return $this->signature;
+        if ($remove_arguments) {
+            $signature = preg_replace('#^(\w+:\w+).*$#', '$1', $this->signature);
+        } else {
+            $signature = $this->signature;
+        }
+
+        return $signature;
     }
 }
