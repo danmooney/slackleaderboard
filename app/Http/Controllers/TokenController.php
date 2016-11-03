@@ -47,14 +47,18 @@ class TokenController extends Controller
         $response = $commander->execute('team.info');
         $team     = Team::importFromSlackResponseBody($response->getBody());
 
-        // add users
-        $response = $commander->execute('users.list');
-        $users    = UserCollection::importFromSlackResponseBody($response->getBody());
-
         // get current user's identity and store in session
         $response              = $commander->execute('auth.test');
         $current_user_slack_id = $response->getBody()['user_id'];
-        $user 	       		   = $users->where('slack_user_id', $current_user_slack_id)->first() ?: new User();
+
+        $user 	       		   = User::where('slack_user_id', $current_user_slack_id)->first();
+
+        if (!$user) {
+            // add users
+            $response = $commander->execute('users.list');
+            $users    = UserCollection::importFromSlackResponseBody($response->getBody());
+            $user 	  = $users->where('slack_user_id', $current_user_slack_id)->first() ?: new User(); // TODO - no way new User should get called here
+        }
 
         $token = Token::find($user->getKey()) ?: new Token();
         $token->user_id = $user->getKey();
@@ -69,7 +73,7 @@ class TokenController extends Controller
 
 		if (!$team->posts_from_beginning_of_time_fetched) {
 		    $slack_data_fetch_artisan_command = sprintf(
-		        '%s %s %s > /dev/null 2>/dev/null &',
+		        'php %s/artisan %s %s > /dev/null 2>/dev/null &',
                 base_path(),
                 (new SlackDataFetch())->getSignature(),
                 $team->getKey()
