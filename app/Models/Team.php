@@ -15,7 +15,7 @@ class Team extends ModelAbstract
         $team->name          = $team_response['name'];
         $team->domain        = $team_response['domain'];
         $team->email_domain  = $team_response['email_domain'];
-        $team->icon          = $team_response['icon']['image_original'];
+        $team->icon          = isset($team_response['icon']['image_original']) ? $team_response['icon']['image_original'] : $team_response['icon']['image_132'];
 
         $team->save();
 
