@@ -14,6 +14,7 @@ class User extends ModelAbstract
     public function isEligibleToBeOnLeaderBoard()
     {
         return (
+            trim($this->name) &&
             !$this->slack_deleted &&
             !$this->slack_restricted &&
             !$this->slack_ultra_restricted &&
@@ -51,5 +52,10 @@ class User extends ModelAbstract
             ($user = session()->get('user')) &&
             $this->isSameAs($user)
         );
+    }
+
+    public function team()
+    {
+        return $this->belongsTo(Team::class);
     }
 }
