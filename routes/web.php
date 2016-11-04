@@ -26,9 +26,9 @@
 
 Route::get('/', 'SlackController@guestHomepageAction');
 Route::get('/c', 'TokenController@getAndStoreTokenFromOauthFlow');
+Route::get('/+/login', 'UserController@loginAction');
 
 Route::group(['middleware' => 'auth'], function () {
-    Route::get('/+/login', 'UserController@loginAction');
     Route::post('/+/logout', 'UserController@logoutAction');
     Route::get('/{team_domain}', 'TeamController@showLeaderboardAction');
     Route::get('/{team_domain}/u/{user_handle}', 'UserController@showLeaderboardAction');
