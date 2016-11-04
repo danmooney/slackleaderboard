@@ -61,7 +61,24 @@ class SlackDataFetch extends CommandAbstract
                 $reaction_fetch_log->team_id = $team_id;
                 $reaction_fetch_logs->push($reaction_fetch_log);
             }
-        } else { // no team id argument passed;
+        } else { // no team id argument passed
+            // first check for whether ps aux returns a process that's already being run with no team id argument
+            $shell_cmd = "ps aux | grep {$this->getSignature()}";
+            $response = shell_exec($shell_cmd);
+
+            preg_match_all("#artisan {$this->getSignature()}.*#", $response, $matches);
+
+            $matches = array_filter($matches, function ($match) {
+                $has_team_id_argument = preg_match('#[0-9]#', reset($match));
+                return !$has_team_id_argument;
+            });
+
+            $already_running_this_process_with_no_team_id_argument = count($matches) > 1;
+
+            if ($already_running_this_process_with_no_team_id_argument) {
+                return;
+            }
+
             $reaction_fetch_logs = ReactionFetchLog::where(['in_process' => false])->get();
         }
 
@@ -78,6 +95,11 @@ class SlackDataFetch extends CommandAbstract
             }
 
             if ($reaction_fetch_log->in_process) {
+                continue;
+            }
+
+            // figure out if reaction fetch for this team was too recent
+            if ($reaction_fetch_log->lastFetchHasBeenMadeTooRecently()) {
                 continue;
             }
 
@@ -102,7 +124,7 @@ class SlackDataFetch extends CommandAbstract
 
                         // team
                         $response = $commander->execute('team.info');
-                        if ($this->_isForbiddenResponse($response)) {
+                        if ($this->_isForbiddenOrErrorResponse($response)) {
                             throw new Exception(self::FORBIDDEN_RESPONSE_RECEIVED);
                         }
 
@@ -111,7 +133,7 @@ class SlackDataFetch extends CommandAbstract
 
                         // users
                         $response  	    = $commander->execute('users.list');
-                        if ($this->_isForbiddenResponse($response)) {
+                        if ($this->_isForbiddenOrErrorResponse($response)) {
                             throw new Exception(self::FORBIDDEN_RESPONSE_RECEIVED);
                         }
 
@@ -119,7 +141,7 @@ class SlackDataFetch extends CommandAbstract
 
                         // emoji.list
                         $response  	    = $commander->execute('emoji.list');
-                        if ($this->_isForbiddenResponse($response)) {
+                        if ($this->_isForbiddenOrErrorResponse($response)) {
                             throw new Exception(self::FORBIDDEN_RESPONSE_RECEIVED);
                         }
 
@@ -194,7 +216,7 @@ class SlackDataFetch extends CommandAbstract
                             }
                         }
 
-                        $team->posts_from_beginning_of_time_fetched = false;
+                        $team->posts_from_beginning_of_time_fetched = true;
                         $team->save();
 
                         $reaction_fetch_log->in_process = false;
@@ -235,7 +257,7 @@ class SlackDataFetch extends CommandAbstract
 			'user'  => $slack_user_id
 		]);
 
-        if ($this->_isForbiddenResponse($response)) {
+        if ($this->_isForbiddenOrErrorResponse($response)) {
             throw new Exception(self::FORBIDDEN_RESPONSE_RECEIVED);
         }
 
@@ -337,15 +359,6 @@ class SlackDataFetch extends CommandAbstract
 			$post->url              = $url;
 			$post->save();
 
-            if ($item['type'] === 'message') {
-                $post_message = PostMessage::find($post->getKey()) ?: new PostMessage();
-                $post_message->post_id = $post->getKey();
-                $post_message->message = substr($item['message']['text'], 0, 1000);
-                $post_message->message_truncated = strlen($item['message']['text']) > 1000;
-
-                $post_message->save();
-            }
-
 			// delete post user reactions (users can undo their reactions, etc. start fresh)
 			PostUserReaction::where('post_id', $post->getKey())->delete();
 
@@ -380,8 +393,11 @@ class SlackDataFetch extends CommandAbstract
 		}
 	}
 
-	private function _isForbiddenResponse($response)
+	private function _isForbiddenOrErrorResponse($response)
     {
-        return (4 == substr($response->getStatusCode(), 0, 1));
+        $response_body = $response->getBody();
+        $error_exists  = is_array($response_body) && isset($response_body['error']);
+
+        return $error_exists || (4 == substr($response->getStatusCode(), 0, 1));
     }
 }
