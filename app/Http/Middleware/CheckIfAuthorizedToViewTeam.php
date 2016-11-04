@@ -20,6 +20,10 @@ class CheckIfAuthorizedToViewTeam
     {
         $team_domain = $request->team_domain;
 
+        if (!$team_domain) {
+            return $next($request);
+        }
+
         $current_user = session()->get('user') ?: new User();
 
         $current_user_is_banned_from_looking_at_this_team_page = (
