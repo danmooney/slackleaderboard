@@ -5,7 +5,7 @@
  * @var $team App\Models\Team
  * @var $emojis App\Collections\Reaction
  * @var $reaction App\Models\Reaction
- * @var $reaction_counts_by_users App\Collections\PostUserReaction
+ * @var $reaction_given_counts_by_users App\Collections\PostUserReaction
  */
 use App\Models\User;
 
@@ -34,7 +34,7 @@ $users_by_user_id = [];
     </thead>
     <tbody>
     <?php
-        foreach ($reaction_counts_by_users as $reaction_user):
+        foreach ($reaction_given_counts_by_users as $reaction_user):
             $user = $users->find($reaction_user->user_id);
             $users_by_user_id[$reaction_user->user_id] = $user;
             if (!$user->isEligibleToBeOnLeaderBoard()) continue;
@@ -61,7 +61,7 @@ $users_by_user_id = [];
     </tbody>
 </table>
 
-<?php /*
+
 <br>
 <h3><strong>Top Reaction Receivers</strong></h3>
 <table>
@@ -78,4 +78,4 @@ $users_by_user_id = [];
         </tr>
     </tbody>
 </table>
-*/
+

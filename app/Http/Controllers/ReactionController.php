@@ -28,12 +28,12 @@ class ReactionController extends Controller
         $users    = User::where(['team_id' => $team->team_id/*, 'handle' => $user_handle*/])->get();
         $reaction = Reaction::getReactionByAlias($reaction_alias);
 
-        PostUserReactionCollection::getTotalReactionCountsByEachUserOnTeamAndAddToUsers($team, $users);
-        $reaction_counts_by_users = PostUserReactionCollection::getEmojiReactionGivenCountByReactionGroupedByAllUsers($reaction, $users);
-        $reaction_counts_by_users = $reaction_counts_by_users->sortByDesc('total_count_using_this_reaction');
+        PostUserReactionCollection::getTotalReactionGivenCountsByEachUserOnTeamAndAddToUsers($team, $users);
+        $reaction_given_counts_by_users = PostUserReactionCollection::getEmojiReactionGivenCountByReactionGroupedByAllUsers($reaction, $users);
+        $reaction_given_counts_by_users = $reaction_given_counts_by_users->sortByDesc('total_count_using_this_reaction');
 
         $total_count = 0;
-        foreach ($reaction_counts_by_users as $reaction_user) {
+        foreach ($reaction_given_counts_by_users as $reaction_user) {
             $total_count += $reaction_user->total_count_using_this_reaction;
         }
 
@@ -42,7 +42,7 @@ class ReactionController extends Controller
             'team'   => $team,
             'users'  => $users,
             'reaction'  => $reaction,
-            'reaction_counts_by_users' => $reaction_counts_by_users,
+            'reaction_given_counts_by_users' => $reaction_given_counts_by_users,
             'total_count' => $total_count
         ]);
 

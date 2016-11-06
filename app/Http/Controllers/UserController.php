@@ -43,7 +43,7 @@ class UserController extends Controller
     
         $users = User::where(['team_id' => $team->team_id/*, 'handle' => $user_handle*/])->get();
     
-        PostUserReactionCollection::getTotalReactionCountsByEachUserOnTeamAndAddToUsers($team, $users);
+        PostUserReactionCollection::getTotalReactionGivenCountsByEachUserOnTeamAndAddToUsers($team, $users);
     //        PostUserReactionCollection::getAllPostUserReactionsByEachUserOnTeamAndAddToUsers($team, $users);
     
         $user  = $users->where('handle', $user_handle)->first();

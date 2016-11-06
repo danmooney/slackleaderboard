@@ -10,7 +10,7 @@ use Reaction;
 
 class PostUserReaction extends Collection
 {
-    public static function getTotalReactionCountsByEachUserOnTeamAndAddToUsers(Team $team, UserCollection $users)
+    public static function getTotalReactionGivenCountsByEachUserOnTeamAndAddToUsers(Team $team, UserCollection $users)
     {
         $rows = DB::table('post_user_reaction AS pur')
             ->join('user AS u', 'pur.user_id', '=', 'u.user_id')
@@ -36,9 +36,9 @@ class PostUserReaction extends Collection
         }
     }
 
-    public static function getCountsOfReactionsToASingleUsersPostsGroupedByUser(Team $team, UserCollection $users)
+    public static function getCountsOfReactionsReceivedToASingleUsersPostsGroupedByUser(Team $team, UserCollection $users)
     {
-        //  TODO - to get most reacted posts group by p.post_id instead
+        //  TODO - to get most reacted POSTS group by p.post_id instead
         $rows = DB::table('post_user_reaction AS pur')
             ->join('post AS p', 'pur.post_id', '=', 'p.post_id')
             ->join('user AS u', 'p.user_id', '=', 'u.user_id')

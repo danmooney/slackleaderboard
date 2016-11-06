@@ -92,7 +92,7 @@ $users_by_id = [];
     </thead>
     <tbody>
     <?php
-        foreach ($single_user_reaction_counts as $data):
+        foreach ($single_user_reaction_received_counts as $data):
             if (!isset($users_by_id[$data->posting_user])) {
                 $users_by_id[$data->posting_user] = $users->find($data->posting_user);
             }
