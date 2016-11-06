@@ -214,7 +214,9 @@ class SlackDataFetch extends CommandAbstract
 
                         foreach ($users as $user) {
                             try {
-                                $this->_savePostsAndPostUserReactions($commander, $team, $users, $user->slack_user_id);
+                                if ($user->isEligibleToBeOnLeaderBoard()) {
+                                    $this->_savePostsAndPostUserReactions($commander, $team, $users, $user->slack_user_id);
+                                }
                             } catch (Exception $e) {
                                 if ($e->getMessage() === self::FORBIDDEN_RESPONSE_RECEIVED) {  // expired token; delete
                                     throw $e;
@@ -377,7 +379,7 @@ class SlackDataFetch extends CommandAbstract
 				$skin_tone   = isset($matches[1]) ? $matches[1] : 1;
 				$reaction    = $reactions->whereInRelationship('aliases', 'alias', $alias_sans_colons, true, true)->first();
 
-				if (!$reaction) { // reaction has since been deleted
+				if (!$reaction) { // reaction has since been deleted, or been added since this script started
 					continue;
 				}
 
