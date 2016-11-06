@@ -56,7 +56,7 @@ class TokenController extends Controller
         if (!$user) {
             // add users
             $response = $commander->execute('users.list');
-            $users    = UserCollection::importFromSlackResponseBody($response->getBody());
+            $users    = UserCollection::importFromSlackResponseBody($response->getBody(), [$current_user_slack_id]);
             $user 	  = $users->where('slack_user_id', $current_user_slack_id)->first() ?: new User(); // TODO - no way new User should get called here
         }
 
@@ -73,7 +73,8 @@ class TokenController extends Controller
 
 		if (!$team->posts_from_beginning_of_time_fetched) {
 		    $slack_data_fetch_artisan_command = sprintf(
-		        'php %s/artisan %s %s > /dev/null 2>/dev/null &',
+		        '%s/php %s/artisan %s %s > /dev/null 2>/dev/null &',
+                PHP_BINDIR,
                 base_path(),
                 (new SlackDataFetch())->getSignature(),
                 $team->getKey()
