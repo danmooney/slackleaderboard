@@ -17,7 +17,7 @@ class User extends Collection
         return $total_reaction_count_among_all_users;
     }
 
-    public static function importFromSlackResponseBody(array $response_body)
+    public static function importFromSlackResponseBody(array $response_body, array $slack_id_whitelist = null)
     {
         $users_response   = $response_body['members'];
 
@@ -27,6 +27,10 @@ class User extends Collection
         $users_saved = [];
 
         foreach ($users_response as $member) {
+            if ($slack_id_whitelist && !in_array($member['id'], $slack_id_whitelist)) {
+                continue;
+            }
+
             $slack_team_id = $member['team_id'];
 
             if (!isset($teams_by_slack_team_id[$slack_team_id])) {
