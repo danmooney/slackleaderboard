@@ -18,6 +18,7 @@ use App\Collections\User as UserCollection;
 use DB;
 use App;
 use Exception;
+use Artisan;
 
 class SlackDataFetch extends CommandAbstract
 {
@@ -82,6 +83,14 @@ class SlackDataFetch extends CommandAbstract
             $reaction_fetch_logs = ReactionFetchLog::where(['in_process' => false])->get();
         }
 
+        $default_emoji_reaction_set = Reaction::with('aliases')->where(['team_id' => null])->get();
+
+        // if default emojis haven't been imported yet, call ReactionTableSeeder
+        if (!count($default_emoji_reaction_set)) {
+            Artisan::call('db:seed', ['--class' => 'ReactionTableSeeder']);
+            $default_emoji_reaction_set = Reaction::with('aliases')->where(['team_id' => null])->get();
+        }
+
         foreach ($reaction_fetch_logs as $reaction_fetch_log) {
             // fetch fresh copy of reaction fetch log from DB
             $reaction_fetch_log_in_db = ReactionFetchLog::where(['team_id' => $reaction_fetch_log->team_id])->first();
@@ -118,7 +127,7 @@ class SlackDataFetch extends CommandAbstract
                     try {
                         $interactor     = new CurlInteractor();
                         $interactor->setResponseFactory(new SlackResponseFactory());
-                        $commander      = new Commander($slack_token->token, $interactor);
+                        $commander      = new Commander(decrypt($slack_token->token), $interactor);
 
                 //		DB::beginTransaction();
 
@@ -177,8 +186,7 @@ class SlackDataFetch extends CommandAbstract
                             $emoji_alias->save();
                         }
 
-                        // get default emoji set (team id null) and merge with $emoji_reaction_ids_by_main_alias
-                        $default_emoji_reaction_set = Reaction::with('aliases')->where(['team_id' => null])->get();
+                        // merge default emoji set (team id null) with $emoji_reaction_ids_by_main_alias
                         foreach ($default_emoji_reaction_set as $reaction) {
                             foreach ($reaction->aliases as $alias) {
                                 if (!$alias->is_main_alias) {
