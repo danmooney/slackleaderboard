@@ -15,6 +15,11 @@ $current_user = session()->get('user') ?: new User();
     <meta name="viewport" content="width=device-width, initial=scale=1">
     <title><?= View::yieldContent('title', 'Slack Leaderboard') ?></title>
     <link href="/css/app.css" rel="stylesheet">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png">
+    <link rel="icon" type="image/png" sizes="64x64" href="/favicon-64.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-32.png">
     <?= View::yieldContent('style') ?>
 </head>
 <body>
