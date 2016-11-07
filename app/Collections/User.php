@@ -17,6 +17,29 @@ class User extends Collection
         return $total_reaction_count_among_all_users;
     }
 
+    public function getTotalReactionCountByReactionIdAmongAllUsers()
+    {
+        $total_reaction_count_by_reaction_id_among_all_users = [];
+
+        foreach ($this->items as $item) {
+            if (!$item->total_reactions_by_reaction_id) {
+                continue;
+            }
+
+            foreach ($item->total_reactions_by_reaction_id as $reaction_id => $reaction_count) {
+                if (!isset($total_reaction_count_by_reaction_id_among_all_users[$reaction_id])) {
+                    $total_reaction_count_by_reaction_id_among_all_users[$reaction_id] = 0;
+                }
+
+                $total_reaction_count_by_reaction_id_among_all_users[$reaction_id] += $reaction_count;
+            }
+        }
+
+        arsort($total_reaction_count_by_reaction_id_among_all_users, SORT_NUMERIC);
+
+        return $total_reaction_count_by_reaction_id_among_all_users;
+    }
+
     public static function importFromSlackResponseBody(array $response_body, array $slack_id_whitelist = null)
     {
         $users_response   = $response_body['members'];
