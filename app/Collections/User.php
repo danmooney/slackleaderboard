@@ -11,7 +11,7 @@ class User extends Collection
         $total_reaction_count_among_all_users = 0;
 
         foreach ($this->items as $item) {
-            $total_reaction_count_among_all_users += intval($item->total_reaction_count);
+            $total_reaction_count_among_all_users += intval($item->total_reactions_given_count);
         }
 
         return $total_reaction_count_among_all_users;

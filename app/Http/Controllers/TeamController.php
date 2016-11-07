@@ -32,8 +32,8 @@ class TeamController extends Controller
         PostUserReactionCollection::getTotalReactionGivenCountsByEachUserOnTeamAndAddToUsers($team, $users);
         PostUserReactionCollection::getAllPostUserReactionsByEachUserOnTeamAndAddToUsers($team, $users);
 		$users = $users->sort(function ($a, $b) {
-			if ($a->total_reaction_count !== $b->total_reaction_count) {
-				return $b->total_reaction_count - $a->total_reaction_count; // sort by total reaction count desc
+			if ($a->total_reactions_given_count !== $b->total_reactions_given_count) {
+				return $b->total_reactions_given_count - $a->total_reactions_given_count; // sort by total reaction count desc
 			}
 
 			return strcasecmp($a->name, $b->name); // sort by name asc
@@ -42,7 +42,7 @@ class TeamController extends Controller
         $emojis    = ReactionCollection::getReactionsAndReactionAliasesByTeam($team, true);
 
         $single_user_reaction_received_counts = PostUserReactionCollection::getCountsOfReactionsReceivedToASingleUsersPostsGroupedByUser($team, $users);
-//        $single_user_reaction_received_counts = $single_user_reaction_received_counts->sortByDesc('total_reaction_count');
+//        $single_user_reaction_received_counts = $single_user_reaction_received_counts->sortByDesc('total_reactions_given_count');
 
         $this->_layout->team = $team;
         $this->_layout->content = view('team.leaderboard', [

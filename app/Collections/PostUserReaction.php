@@ -17,7 +17,7 @@ class PostUserReaction extends Collection
             ->where('u.team_id', '=', $team->getKey())
             ->whereIn('u.user_id', $users->modelKeys())
             ->groupBy('user_id')
-            ->select('pur.user_id', DB::raw('COUNT(*) AS total_reaction_count'))
+            ->select('pur.user_id', DB::raw('COUNT(*) AS total_reactions_given_count'))
             ->get()
         ;
 
@@ -27,11 +27,11 @@ class PostUserReaction extends Collection
                     continue;
                 }
 
-                $user->total_reaction_count = $row->total_reaction_count;
+                $user->total_reactions_given_count = $row->total_reactions_given_count;
             }
 
-            if (!isset($user->total_reaction_count)) {
-                $user->total_reaction_count = 0;
+            if (!isset($user->total_reactions_given_count)) {
+                $user->total_reactions_given_count = 0;
             }
         }
     }
@@ -46,11 +46,11 @@ class PostUserReaction extends Collection
             ->whereIn('u.user_id', $users->modelKeys())
             ->groupBy('p.user_id')
             ->select(
-                'p.user_id AS posting_user',
+                'p.user_id AS posting_user_id',
                 DB::raw('GROUP_CONCAT(pur.reaction_id) AS reaction_list'),
-                DB::raw('COUNT(pur.reaction_id) AS total_reaction_count')
+                DB::raw('COUNT(pur.reaction_id) AS total_reactions_received_count')
             )
-            ->orderBy('total_reaction_count', 'DESC')
+            ->orderBy('total_reactions_received_count', 'DESC')
             ->get()
         ;
 
@@ -61,6 +61,20 @@ class PostUserReaction extends Collection
 
             arsort($total_reactions_by_reaction_id);
             $row->total_reactions_by_reaction_id = $total_reactions_by_reaction_id;
+        }
+
+        foreach ($users as $user) {
+            foreach ($rows as $row) {
+                if ($user->user_id !== $row->posting_user_id) {
+                    continue;
+                }
+
+                $user->total_reactions_received_count = $row->total_reactions_received_count;
+            }
+
+            if (!isset($user->total_reactions_received_count)) {
+                $user->total_reactions_received_count = 0;
+            }
         }
 
         return $rows;
@@ -190,6 +204,15 @@ class PostUserReaction extends Collection
 
     public static function getEmojiReactionReceivedCountByReactionGroupedByAllUsers(ReactionModel $reaction, UserCollection $users)
     {
-        // TODO
+        $rows = DB::table('post_user_reaction AS pur')
+            ->join('post', 'pur.post_id', '=', 'post.post_id')
+            ->where('pur.reaction_id', '=', $reaction->getKey())
+            ->whereIn('post.user_id', $users->modelKeys())
+            ->groupBy('post.user_id')
+            ->select('post.user_id', DB::raw('COUNT(*) AS total_count_using_this_reaction'))
+            ->get()
+        ;
+
+        return $rows;
     }
 }

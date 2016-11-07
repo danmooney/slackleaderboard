@@ -29,6 +29,7 @@ class ReactionController extends Controller
         $reaction = Reaction::getReactionByAlias($reaction_alias);
 
         PostUserReactionCollection::getTotalReactionGivenCountsByEachUserOnTeamAndAddToUsers($team, $users);
+
         $reaction_given_counts_by_users = PostUserReactionCollection::getEmojiReactionGivenCountByReactionGroupedByAllUsers($reaction, $users);
         $reaction_given_counts_by_users = $reaction_given_counts_by_users->sortByDesc('total_count_using_this_reaction');
 
@@ -37,12 +38,18 @@ class ReactionController extends Controller
             $total_count += $reaction_user->total_count_using_this_reaction;
         }
 
+        $reaction_received_counts_by_users = PostUserReactionCollection::getEmojiReactionReceivedCountByReactionGroupedByAllUsers($reaction, $users);
+        $reaction_received_counts_by_users = $reaction_received_counts_by_users->sortByDesc('total_count_using_this_reaction');
+
+        PostUserReactionCollection::getCountsOfReactionsReceivedToASingleUsersPostsGroupedByUser($team, $users);
+
         $this->_layout->team = $team;
         $this->_layout->content = view('reaction.leaderboard', [
             'team'   => $team,
             'users'  => $users,
             'reaction'  => $reaction,
             'reaction_given_counts_by_users' => $reaction_given_counts_by_users,
+            'reaction_received_counts_by_users' => $reaction_received_counts_by_users,
             'total_count' => $total_count
         ]);
 

@@ -65,8 +65,6 @@ class TokenController extends Controller
         $token->token   = $their_slack_access_token;
         $token->save();
 
-        setcookie('slack', md5($token->token), strtotime('now + 1 year'));
-
         User::saveIntoSession($user);
 
         DB::commit();
