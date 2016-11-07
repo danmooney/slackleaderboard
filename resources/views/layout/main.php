@@ -72,8 +72,15 @@ $current_user = session()->get('user') ?: new User();
     </header>
     <main>
         <div class="u-outerContainer">
+            <?php
+                if (isset($team) && !$team->posts_from_beginning_of_time_fetched): ?>
+                    <br>
+                    <div class="alert alert-warning">
+                        <strong>We are currently fetching reactions for your team for the first time.  Information will change rapidly as reactions get calculated.</strong><br>Refresh the page to see newly updated results.
+                    </div>
+            <?php
+                endif ?>
             <?= $__data['content'] ?>
-            <script src="/js/jquery-3.1.1.js"></script>
         </div>
     </main>
 </div>
@@ -81,6 +88,7 @@ $current_user = session()->get('user') ?: new User();
     <div class="u-outerContainer">
     </div>
 </footer>
+<script src="/js/jquery-3.1.1.js"></script>
 <script src="/js/app.js"></script>
 </body>
 </html>
