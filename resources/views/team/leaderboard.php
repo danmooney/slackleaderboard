@@ -9,6 +9,7 @@
 use App\Models\User;
 $emojis_by_reaction_id = $emojis->generateFlatArrayByKey();
 $total_reaction_count_among_all_users = $users->getTotalReactionCountAmongAllUsers();
+$total_reaction_count_by_reaction_id_among_all_users = $users->getTotalReactionCountByReactionIdAmongAllUsers();
 $users_by_id = [];
 ?>
 <h3>
@@ -146,6 +147,42 @@ $users_by_id = [];
                             <?php
                         endforeach ?>
                     </div>
+                </td>
+            </tr>
+    <?php
+        endforeach ?>
+    </tbody>
+</table>
+
+<br>
+<h3><strong>Top Emojis Used All-Time</strong></h3>
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Total Times Used</th>
+            <th>% of Team's Total Reactions</th>
+        </tr>
+    </thead>
+    <tbody>
+    <?php
+        foreach ($total_reaction_count_by_reaction_id_among_all_users as $reaction_id => $total_count):
+            $reaction = $emojis_by_reaction_id[$reaction_id];
+            if (!$reaction) {
+                continue;
+            }
+
+            ?>
+            <tr>
+                <td class="table-cell-user">
+                    <a class="reaction-anchor" href="<?= action('ReactionController@showLeaderboardAction', [$team->domain, $reaction->getMainAlias()->alias]) ?>">
+                        <span class="reaction-img" style="background-image:url('<?= $reaction->image ?>')"></span>
+                        <span class="reaction-count">:<?= htmlspecialchars($reaction->getMainAlias()->alias) ?>:</span>
+                    </a>
+                </td>
+                <td class="table-cell-total-reaction-count" align="right"><?= $total_count ?></td>
+                <td class="table-cell-percentage-reaction-count" align="right">
+                    <?= $total_reaction_count_among_all_users ? round(($total_count / $total_reaction_count_among_all_users) * 100, 2) . '%' : '' ?>
                 </td>
             </tr>
     <?php
