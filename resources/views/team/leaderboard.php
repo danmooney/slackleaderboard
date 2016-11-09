@@ -32,7 +32,10 @@ $users_by_id = [];
         <tr>
             <th>Name</th>
             <th>Total Reactions Given</th>
-            <th>% of Team's Total Reactions</th>
+            <th>
+                % of Team's Total Reactions
+                <i class="fa fa-fw fa-sort-desc"></i>
+            </th>
             <th class="nosort">Top Reactions Given</th>
         </tr>
     </thead>
@@ -94,7 +97,10 @@ $users_by_id = [];
         <tr>
             <th>Name</th>
             <th>Total Reactions Received</th>
-            <th>% of Team's Total Reactions</th>
+            <th>
+                % of Team's Total Reactions
+                <i class="fa fa-fw fa-sort-desc"></i>
+            </th>
             <th class="nosort">Top Reactions Received</th>
         </tr>
     </thead>
@@ -165,7 +171,10 @@ $users_by_id = [];
         <tr>
             <th>Name</th>
             <th>Total Times Used</th>
-            <th>% of Team's Total Reactions</th>
+            <th>
+                % of Team's Total Reactions
+                <i class="fa fa-fw fa-sort-desc"></i>
+            </th>
         </tr>
     </thead>
     <tbody>

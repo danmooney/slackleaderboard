@@ -34,7 +34,10 @@ $current_user = session()->get('user') ?: new User();
         <tr>
             <th>Name</th>
             <th># Reactions Given</th>
-            <th>% of this Giver's Total Reactions Given<?php /*Reaction Giver's Total Reactions */ ?></th>
+            <th>
+                % of this Giver's Total Reactions Given
+                <i class="fa fa-fw fa-sort-desc"></i>
+            </th>
             <th class="nosort">Top Reactions Given<?php /* to this User */ ?></th>
         </tr>
     </thead>
@@ -42,7 +45,16 @@ $current_user = session()->get('user') ?: new User();
     <?php
         foreach ($reactions_to_this_users_posts_grouped_by_user as $reaction_user):
             $user = $users->find($reaction_user->user_id);
+            $user->total_reaction_percentage_given_count = $reaction_user->total_reaction_percentage_given_count = $user->total_reactions_given_count ? round(($reaction_user->total_reactions_to_this_users_posts / $user->total_reactions_given_count) * 100, 2) : '';
             $users_by_user_id[$reaction_user->user_id] = $user;
+        endforeach;
+
+        $reactions_to_this_users_posts_grouped_by_user = $reactions_to_this_users_posts_grouped_by_user->sort(function ($a, $b) {
+            return $b->total_reaction_percentage_given_count * 100 - $a->total_reaction_percentage_given_count * 100;
+        });
+
+        foreach ($reactions_to_this_users_posts_grouped_by_user as $reaction_user):
+            $user = $users_by_user_id[$reaction_user->user_id];
             if (!$user->isEligibleToBeOnLeaderBoard()) continue;
             $total_reaction_count_title = $user->total_reactions_given_count ? sprintf('%s%% of all user\'s reactions given', round(($reaction_user->total_reactions_to_this_users_posts / $user->total_reactions_given_count) * 100, 2)) : '';
             ?>
@@ -59,7 +71,7 @@ $current_user = session()->get('user') ?: new User();
                     <strong><?= htmlspecialchars($reaction_user->total_reactions_to_this_users_posts) ?></strong>
                 </td>
                 <td class="table-cell-percentage-reaction-count" align="right">
-                    <?= $user->total_reactions_given_count ? round(($reaction_user->total_reactions_to_this_users_posts / $user->total_reactions_given_count) * 100, 2) . '%' : '' ?>
+                    <?= ltrim($user->total_reaction_percentage_given_count . '%', '%') ?>
                 </td>
                 <td class="table-cell-reaction-list">
                     <div>
@@ -103,16 +115,29 @@ $current_user = session()->get('user') ?: new User();
         <tr>
             <th>Name</th>
             <th># Mutual Reactions Given<?php /*Total Mutual Reaction Count*/ ?></th>
-            <th>% of this Giver's Total Reactions Given</th>
+            <th>
+                % of this Giver's Total Reactions Given
+                <i class="fa fa-fw fa-sort-desc"></i>
+            </th>
             <th class="nosort">Top Mutual Reactions Given (to the same posts)</th>
         </tr>
     </thead>
     <tbody>
     <?php
-        foreach ($total_mutual_reactions_for_this_user_by_user_id_and_reaction_id as $user_id => $data):
+        foreach ($total_mutual_reactions_for_this_user_by_user_id_and_reaction_id as $user_id => &$data):
             if (!isset($users_by_user_id[$user_id])) {
                 $users_by_user_id[$user_id] = $users->find($user_id);
             }
+
+            $user = $users_by_user_id[$user_id];
+            $user->total_mutual_reaction_percentage_given_count = $data['total_mutual_reaction_percentage_given_count'] = $user->total_reactions_given_count ? round(($data['total'] / $user->total_reactions_given_count) * 100, 2) : '';
+        endforeach;
+
+        uasort($total_mutual_reactions_for_this_user_by_user_id_and_reaction_id, function ($a, $b) {
+            return $b['total_mutual_reaction_percentage_given_count'] * 100 - $a['total_mutual_reaction_percentage_given_count'] * 100;
+        });
+
+        foreach ($total_mutual_reactions_for_this_user_by_user_id_and_reaction_id as $user_id => $data):
             $user = $users_by_user_id[$user_id];
             if (!$user->isEligibleToBeOnLeaderBoard()) continue;
             $total_reaction_count_title = $user->total_reactions_given_count ? sprintf('%s%% of all user\'s reactions given', round(($reaction_user->total_reactions_to_this_users_posts / $user->total_reactions_given_count) * 100, 2)) : '';
@@ -128,7 +153,7 @@ $current_user = session()->get('user') ?: new User();
                     <strong><?= htmlspecialchars($data['total']) ?></strong>
                 </td>
                 <td class="table-cell-percentage-reaction-count" align="right">
-                    <?= $user->total_reactions_given_count ? round(($data['total'] / $user->total_reactions_given_count) * 100, 2) . '%' : '' ?>
+                    <?= ltrim($user->total_mutual_reaction_percentage_given_count . '%', '%') ?>
                 </td>
                 <td class="table-cell-reaction-list">
                     <div>

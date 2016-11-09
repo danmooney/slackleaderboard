@@ -32,7 +32,10 @@ $users_by_user_id = [];
         <tr>
             <th>Name</th>
             <th># Reactions Given</th>
-            <th>% of this Giver's Total Reactions Given</th>
+            <th>
+                % of this Giver's Total Reactions Given
+                <i class="fa fa-fw fa-sort-desc"></i>
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -40,6 +43,15 @@ $users_by_user_id = [];
         foreach ($reaction_given_counts_by_users as $reaction_user):
             $user = $users->find($reaction_user->user_id);
             $users_by_user_id[$reaction_user->user_id] = $user;
+            $reaction_user->total_reactions_given_percentage = $user->total_reactions_given_count ? round(($reaction_user->total_count_using_this_reaction / $user->total_reactions_given_count) * 100, 2) : '';
+        endforeach;
+
+        $reaction_given_counts_by_users = $reaction_given_counts_by_users->sort(function ($a, $b) {
+            return $b->total_reactions_given_percentage * 100 - $a->total_reactions_given_percentage * 100;
+        });
+
+        foreach ($reaction_given_counts_by_users as $reaction_user):
+            $user = $users_by_user_id[$reaction_user->user_id];
             if (!$user->isEligibleToBeOnLeaderBoard()) continue;
             $total_reaction_count_title = $user->total_reactions_given_count ? sprintf('%s%% of all user\'s reactions given', round(($reaction_user->total_count_using_this_reaction / $user->total_reactions_given_count) * 100, 2)) : '';
             ?>
@@ -56,7 +68,7 @@ $users_by_user_id = [];
                     <?= htmlspecialchars($reaction_user->total_count_using_this_reaction) ?>
                 </td>
                 <td class="table-cell-percentage-reaction-count" align="right">
-                    <?= $user->total_reactions_given_count ? round(($reaction_user->total_count_using_this_reaction / $user->total_reactions_given_count) * 100, 2) . '%' : '' ?>
+                    <?= ltrim($reaction_user->total_reactions_given_percentage . '%', '%') ?>
                 </td>
             </tr>
     <?php
@@ -74,7 +86,10 @@ $users_by_user_id = [];
     <tr>
         <th>Name</th>
         <th>Total Reactions Received</th>
-        <th>% of this Receiver's Total Reactions Received</th>
+        <th>
+            % of this Receiver's Total Reactions Received
+            <i class="fa fa-fw fa-sort-desc"></i>
+        </th>
     </tr>
     </thead>
     <tbody>
@@ -82,6 +97,16 @@ $users_by_user_id = [];
         foreach ($reaction_received_counts_by_users as $reaction_user):
             $user = $users->find($reaction_user->user_id);
             $users_by_user_id[$reaction_user->user_id] = $user;
+
+            $reaction_user->total_reactions_received_percentage = $user->total_reactions_received_count ? round(($reaction_user->total_count_using_this_reaction / $user->total_reactions_received_count) * 100, 2) : '';
+        endforeach;
+
+        $reaction_received_counts_by_users = $reaction_received_counts_by_users->sort(function ($a, $b) {
+            return $b->total_reactions_received_percentage * 100 - $a->total_reactions_received_percentage * 100;
+        });
+
+        foreach ($reaction_received_counts_by_users as $reaction_user):
+            $user = $users_by_user_id[$reaction_user->user_id];
             if (!$user->isEligibleToBeOnLeaderBoard()) continue;
             $total_reaction_count_title = $user->total_reactions_given_count ? sprintf('%s%% of all user\'s reactions given', round(($reaction_user->total_count_using_this_reaction / $user->total_reactions_given_count) * 100, 2)) : '';
             ?>
@@ -98,7 +123,7 @@ $users_by_user_id = [];
                     <?= htmlspecialchars($reaction_user->total_count_using_this_reaction) ?>
                 </td>
                 <td class="table-cell-percentage-reaction-count" align="right">
-                    <?= $user->total_reactions_received_count ? round(($reaction_user->total_count_using_this_reaction / $user->total_reactions_received_count) * 100, 2) . '%' : '' ?>
+                    <?= ltrim($reaction_user->total_reactions_received_percentage . '%', '%') ?>
                 </td>
             </tr>
     <?php
