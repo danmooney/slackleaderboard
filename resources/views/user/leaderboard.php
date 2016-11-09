@@ -24,7 +24,10 @@ $current_user = session()->get('user') ?: new User();
     </a>
     <?= $user->isSameAs($current_user) ? '(That\'s You!)' : '' ?>
 </h3>
+
 <br>
+<br>
+<hr>
 <h3><strong>Top Reaction Givers<?php /* to this User's Posts */ ?></strong></h3>
 <table>
     <thead>
@@ -90,7 +93,10 @@ $current_user = session()->get('user') ?: new User();
         endforeach ?>
     </tbody>
 </table>
-<br><br>
+
+<br>
+<br>
+<hr>
 <h3><strong>Top Mutual Post Reaction Givers</strong></h3>
 <table>
     <thead>

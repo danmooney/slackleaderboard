@@ -22,10 +22,10 @@ $users_by_id = [];
     </a>
 </h3>
 <h3>
-    <strong><?= $total_reaction_count_among_all_users ?></strong>
-    <?= str_plural('reaction', $total_reaction_count_among_all_users) ?> total
+    <strong><?= $total_reaction_count_among_all_users ?> total <?= str_plural('reaction', $total_reaction_count_among_all_users) ?></strong>
 </h3>
 <br>
+<hr>
 <h3><strong>Top Reaction Givers All-Time</strong></h3>
 <table>
     <thead>
@@ -86,6 +86,8 @@ $users_by_id = [];
 </table>
 
 <br>
+<br>
+<hr>
 <h3><strong>Top Reaction Receivers All-Time</strong></h3>
 <table>
     <thead>
@@ -155,6 +157,8 @@ $users_by_id = [];
 </table>
 
 <br>
+<br>
+<hr>
 <h3><strong>Top Emojis Used All-Time</strong></h3>
 <table>
     <thead>

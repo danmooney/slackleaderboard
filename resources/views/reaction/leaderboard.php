@@ -24,6 +24,8 @@ $users_by_user_id = [];
     <span>:<?= htmlspecialchars($reaction->getMainAlias()->alias) ?>:
 </div>
 <br>
+<br>
+<hr>
 <h3><strong>Top Reaction Givers</strong></h3>
 <table>
     <thead>
@@ -64,6 +66,8 @@ $users_by_user_id = [];
 
 
 <br>
+<br>
+<hr>
 <h3><strong>Top Reaction Receivers</strong></h3>
 <table>
     <thead>
