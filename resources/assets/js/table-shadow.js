@@ -14,8 +14,6 @@ $reactionListTableCells.each(function () {
         var scrollNum = (this.scrollLeft + tableCellContainerVisibleWidth) - (this.scrollWidth);
         var $parent = $(this).parent();
 
-        console.log(scrollNum);
-
         if (this.scrollLeft < 10) {
             $parent.removeClass('table-cell-reaction-list--left-shadow');
         }
