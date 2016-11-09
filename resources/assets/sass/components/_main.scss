@@ -2,6 +2,10 @@
     padding-bottom: 20px;
 }
 
+main {
+    overflow: hidden;
+}
+
 main > .u-outerContainer > * {
     @extend %rowPadd;
 }
@@ -40,14 +44,13 @@ table tr > th {
     position: relative;
     text-overflow: ellipsis;
     white-space: nowrap;
-    padding-left: 0;
-    padding-right: 0;
+    padding: 0;
 
     &--left-shadow {
         &::before {
             position: absolute;
             content: '';
-            width: 0px;
+            width: 0;
             top: 0;
             height: 100%;
             left: 0;
@@ -59,7 +62,7 @@ table tr > th {
         &::after {
             position: absolute;
             content: '';
-            width: 0px;
+            width: 0;
             top: 0;
             height: 100%;
             right: 0;
@@ -71,8 +74,8 @@ table tr > th {
 
 .table-cell-reaction-list > div {
     overflow: auto;
-    padding-top: 15px;
-    padding-bottom: 15px;
+    padding-top: 20px;
+    padding-bottom: 20px;
     padding-left: 5px;
     padding-right: 5px;
 }
