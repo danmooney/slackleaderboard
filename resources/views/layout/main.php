@@ -12,14 +12,62 @@ $current_user = session()->get('user') ?: new User();
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial=scale=1">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0">
+
+	<link rel="stylesheet" href="dist/app.css" />
+
+	<meta name="description" content="An emoji reaction leaderboard for teams using Slack.  Find out who's using the most reactions and who's reacting to whom the most!" />
+	<meta name="author" content="Dan Mooney" />
+
+    <meta itemprop="name" content="Slack Leaderboard" />
+	<meta itemprop="description" content="An emoji reaction leaderboard for teams using Slack.  Find out who's using the most reactions and who's reacting to whom the most!" />
+	<meta itemprop="image" content="/img/logo.png" />
+    
+	<meta property="og:url" content="https://www.slackleaderboard.com" />
+	<meta property="og:title" content="Slack Leaderboard" />
+	<meta property="og:description" content="An emoji reaction leaderboard for teams using Slack.  Find out who's using the most reactions and who's reacting to whom the most!" />
+	<meta property="og:image" content="/img/logo.png" />
+
+    <?php /*
+	<link rel="canonical" href="xxx" />
+
+ */ ?>
+	<meta name="twitter:card" content="summary" />
+    <meta name="twitter:creator" content="@hiremephotoshop" />
+	<meta name="twitter:site" content="@reactionleaders" />
+	<meta name="twitter:title" content="Slack Leaderboard" />
+	<meta name="twitter:description" content="An emoji reaction leaderboard for teams using Slack.  Find out who's using the most reactions and who's reacting to whom the most!" />
+	<meta name="twitter:image" content="/img/logo.png" />
+
+    <?php /*
+	<link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
+	<link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
+	<link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
+	<link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
+	<link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
+	<link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
+	<link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
+	<link rel="icon" type='image/png' sizes="192x192"  href="/android-icon-192x192.png">
+	<link rel="icon" type='image/png' sizes="32x32" href="/favicon-32x32.png">
+	<link rel="icon" type='image/png' sizes="96x96" href="/favicon-96x96.png">
+	<link rel="icon" type='image/png' sizes="16x16" href="/favicon-16x16.png">
+*/ ?>
+	<meta name="msapplication-TileColor" content="#FFF">
+	<meta name="msapplication-TileImage" content="/img/logo.png">
+	<meta name="theme-color" content="#FFF">
+
     <title><?= View::yieldContent('title', 'Slack Leaderboard') ?></title>
-    <link href="/css/app.css" rel="stylesheet">
+
     <link rel="shortcut icon" href="/favicon.ico">
     <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png">
     <link rel="icon" type="image/png" sizes="64x64" href="/favicon-64.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-32.png">
+
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="/css/app.css" rel="stylesheet">
     <?= View::yieldContent('style') ?>
 </head>
 <body>
