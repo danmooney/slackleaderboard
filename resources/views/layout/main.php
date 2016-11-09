@@ -14,8 +14,6 @@ $current_user = session()->get('user') ?: new User();
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, minimum-scale=1.0">
 
-	<link rel="stylesheet" href="dist/app.css" />
-
 	<meta name="description" content="An emoji reaction leaderboard for teams using Slack.  Find out who's using the most reactions and who's reacting to whom the most!" />
 	<meta name="author" content="Dan Mooney" />
 
