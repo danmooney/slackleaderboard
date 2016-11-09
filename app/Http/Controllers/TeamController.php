@@ -17,10 +17,6 @@ class TeamController extends Controller
 {
     public function showLeaderboardAction($team_domain)
     {
-        if (!isset($_COOKIE['slack'])) {
-            App::abort(404);
-        }
-
         $team = Team::where(['domain' => $team_domain])->first();
 
         if (!$team) {

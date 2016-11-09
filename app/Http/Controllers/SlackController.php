@@ -10,10 +10,6 @@ class SlackController extends Controller
 {
 	public function guestHomepageAction()
 	{
-	    if (!isset($_COOKIE['slack'])) {
-			App::abort(404);
-		}
-
 		$current_user = session()->get('user');
 
 		if ($current_user) {
