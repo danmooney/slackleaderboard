@@ -1,7 +1,7 @@
 process.env.DISABLE_NOTIFIER = true;
 
 const elixir = require('laravel-elixir');
-
+require('laravel-browser-sync');
 
 /*
  |--------------------------------------------------------------------------
@@ -14,7 +14,19 @@ const elixir = require('laravel-elixir');
  |
  */
 
-elixir(mix => {
-    mix.sass('app.scss')
-       .webpack('app.js');
+elixir(function (mix) {
+    mix.sass('app.scss');
+    mix.webpack('app.js');
+    mix.browserSync({
+        proxy: 'slackleaderboard.local',
+        'js': [
+            'public/**/*.js',
+        ],
+        'css': [
+            'public/**/*.css',
+        ],
+        'views': [
+            'resources/views/**/*'
+        ]
+    });
 });
