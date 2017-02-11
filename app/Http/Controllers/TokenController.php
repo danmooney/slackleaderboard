@@ -24,7 +24,7 @@ class TokenController extends Controller
         $client_secret = config('app.slack_client_secret');
         $redirect_uri  = "http://{$_SERVER['HTTP_HOST']}/c";
 
-		$interactor    = new CurlInteractor;
+        $interactor    = new CurlInteractor;
         $interactor->setResponseFactory(new SlackResponseFactory());
         $commander     = new Commander('', $interactor);
 
