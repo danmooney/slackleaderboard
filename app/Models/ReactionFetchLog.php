@@ -9,7 +9,7 @@ class ReactionFetchLog extends ModelAbstract
 
     public $incrementing = false;
 
-	const STALL_CONSIDERATION_THRESHOLD_SECONDS = 60 * 60 * 24;
+	const STALL_CONSIDERATION_THRESHOLD_SECONDS = 60 * 60 * 24; // 24 hours
 	const RECENT_THRESHOLD_SECONDS = 60 * 10; // 10 minutes ago
 
 	public function hasMostLikelyBeenStalled()
