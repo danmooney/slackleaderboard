@@ -7,13 +7,14 @@ use App\Models\ReactionAlias;
 class ReactionTableSeeder extends Seeder
 {
     /**
-     * Seed reaction/reaction_alias
+     * Seed default Slack reaction/reaction_alias
      *
      * @return void
      */
     public function run()
     {
     	$all_reactions = Reaction::with('aliases')->where(['team_id' => null])->get();
+        // TODO - write node script to fetch new default standard emojis from Slack
     	$emojis = json_decode(file_get_contents(dirname(__FILE__) . '/emojis.json'));
 
 		$reactions_added = [];
