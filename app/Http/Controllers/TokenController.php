@@ -57,6 +57,9 @@ class TokenController extends Controller
         $response              = $commander->execute('auth.test');
         $current_user_slack_id = $response->getBody()['user_id'];
 
+        /**
+         * @var $user User
+         */
         $user 	       		   = User::where('slack_user_id', $current_user_slack_id)->first();
 
         if (!$user) {
@@ -83,7 +86,7 @@ class TokenController extends Controller
         $token->token   = $their_slack_access_token;
         $token->save();
 
-        User::saveIntoSession($user);
+        $user->saveIntoSession(false); // the fetchData command may update just in time for the redirecting user to see their new data
 
         DB::commit();
 

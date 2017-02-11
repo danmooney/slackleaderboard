@@ -23,7 +23,7 @@ class CheckIfAuthorizedToViewTeam
             return $next($request);
         }
 
-        $current_user = session()->get('user') ?: new User();
+        $current_user = User::getFromSession();
 
         $current_user_is_banned_from_looking_at_this_team_page = (
             !$current_user->isLoggedIn() ||

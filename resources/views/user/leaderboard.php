@@ -13,7 +13,7 @@ $emojis_by_reaction_id = $emojis->generateFlatArrayByKey();
 //$total_reaction_count_among_all_users = $users->getTotalReactionCountAmongAllUsers();
 $users_by_user_id = [];
 
-$current_user = session()->get('user') ?: new User();
+$current_user = User::getFromSession();
 ?>
 <h3>
     User:

@@ -4,7 +4,7 @@ use App\Models\User;
 /**
  * @var $current_user App\Models\User
  */
-$current_user = session()->get('user') ?: new User();
+$current_user = User::getFromSession();
 
 ?>
 <!DOCTYPE html>

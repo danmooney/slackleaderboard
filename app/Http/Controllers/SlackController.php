@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Team;
+use App\Models\User;
 use DB;
 use App;
 
@@ -10,7 +11,7 @@ class SlackController extends Controller
 {
 	public function guestHomepageAction()
 	{
-		$current_user = session()->get('user');
+		$current_user = User::getFromSession(false);
 
 		if ($current_user) {
 			$team = Team::find($current_user->team_id);
