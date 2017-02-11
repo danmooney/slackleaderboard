@@ -65,7 +65,7 @@ $current_user = session()->get('user') ?: new User();
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-32.png">
 
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
-    <link href="/css/app.css" rel="stylesheet">
+    <link href="/css/main.css" rel="stylesheet">
     <?= View::yieldContent('style') ?>
 </head>
 <body>

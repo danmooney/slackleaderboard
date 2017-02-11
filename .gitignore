@@ -64,5 +64,5 @@ Homestead.yaml
 Homestead.json
 .env
 .env.*
-/public/css
-/public/js
+/public/css/*
+/public/js/*
