@@ -10,6 +10,7 @@ use App\Models\User;
 use App\Models\Team;
 use App\Collections\User as UserCollection;
 use App\Console\Commands\SlackDataFetch;
+use Illuminate\Support\Facades\Log;
 
 use Frlnc\Slack\Http\SlackResponseFactory;
 use Frlnc\Slack\Http\CurlInteractor;
@@ -38,6 +39,11 @@ class TokenController extends Controller
         $response = $commander->execute('oauth.access', $data);
         $response = $response->getBody();
 
+        if (!$response['ok']) {
+            Log::warning('oauth.access call failed', $response);
+            return redirect()->action('SlackController@guestHomepageAction');
+        }
+
         $their_slack_access_token = isset($response['access_token']) ? $response['access_token'] : '';
         $commander                = new Commander($their_slack_access_token, $interactor);
 
@@ -54,10 +60,22 @@ class TokenController extends Controller
         $user 	       		   = User::where('slack_user_id', $current_user_slack_id)->first();
 
         if (!$user) {
-            // add users
-            $response = $commander->execute('users.list');
-            $users    = UserCollection::importFromSlackResponseBody($response->getBody(), [$current_user_slack_id]);
-            $user 	  = $users->where('slack_user_id', $current_user_slack_id)->first() ?: new User(); // TODO - no way new User should get called here
+            // just get you first! too slow otherwise
+            $response = $commander->execute('users.info', [
+                'user' => $current_user_slack_id
+            ]);
+
+            $response = $response->getBody();
+
+            if (!$response['ok']) {
+                Log::warning('users.info call failed', $response);
+                return redirect()->action('SlackController@guestHomepageAction');
+            }
+
+            $response['members'] = [$response['user']];
+
+            $users = UserCollection::importFromSlackResponseBody($response, [$current_user_slack_id]);
+            $user  = $users->where('slack_user_id', $current_user_slack_id)->first();
         }
 
         $token = Token::find($user->getKey()) ?: new Token();
@@ -69,6 +87,7 @@ class TokenController extends Controller
 
         DB::commit();
 
+        // if posts from beginning of time haven't been fetched yet for the team, then run the SlackDataFetch command with team id as an argument
 		if (!$team->posts_from_beginning_of_time_fetched) {
 		    $slack_data_fetch_artisan_command = sprintf(
 		        '%s/php %s/artisan %s %s > /dev/null 2>/dev/null &',
