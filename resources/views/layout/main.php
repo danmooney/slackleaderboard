@@ -135,6 +135,6 @@ $current_user = session()->get('user') ?: new User();
     </div>
 </footer>
 <script src="/js/jquery-3.1.1.js"></script>
-<script src="/js/app.js"></script>
+<script src="/js/main.js"></script>
 </body>
 </html>
