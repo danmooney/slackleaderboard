@@ -10,6 +10,10 @@ main > .u-outerContainer > * {
     @extend %rowPadd;
 }
 
+main > .u-outerContainer > h3 {
+    margin-bottom: 15px;
+}
+
 main > .u-outerContainer > h3, main > .u-outerContainer > div {
     text-align: center;
 }
@@ -21,16 +25,18 @@ table {
 }
 
 table tr > * {
-    border: 1px solid #CCC;
+    border: 1px solid $mid-gray;
     padding: 5px;
-
     vertical-align: middle;
+    background: $tad-grayer-than-white;
 }
 
 table tr > th {
     font-weight: bold;
     cursor: pointer;
     outline: 0;
+    background: $white;
+    border-color: $dark-gray;
 }
 
 .nosort {
@@ -87,15 +93,15 @@ table tr > th {
 
 .user-avatar {
     margin-right: 5px;
-    box-shadow: 0 0 1px #E8E8E8;
+    box-shadow: 0 0 1px $off-white;
 }
 
 .reaction-anchor {
     display: inline-block;
     margin-top: .125rem;
     margin-bottom: .125rem;
-    background: #fff;
-    border: 1px solid #E8E8E8;
+    background: $white;
+    border: 1px solid $off-white;
     margin-right: .25rem !important;
     border-radius: .3125rem;
     padding-top: .0625rem;
@@ -139,7 +145,7 @@ table tr > th {
 
 .reaction-anchor:hover {
     text-decoration: none;
-    border-color: #4fb0fc;
+    border-color: $dark-sky-blue;
 }
 
 .reaction-count {
@@ -148,5 +154,5 @@ table tr > th {
     position: relative;
     top: -9px;
     padding: 0 1px 0 3px;
-    color: #959595;
+    color: $darkest-gray;
 }

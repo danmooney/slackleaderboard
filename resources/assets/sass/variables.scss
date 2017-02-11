@@ -1,6 +1,29 @@
+// Colors
+$black: #000;
+$white: #fff;
+$tad-grayer-than-white: #fbfbfb;
+$sheetrock: #f5f8fa;
+$off-white: #e8e8e8;
+$mid-gray: #ccc;
+$dark-gray: #bdbdbd;
+$darkest-gray: #959595;
+$dark-sky-blue: #4fb0fc;
+
+// Widths
+$large-screen: 68em;
+$medium-screen: 58.5em;
+$small-screen: 48em;
+
+$max-width: $large-screen;
+
+
+$rowPadd: 1.25em;
+
+
+/* Laravel bootstrapped style variables */
 
 // Body
-$body-bg: #f5f8fa;
+$body-bg: $sheetrock;
 
 // Borders
 $laravel-border-color: darken($body-bg, 10%);
@@ -22,7 +45,6 @@ $font-size-base: 14px;
 $line-height-base: 1.6;
 $text-color: #636b6f;
 
-
 // Buttons
 $btn-default-color: $text-color;
 
@@ -32,17 +54,4 @@ $input-border-focus: lighten($brand-primary, 25%);
 $input-color-placeholder: lighten($text-color, 30%);
 
 // Panels
-$panel-default-heading-bg: #fff;
-
-// Colors
-$black: #000;
-$white: #fff;
-
-// widths
-$large-screen: 68em;
-$medium-screen: 58.5em;
-$small-screen: 48em;
-
-$max-width: $large-screen;
-
-$rowPadd: 1.25em;
+$panel-default-heading-bg: $white;
