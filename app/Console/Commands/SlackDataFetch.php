@@ -30,7 +30,7 @@ class SlackDataFetch extends CommandAbstract
      *
      * @var string
      */
-    protected $signature = 'slackleaderboard:fetchReactions {team_id?}';
+    protected $signature = 'slackleaderboard:fetchData {team_id?}';
 
     /**
      * The console command description.
