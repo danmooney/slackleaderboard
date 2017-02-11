@@ -14,11 +14,9 @@ $users_by_id = [];
 ?>
 <h3>
     Team:
-    <a href="<?= action('TeamController@showLeaderboardAction', [$team->domain]) ?>">
+    <a class="user-avatar-name-anchor" href="<?= action('TeamController@showLeaderboardAction', [$team->domain]) ?>">
         <img class="user-avatar" width="<?= User::DEFAULT_AVATAR_SIZE ?>" src="<?= htmlspecialchars($team->icon) ?>" />
-        <span class="user-name">
-            <?= htmlspecialchars($team->name) ?>
-        </span>
+        <span class="user-name"><?= htmlspecialchars($team->name) ?></span>
     </a>
 </h3>
 <h3>
@@ -118,11 +116,9 @@ $users_by_id = [];
             ?>
             <tr>
                 <td class="table-cell-user">
-                    <a href="<?= action('UserController@showLeaderboardAction', [$team->domain, $user->handle]) ?>">
+                    <a class="user-avatar-name-anchor"  href="<?= action('UserController@showLeaderboardAction', [$team->domain, $user->handle]) ?>">
                         <img class="user-avatar" width="<?= User::DEFAULT_AVATAR_SIZE ?>" src="<?= htmlspecialchars($user->getAvatar()) ?>" />
-                        <span class="user-name">
-                            <?= htmlspecialchars($user->name_binary) ?>
-                        </span>
+                        <span class="user-name"><?= htmlspecialchars($user->name_binary) ?></span>
                     </a>
                 </td>
                 <td class="table-cell-total-reaction-count" align="right">

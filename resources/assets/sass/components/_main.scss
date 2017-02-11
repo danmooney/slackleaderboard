@@ -156,3 +156,10 @@ table tr > th {
     padding: 0 1px 0 3px;
     color: $darkest-gray;
 }
+
+.user-avatar-name-anchor:hover {
+    text-decoration: none;
+    .user-name {
+        text-decoration: underline;
+    }
+}

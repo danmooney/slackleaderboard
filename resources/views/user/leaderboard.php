@@ -17,10 +17,9 @@ $current_user = session()->get('user') ?: new User();
 ?>
 <h3>
     User:
-    <a href="<?= action('UserController@showLeaderboardAction', [$team->domain, $user->handle]) ?>"><img class="user-avatar" width="<?= User::DEFAULT_AVATAR_SIZE ?>" src="<?= htmlspecialchars($user->getAvatar()) ?>" />
-        <span class="user-name">
-            <?= htmlspecialchars($user->name_binary) ?>
-        </span>
+    <a class="user-avatar-name-anchor"  href="<?= action('UserController@showLeaderboardAction', [$team->domain, $user->handle]) ?>">
+        <img class="user-avatar" width="<?= User::DEFAULT_AVATAR_SIZE ?>" src="<?= htmlspecialchars($user->getAvatar()) ?>" />
+        <span class="user-name"><?= htmlspecialchars($user->name_binary) ?></span>
     </a>
     <?= $user->isSameAs($current_user) ? '(That\'s You!)' : '' ?>
 </h3>
@@ -60,11 +59,9 @@ $current_user = session()->get('user') ?: new User();
             ?>
             <tr>
                 <td class="table-cell-user">
-                    <a href="<?= action('UserController@showLeaderboardAction', [$team->domain, $user->handle]) ?>">
+                    <a class="user-avatar-name-anchor" href="<?= action('UserController@showLeaderboardAction', [$team->domain, $user->handle]) ?>">
                         <img class="user-avatar" width="<?= User::DEFAULT_AVATAR_SIZE ?>" src="<?= htmlspecialchars($user->getAvatar()) ?>" />
-                        <span class="user-name">
-                            <?= htmlspecialchars($user->name_binary) ?>
-                        </span>
+                        <span class="user-name"><?= htmlspecialchars($user->name_binary) ?></span>
                     </a>
                 </td>
                 <td class="table-cell-total-reaction-count" align="right">

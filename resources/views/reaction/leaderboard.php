@@ -57,11 +57,9 @@ $users_by_user_id = [];
             ?>
             <tr>
                 <td>
-                    <a href="<?= action('UserController@showLeaderboardAction', [$team->domain, $user->handle]) ?>">
+                    <a class="user-avatar-name-anchor" href="<?= action('UserController@showLeaderboardAction', [$team->domain, $user->handle]) ?>">
                         <img class="user-avatar" width="<?= User::DEFAULT_AVATAR_SIZE ?>" src="<?= htmlspecialchars($user->getAvatar()) ?>" />
-                        <span class="user-name">
-                            <?= htmlspecialchars($user->name_binary) ?>
-                        </span>
+                        <span class="user-name"><?= htmlspecialchars($user->name_binary) ?></span>
                     </a>
                 </td>
                 <td class="table-cell-total-reaction-count" align="right">
@@ -112,11 +110,9 @@ $users_by_user_id = [];
             ?>
             <tr>
                 <td>
-                    <a href="<?= action('UserController@showLeaderboardAction', [$team->domain, $user->handle]) ?>">
+                    <a class="user-avatar-name-anchor" href="<?= action('UserController@showLeaderboardAction', [$team->domain, $user->handle]) ?>">
                         <img class="user-avatar" width="<?= User::DEFAULT_AVATAR_SIZE ?>" src="<?= htmlspecialchars($user->getAvatar()) ?>" />
-                        <span class="user-name">
-                            <?= htmlspecialchars($user->name_binary) ?>
-                        </span>
+                        <span class="user-name"><?= htmlspecialchars($user->name_binary) ?></span>
                     </a>
                 </td>
                 <td class="table-cell-total-reaction-count" align="right">
