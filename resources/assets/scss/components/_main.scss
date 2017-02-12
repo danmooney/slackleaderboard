@@ -22,13 +22,13 @@ table {
     padding-left: 0;
     padding-right: 0;
     width: 100%;
+    background: $tad-grayer-than-white;
 }
 
 table tr > * {
     border: 1px solid $mid-gray;
     padding: 5px;
     vertical-align: middle;
-    background: $tad-grayer-than-white;
 }
 
 table tr > th {
@@ -96,6 +96,24 @@ table tr > th {
     box-shadow: 0 0 1px $off-white;
 }
 
+table .user-avatar {
+    display: block;
+}
+
+table .table-cell-user {
+    width: 10%;
+}
+
+@media screen and (min-width: $small-screen) {
+    table .table-cell-user {
+        width: auto;
+    }
+
+    table .user-avatar {
+        display: inline;
+    }
+}
+
 .reaction-anchor {
     display: inline-block;
     margin-top: .125rem;
@@ -140,7 +158,6 @@ table tr > th {
     background-repeat: no-repeat;
     background-position: 50% 50%;
     display: inline-block;
-
 }
 
 .reaction-anchor:hover {
@@ -153,8 +170,9 @@ table tr > th {
     font-family: helvetica, arial, sans-serif;
     position: relative;
     top: -9px;
-    padding: 0 1px 0 3px;
+    padding: 11px 1px 0 3px;
     color: $darkest-gray;
+    display: inline-block;
 }
 
 .user-avatar-name-anchor:hover {
