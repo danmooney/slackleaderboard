@@ -14,19 +14,22 @@ require('laravel-browser-sync');
  |
  */
 
+elixir.config.css.sass.folder = 'scss';
+
 elixir(function (mix) {
-    mix.sass('main.scss', undefined, 'resources/assets/scss');
+    mix.sass('main.scss'/*, undefined, 'resources/assets/scss'*/);
     mix.webpack('main.js');
     mix.browserSync({
         proxy: 'slackleaderboard.local',
-        'js': [
+        js: [
             'public/**/*.js',
         ],
-        'css': [
+        css: [
             'public/**/*.css',
         ],
-        'views': [
+        views: [
             'resources/views/**/*'
-        ]
+        ],
+        open: false // don't open the browser window initially
     });
 });
