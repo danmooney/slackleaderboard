@@ -15,7 +15,7 @@ require('laravel-browser-sync');
  */
 
 elixir(function (mix) {
-    mix.sass('main.scss');
+    mix.sass('main.scss', undefined, 'resources/assets/scss');
     mix.webpack('main.js');
     mix.browserSync({
         proxy: 'slackleaderboard.local',
