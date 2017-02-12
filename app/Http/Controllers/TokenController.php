@@ -60,7 +60,7 @@ class TokenController extends Controller
         /**
          * @var $user User
          */
-        $user 	       		   = User::where('slack_user_id', $current_user_slack_id)->first();
+        $user = User::where('slack_user_id', $current_user_slack_id)->first();
 
         if (!$user) {
             // just get you first! too slow otherwise
