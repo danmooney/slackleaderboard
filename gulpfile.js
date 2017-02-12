@@ -22,10 +22,10 @@ elixir(function (mix) {
     mix.browserSync({
         proxy: 'slackleaderboard.local',
         js: [
-            'public/**/*.js',
+            'public/**/*.js'
         ],
         css: [
-            'public/**/*.css',
+            'public/**/*.css'
         ],
         views: [
             'resources/views/**/*'
