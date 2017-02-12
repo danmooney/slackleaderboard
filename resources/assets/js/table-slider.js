@@ -1,6 +1,7 @@
-var numToShowInitially = SL_OPTIONS.numToShowInitially;
-var loadMoreIncrementNum = SL_OPTIONS.loadMoreIncrementNum;
-var toleranceThresholdForWhenAtEndOfList = SL_OPTIONS.toleranceThresholdForWhenAtEndOfList;
+var options = SL_OPTIONS.tableSlider;
+var numToShowInitially = options.numToShowInitially;
+var loadMoreIncrementNum = options.loadMoreIncrementNum;
+var toleranceThresholdForWhenAtEndOfList = options.toleranceThresholdForWhenAtEndOfList;
 var currentlyShowingNum = numToShowInitially;
 
 var $tables = $('table');
