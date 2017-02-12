@@ -3,7 +3,6 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use stdClass;
 
 class HelperServiceProvider extends ServiceProvider
 {
@@ -27,12 +26,11 @@ class HelperServiceProvider extends ServiceProvider
         $app = app();
 
         foreach (glob(app_path() . '/Helpers/*.php') as $pathname) {
-            $callback = require_once $pathname;
+            $func_or_obj          = require_once $pathname;
+            $filename             = pathinfo($pathname, PATHINFO_FILENAME);
+            $app_func_or_obj_name = camel_case($filename);
 
-            $filename      = pathinfo($pathname, PATHINFO_FILENAME);
-            $app_func_name = camel_case($filename);
-
-            $app->addHelper($app_func_name, $callback);
+            $app->addHelper($app_func_or_obj_name, $func_or_obj);
         }
     }
 }
