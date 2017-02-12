@@ -123,6 +123,7 @@ return [
     'log' => env('APP_LOG', 'single'),
 
     'log_level' => env('APP_LOG_LEVEL', 'debug'),
+    'log_max_files' => env('APP_LOG_MAX_FILES', PHP_INT_MAX),
 
     /*
     |--------------------------------------------------------------------------
@@ -178,7 +179,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\HelperServiceProvider::class,
-        isset($_SERVER['HTTP_HOST']) && $_SERVER['HTTP_HOST'] === 'slackleaderboard.local' ? Barryvdh\Debugbar\ServiceProvider::class : null,
+//        isset($_SERVER['HTTP_HOST']) && $_SERVER['HTTP_HOST'] === 'slackleaderboard.local' ? Barryvdh\Debugbar\ServiceProvider::class : null,
 
     ]),
 
@@ -229,8 +230,15 @@ return [
 
     ],
 
-    'slack_access_token'  => env('SLACK_TOKEN'),
     'slack_client_id'     => env('SLACK_CLIENT_ID'),
     'slack_client_secret' => env('SLACK_CLIENT_SECRET'),
-    'slack_oauth_url'     => env('SLACK_OAUTH_URL', sprintf('https://slack.com/oauth/authorize?client_id=%s&scope=identify users:read reactions:read team:read emoji:read&redirect_uri=http://%s/c', env('SLACK_CLIENT_ID'), isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : null))
+    'slack_oauth_url'     => env('SLACK_OAUTH_URL', sprintf('https://slack.com/oauth/authorize?client_id=%s&scope=identify users:read reactions:read team:read emoji:read&redirect_uri=http://%s/c', env('SLACK_CLIENT_ID'), isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : null)),
+
+    'options' => [
+        'tableSlider' => [
+            'numToShowInitially' => 20,
+            'loadMoreIncrementNum' => 20,
+            'toleranceThresholdForWhenAtEndOfList' => 10,
+        ]
+    ]
 ];

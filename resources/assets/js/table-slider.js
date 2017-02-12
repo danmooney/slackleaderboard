@@ -1,6 +1,6 @@
-var numToShowInitially = 20;
-var loadMoreIncrementNum = 20;
-var toleranceThresholdForWhenAtEndOfList = 10;
+var numToShowInitially = SL_OPTIONS.numToShowInitially;
+var loadMoreIncrementNum = SL_OPTIONS.loadMoreIncrementNum;
+var toleranceThresholdForWhenAtEndOfList = SL_OPTIONS.toleranceThresholdForWhenAtEndOfList;
 var currentlyShowingNum = numToShowInitially;
 
 var $tables = $('table');
@@ -22,9 +22,9 @@ $tables.each(function () {
 
     $bodyTrList.slice(currentlyShowingNum).hide();
 
-    $showMoreButton = $('<button class="button-show-more btn-primary">Show More</button>');
+    $showMoreButton = $('<div><button class="button-show-more btn-primary">Show More</button></div>');
 
-    $showMoreButton.on('click', function (e) {
+    $showMoreButton.on('click', function () {
         currentlyShowingNum += loadMoreIncrementNum;
 
         if (currentlyShowingNum + toleranceThresholdForWhenAtEndOfList >= $bodyTrList.length) {
@@ -33,8 +33,6 @@ $tables.each(function () {
 
         $bodyTrList.slice(0, currentlyShowingNum).show();
 
-
-        debugger;
         canHideShowMoreButton = currentlyShowingNum >= $bodyTrList.length;
 
         if (canHideShowMoreButton) {
