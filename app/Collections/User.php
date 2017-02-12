@@ -73,7 +73,7 @@ class User extends Collection
             $user->slack_user_id  = $member['id'];
             $user->team_id        = $team->getKey();
             $user->name_binary    = isset($member['real_name']) ? $member['real_name'] : $member['profile']['real_name'];
-            $user->name           = remove_emojis($user->name_binary);
+            $user->name           = app()->removeEmojis($user->name_binary);
             $user->handle         = $member['name'];
             $user->avatar         = isset($member['profile']['image_original']) ? $member['profile']['image_original'] : $member['profile']['image_192'];
             $user->email          = isset($member['profile']['email']) ? $member['profile']['email'] : null;

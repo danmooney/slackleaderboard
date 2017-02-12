@@ -1,7 +1,6 @@
 <?php
 
-function remove_emojis($text)
-{
+return function ($text) {
     // Match Emoticons
     $regex_emojis = '/[\x{1F600}-\x{1F64F}]/u';
     $clean_text = preg_replace($regex_emojis, '', $text);
@@ -25,4 +24,4 @@ function remove_emojis($text)
     $clean_text = trim(preg_replace('#([^a-z0-9\' ])#i', '', $clean_text));
 
     return $clean_text;
-}
+};
