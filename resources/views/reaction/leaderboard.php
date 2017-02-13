@@ -30,7 +30,7 @@ $users_by_user_id = [];
 <table>
     <thead>
         <tr>
-            <th>Name</th>
+            <th data-sortInitialOrder="asc">Name</th>
             <th># Reactions Given</th>
             <th>
                 % of this Giver's Total Reactions Given
@@ -82,7 +82,7 @@ $users_by_user_id = [];
 <table>
     <thead>
     <tr>
-        <th>Name</th>
+        <th data-sortInitialOrder="asc">Name</th>
         <th>Total Reactions Received</th>
         <th>
             % of this Receiver's Total Reactions Received

@@ -31,7 +31,7 @@ $current_user = User::getFromSession();
 <table>
     <thead>
         <tr>
-            <th>Name</th>
+            <th data-sortInitialOrder="asc">Name</th>
             <th># Reactions Given</th>
             <th>
                 % of this Giver's Total Reactions Given
@@ -110,7 +110,7 @@ $current_user = User::getFromSession();
 <table>
     <thead>
         <tr>
-            <th>Name</th>
+            <th data-sortInitialOrder="asc">Name</th>
             <th># Mutual Reactions Given<?php /*Total Mutual Reaction Count*/ ?></th>
             <th>
                 % of this Giver's Total Reactions Given
