@@ -23,7 +23,7 @@ $tables.each(function () {
 
     $bodyTrList.slice(currentlyShowingNum).hide();
 
-    $showMoreButton = $('<div><button class="button-show-more btn-primary">Show More</button></div>');
+    $showMoreButton = $table.next('.button-show-more-container');
 
     $showMoreButton.on('click', function () {
         currentlyShowingNum += loadMoreIncrementNum;
@@ -42,7 +42,6 @@ $tables.each(function () {
     });
 
     $showMoreButton.insertAfter($table);
-
 
     $table.on('sortEnd', showRowsBeforeCurrentlyShowingNumAndHideRowsAfterCurrentlyShowingNum);
 });
