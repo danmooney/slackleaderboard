@@ -165,7 +165,7 @@ table .table-cell-user {
     border-color: $dark-sky-blue;
 }
 
-.reaction-count {
+.reaction-count, .reaction-name {
     /*font-size: .6875rem;*/
     font-family: helvetica, arial, sans-serif;
     position: relative;
@@ -173,6 +173,10 @@ table .table-cell-user {
     padding: 11px 1px 0 3px;
     color: $darkest-gray;
     display: inline-block;
+}
+
+.reaction-name {
+    word-break: break-word;
 }
 
 .user-avatar-name-anchor:hover {
