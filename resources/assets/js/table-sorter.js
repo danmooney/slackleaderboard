@@ -3,10 +3,27 @@ require('tablesorter');
 var $tables = $('table');
 
 $tables.each(function () {
+    var $table = $(this),
+        sortList,
+        $th = $table.find('th'),
+        $currentSortArrow = $th.find('.fa'),
+        direction,
+        directionNum,
+        currentSortArrowHeaderColNum
+    ;
+
+    if ($currentSortArrow.length) {
+        direction = $currentSortArrow.hasClass('fa-sort-desc') ? 'desc' : 'asc';
+        directionNum = direction === 'desc' ? 1 : 0;
+        currentSortArrowHeaderColNum = $th.index($currentSortArrow.closest('th'));
+        sortList = [[currentSortArrowHeaderColNum, directionNum]];
+    }
+
     $(this).tablesorter({
+        sortInitialOrder: 'desc',
+        sortRestart: true,
+        sortList: sortList,
         headers: {
-            // disable sorting of the first & second column - before we would have to had made two entries
-            // note that "first-name" is a class on the span INSIDE the first column th cell
             '.nosort': {
                 // disable it by setting the property sorter to false
                 sorter: false
