@@ -26,6 +26,8 @@ $tables.each(function () {
     $showMoreButton = $table.next('.button-show-more-container');
 
     $showMoreButton.on('click', function () {
+        // need to get refreshed list since it may be out of order from the user's sorting (jQuery persists order from its original invocation)
+        $bodyTrList = $table.find('tbody tr');
         currentlyShowingNum += loadMoreIncrementNum;
 
         if (currentlyShowingNum + toleranceThresholdForWhenAtEndOfList >= $bodyTrList.length) {
