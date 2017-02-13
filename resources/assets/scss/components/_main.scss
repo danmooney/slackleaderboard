@@ -104,8 +104,12 @@ table .table-cell-user {
     width: 10%;
 }
 
+table .table-cell-reaction-emoji {
+    width: 22%;
+}
+
 @media screen and (min-width: $small-screen) {
-    table .table-cell-user {
+    table .table-cell-user, table .table-cell-reaction-emoji {
         width: auto;
     }
 
