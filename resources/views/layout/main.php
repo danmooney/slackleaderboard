@@ -134,7 +134,6 @@ $current_user = User::getFromSession();
     <div class="u-outerContainer"></div>
 </footer>
 <script>window.SL_OPTIONS = <?= json_encode(config('app.options')) ?>;</script>
-<script src="/js/jquery-3.1.1.js"></script>
 <script src="/js/main.js"></script>
 </body>
 </html>
