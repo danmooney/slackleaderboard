@@ -50,12 +50,21 @@ $users_by_user_id = [];
             return $b->total_reactions_given_percentage * 100 - $a->total_reactions_given_percentage * 100;
         });
 
+        $total_eligible_reaction_counts_given_by_users = 0;
+
+        foreach ($reaction_given_counts_by_users as $reaction_user):
+            $user = $users_by_user_id[$reaction_user->user_id];
+            if ($user->isEligibleToBeOnLeaderBoard()) {
+                $total_eligible_reaction_counts_given_by_users += 1;
+            }
+        endforeach;
+
         foreach ($reaction_given_counts_by_users as $reaction_user):
             $user = $users_by_user_id[$reaction_user->user_id];
             if (!$user->isEligibleToBeOnLeaderBoard()) continue;
             $total_reaction_count_title = $user->total_reactions_given_count ? sprintf('%s%% of all user\'s reactions given', round(($reaction_user->total_count_using_this_reaction / $user->total_reactions_given_count) * 100, 2)) : '';
             ?>
-            <tr>
+            <tr <?= $app->tableRow->shouldBeInvisible($total_eligible_reaction_counts_given_by_users) ? 'style="display:none;"' : '' ?>>
                 <td>
                     <a class="user-avatar-name-anchor" href="<?= action('UserController@showLeaderboardAction', [$team->domain, $user->handle]) ?>">
                         <img class="user-avatar" width="<?= User::DEFAULT_AVATAR_SIZE ?>" src="<?= htmlspecialchars($user->getAvatar()) ?>" />
@@ -73,8 +82,11 @@ $users_by_user_id = [];
         endforeach ?>
     </tbody>
 </table>
-
-
+<?php
+    if ($app->tableRow->hasInvisibleRows()):
+        echo view('_partials/button_show_more');
+    endif
+?>
 <br>
 <br>
 <hr>
@@ -103,12 +115,21 @@ $users_by_user_id = [];
             return $b->total_reactions_received_percentage * 100 - $a->total_reactions_received_percentage * 100;
         });
 
+        $total_eligible_reaction_received_counts = 0;
+
+        foreach ($reaction_received_counts_by_users as $reaction_user):
+            $user = $users_by_user_id[$reaction_user->user_id];
+            if ($user->isEligibleToBeOnLeaderBoard()) {
+                $total_eligible_reaction_received_counts += 1;
+            }
+        endforeach;
+
         foreach ($reaction_received_counts_by_users as $reaction_user):
             $user = $users_by_user_id[$reaction_user->user_id];
             if (!$user->isEligibleToBeOnLeaderBoard()) continue;
             $total_reaction_count_title = $user->total_reactions_given_count ? sprintf('%s%% of all user\'s reactions given', round(($reaction_user->total_count_using_this_reaction / $user->total_reactions_given_count) * 100, 2)) : '';
             ?>
-            <tr>
+            <tr <?= $app->tableRow->shouldBeInvisible($total_eligible_reaction_received_counts) ? 'style="display:none;"' : '' ?>>
                 <td>
                     <a class="user-avatar-name-anchor" href="<?= action('UserController@showLeaderboardAction', [$team->domain, $user->handle]) ?>">
                         <img class="user-avatar" width="<?= User::DEFAULT_AVATAR_SIZE ?>" src="<?= htmlspecialchars($user->getAvatar()) ?>" />
@@ -126,4 +147,7 @@ $users_by_user_id = [];
         endforeach ?>
     </tbody>
 </table>
-
+<?php
+    if ($app->tableRow->hasInvisibleRows()):
+        echo view('_partials/button_show_more');
+    endif;

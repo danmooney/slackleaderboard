@@ -5,6 +5,7 @@
  * @var $team App\Models\Team
  * @var $emojis App\Collections\Reaction
  * @var $reaction App\Models\Reaction
+ * @var $single_user_reaction_received_counts App\Collections\PostUserReaction
  */
 use App\Models\User;
 $emojis_by_reaction_id = $emojis->generateFlatArrayByKey();
@@ -41,11 +42,13 @@ $users_by_id = [];
     </thead>
     <tbody>
     <?php
-        foreach ($users as $user):
+        $eligible_users = $users->filter(function (User $user) {
+            return $user->isEligibleToBeOnLeaderBoard();
+        });
+        foreach ($eligible_users as $key => $user):
             $users_by_id[$user->getKey()] = $user;
-            if (!$user->isEligibleToBeOnLeaderBoard() /*|| !$user->total_reactions_given_count*/) continue;
             ?>
-            <tr>
+            <tr <?= $app->tableRow->shouldBeInvisible(count($eligible_users)) ? 'style="display:none;"' : '' ?>>
                 <td class="table-cell-user">
                     <a href="<?= action('UserController@showLeaderboardAction', [$team->domain, $user->handle]) ?>">
                         <img class="user-avatar" width="<?= User::DEFAULT_AVATAR_SIZE ?>" src="<?= htmlspecialchars($user->getAvatar()) ?>" /><?= htmlspecialchars($user->name_binary) ?>
@@ -87,7 +90,11 @@ $users_by_id = [];
         endforeach ?>
     </tbody>
 </table>
-
+<?php
+    if ($app->tableRow->hasInvisibleRows()):
+        echo view('_partials/button_show_more');
+    endif
+?>
 <br>
 <br>
 <hr>
@@ -106,6 +113,8 @@ $users_by_id = [];
     </thead>
     <tbody>
     <?php
+        $total_eligible_single_user_reaction_received_count = 0;
+
         foreach ($single_user_reaction_received_counts as $data):
             if (!isset($users_by_id[$data->posting_user_id])) {
                 $users_by_id[$data->posting_user_id] = $users->find($data->posting_user_id);
@@ -113,10 +122,18 @@ $users_by_id = [];
 
             $user = $users_by_id[$data->posting_user_id];
 
+            if ($user->isEligibleToBeOnLeaderBoard()) {
+                $total_eligible_single_user_reaction_received_count += 1;
+            }
+        endforeach;
+
+        foreach ($single_user_reaction_received_counts as $data):
+            $user = $users_by_id[$data->posting_user_id];
+
             if (!$user->isEligibleToBeOnLeaderBoard() /*|| !$user->total_reactions_given_count*/) continue;
             $total_reaction_count_title = $total_reaction_count_among_all_users ? sprintf('%s%% of all team\'s reactions received', round(($user->total_reactions_received_count / $total_reaction_count_among_all_users) * 100, 2)) : '';
             ?>
-            <tr>
+            <tr <?= $app->tableRow->shouldBeInvisible($total_eligible_single_user_reaction_received_count) ? 'style="display:none;"' : '' ?>>
                 <td class="table-cell-user">
                     <a class="user-avatar-name-anchor"  href="<?= action('UserController@showLeaderboardAction', [$team->domain, $user->handle]) ?>">
                         <img class="user-avatar" width="<?= User::DEFAULT_AVATAR_SIZE ?>" src="<?= htmlspecialchars($user->getAvatar()) ?>" />
@@ -159,7 +176,11 @@ $users_by_id = [];
         endforeach ?>
     </tbody>
 </table>
-
+<?php
+    if ($app->tableRow->hasInvisibleRows()):
+        echo view('_partials/button_show_more');
+    endif
+?>
 <br>
 <br>
 <hr>
@@ -177,18 +198,26 @@ $users_by_id = [];
     </thead>
     <tbody>
     <?php
+        $total_available_reaction_count_by_reaction_id_among_all_users = 0;
         foreach ($total_reaction_count_by_reaction_id_among_all_users as $reaction_id => $total_count):
-            $reaction = $emojis_by_reaction_id[$reaction_id];
-            if (!$reaction) {
+            if (isset($emojis_by_reaction_id[$reaction_id])) {
+                $total_available_reaction_count_by_reaction_id_among_all_users += 1;
+            }
+        endforeach;
+
+        foreach ($total_reaction_count_by_reaction_id_among_all_users as $reaction_id => $total_count):
+            if (!isset($emojis_by_reaction_id[$reaction_id])) {
                 continue;
             }
 
+            $reaction = $emojis_by_reaction_id[$reaction_id];
+
             ?>
-            <tr>
-                <td class="table-cell-user">
+            <tr <?= $app->tableRow->shouldBeInvisible($total_available_reaction_count_by_reaction_id_among_all_users) ? 'style="display:none;"' : '' ?>>
+                <td class="table-cell-reaction-emoji">
                     <a class="reaction-anchor" href="<?= action('ReactionController@showLeaderboardAction', [$team->domain, $reaction->getMainAlias()->alias]) ?>">
                         <span class="reaction-img" style="background-image:url('<?= $reaction->image ?>')"></span>
-                        <span class="reaction-count">:<?= htmlspecialchars($reaction->getMainAlias()->alias) ?>:</span>
+                        <span class="reaction-name">:<?= htmlspecialchars($reaction->getMainAlias()->alias) ?>:</span>
                     </a>
                 </td>
                 <td class="table-cell-total-reaction-count" align="right"><?= $total_count ?></td>
@@ -200,3 +229,7 @@ $users_by_id = [];
         endforeach ?>
     </tbody>
 </table>
+<?php
+    if ($app->tableRow->hasInvisibleRows()):
+        echo view('_partials/button_show_more');
+    endif;

@@ -6,6 +6,8 @@
  * @var $emojis App\Collections\Reaction
  * @var $reaction App\Models\Reaction
  * @var $current_user App\Models\User
+ * @var $reactions_to_this_users_posts_grouped_by_user App\Collections\PostUserReaction
+ * @var $total_mutual_reactions_for_this_user_by_user_id_and_reaction_id App\Collections\PostUserReaction
  */
 use App\Models\User;
 
@@ -52,12 +54,21 @@ $current_user = User::getFromSession();
             return $b->total_reaction_percentage_given_count * 100 - $a->total_reaction_percentage_given_count * 100;
         });
 
+        $total_eligible_reactions_to_this_users_posts_grouped_by_user = 0;
+
+        foreach ($reactions_to_this_users_posts_grouped_by_user as $reaction_user):
+            $user = $users_by_user_id[$reaction_user->user_id];
+            if ($user->isEligibleToBeOnLeaderBoard()) {
+                $total_eligible_reactions_to_this_users_posts_grouped_by_user += 1;
+            }
+        endforeach;
+
         foreach ($reactions_to_this_users_posts_grouped_by_user as $reaction_user):
             $user = $users_by_user_id[$reaction_user->user_id];
             if (!$user->isEligibleToBeOnLeaderBoard()) continue;
             $total_reaction_count_title = $user->total_reactions_given_count ? sprintf('%s%% of all user\'s reactions given', round(($reaction_user->total_reactions_to_this_users_posts / $user->total_reactions_given_count) * 100, 2)) : '';
             ?>
-            <tr>
+            <tr <?= $app->tableRow->shouldBeInvisible($total_eligible_reactions_to_this_users_posts_grouped_by_user) ? 'style="display:none;"' : '' ?>>
                 <td class="table-cell-user">
                     <a class="user-avatar-name-anchor" href="<?= action('UserController@showLeaderboardAction', [$team->domain, $user->handle]) ?>">
                         <img class="user-avatar" width="<?= User::DEFAULT_AVATAR_SIZE ?>" src="<?= htmlspecialchars($user->getAvatar()) ?>" />
@@ -102,7 +113,11 @@ $current_user = User::getFromSession();
         endforeach ?>
     </tbody>
 </table>
-
+<?php
+    if ($app->tableRow->hasInvisibleRows()):
+        echo view('_partials/button_show_more');
+    endif
+?>
 <br>
 <br>
 <hr>
@@ -134,13 +149,22 @@ $current_user = User::getFromSession();
             return $b['total_mutual_reaction_percentage_given_count'] * 100 - $a['total_mutual_reaction_percentage_given_count'] * 100;
         });
 
+        $total_eligible_mutual_reactions_for_this_user_by_user_id_and_reaction_id = 0;
+
+        foreach ($total_mutual_reactions_for_this_user_by_user_id_and_reaction_id as $user_id => $data):
+            $user = $users_by_user_id[$user_id];
+            if ($user->isEligibleToBeOnLeaderBoard()) {
+                $total_eligible_mutual_reactions_for_this_user_by_user_id_and_reaction_id += 1;
+            }
+        endforeach;
+
         foreach ($total_mutual_reactions_for_this_user_by_user_id_and_reaction_id as $user_id => $data):
             $user = $users_by_user_id[$user_id];
             if (!$user->isEligibleToBeOnLeaderBoard()) continue;
             $total_reaction_count_title = $user->total_reactions_given_count ? sprintf('%s%% of all user\'s reactions given', round(($reaction_user->total_reactions_to_this_users_posts / $user->total_reactions_given_count) * 100, 2)) : '';
             arsort($data['reactions'], SORT_NUMERIC);
             ?>
-            <tr>
+            <tr <?= $app->tableRow->shouldBeInvisible($total_eligible_mutual_reactions_for_this_user_by_user_id_and_reaction_id) ? 'style="display:none;"' : '' ?>>
                 <td class="table-cell-user">
                     <a href="<?= action('UserController@showLeaderboardAction', [$team->domain, $user->handle]) ?>">
                         <img class="user-avatar" width="<?= User::DEFAULT_AVATAR_SIZE ?>" src="<?= htmlspecialchars($user->getAvatar()) ?>" /><?= htmlspecialchars($user->name_binary) ?>
@@ -184,7 +208,10 @@ $current_user = User::getFromSession();
         endforeach ?>
     </tbody>
 </table>
-
-<?php /*
+<?php
+    if ($app->tableRow->hasInvisibleRows()):
+        echo view('_partials/button_show_more');
+    endif;
+ /*
 <h3><strong>Top Followers to This User's First Reactions</strong></h3>
  */
