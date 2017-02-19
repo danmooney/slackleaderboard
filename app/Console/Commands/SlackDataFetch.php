@@ -54,9 +54,10 @@ class SlackDataFetch extends CommandAbstract
 
         $team_id = $this->argument('team_id');
 
-        if ($team_id) {
+        if ($team_id) { // if team_id passed, then fetch reaction log with that team id
             $reaction_fetch_logs = ReactionFetchLog::where(['team_id' => $team_id])->get();
 
+            // if reaction fetch log doesn't exist with that team id, then make a new one and push onto the collection
             if (!$reaction_fetch_logs->first()) {
                 $reaction_fetch_log = new ReactionFetchLog();
                 $reaction_fetch_log->team_id = $team_id;
@@ -274,6 +275,8 @@ class SlackDataFetch extends CommandAbstract
 		$paging         = $response->getBody()['paging'];
 		$items          = $response->getBody()['items'];
 
+		$is_too_old_to_include = false;
+
 		foreach ($items as $item) {
 			switch ($item['type']) {
 				case 'message':
@@ -398,7 +401,8 @@ class SlackDataFetch extends CommandAbstract
 			}
 		}
 
-		if ($page_num < $paging['pages']) {
+		// while more pages exist in pagination and posts aren't too old to include in the list, fetch the next page and rerun this function
+		if ($page_num < $paging['pages'] && !$is_too_old_to_include) {
 			$this->_savePostsAndPostUserReactions($commander, $team, $users, $slack_user_id, $page_num + 1);
 		}
 	}
