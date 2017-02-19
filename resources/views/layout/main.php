@@ -90,6 +90,7 @@ $current_user = User::getFromSession();
                                     <span class="user-name"><?= htmlspecialchars($current_user->name_binary) ?></span>
                                 </a>
                                 <ul class="sublist">
+                                    <li class="arrow-box"></li>
                                     <li>
                                         <a href="<?= action('TeamController@showLeaderboardAction', [$team->domain]) ?>">
                                             <img class="user-avatar" width="32" src="<?= $team->icon ?>" />
