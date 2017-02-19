@@ -154,7 +154,7 @@ $users_by_id = [];
                                 break;
                             }
 
-                            $reaction = $emojis_by_reaction_id[$reaction_id];
+                            $reaction = isset($emojis_by_reaction_id[$reaction_id]) ? $emojis_by_reaction_id[$reaction_id] : null;
 
                             if (!$reaction) {
                                 continue;
