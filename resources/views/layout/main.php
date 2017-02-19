@@ -3,6 +3,7 @@ use App\Models\User;
 
 /**
  * @var $current_user App\Models\User
+ * @var $team App\Models\Team
  */
 $current_user = User::getFromSession();
 
