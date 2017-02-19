@@ -8,6 +8,7 @@
  * @var $current_user App\Models\User
  * @var $reactions_to_this_users_posts_grouped_by_user App\Collections\PostUserReaction
  * @var $total_mutual_reactions_for_this_user_by_user_id_and_reaction_id App\Collections\PostUserReaction
+ * @var $single_user_reaction_received_counts App\Collections\PostUserReaction
  */
 use App\Models\User;
 
@@ -25,7 +26,84 @@ $current_user = User::getFromSession();
     </a>
     <?= $user->isSameAs($current_user) ? '(That\'s You!)' : '' ?>
 </h3>
+<table>
+    <thead>
+        <tr>
+            <th align="center" class="nosort"><?= $user->total_reactions_given_count ?> Total Reactions Given By <?= htmlspecialchars($user->name_binary) ?></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td class="table-cell-reaction-list">
+                <div>
+                <?php
+                    $emojis_output_for_this_user_count = 0;
 
+                    foreach ((array) $user->total_reactions_by_reaction_id as $reaction_id => $total_count):
+                        if ($emojis_output_for_this_user_count === 100) {
+                            break;
+                        }
+
+                        $reaction = $emojis_by_reaction_id[$reaction_id];
+
+                        if (!$reaction) {
+                            continue;
+                        }
+
+                        $emojis_output_for_this_user_count += 1;
+                        $anchor_title = $user->total_reactions_given_count ? sprintf('%s &#013;%s%% of all user\'s reactions given', htmlspecialchars($reaction->getMainAlias()->alias), round(($total_count / $user->total_reactions_given_count) * 100, 2)) : '';
+                    ?>
+                        <a class="reaction-anchor" title="<?= $anchor_title ?>" href="<?= action('ReactionController@showLeaderboardAction', [$team->domain, $reaction->getMainAlias()->alias]) ?>">
+                            <span class="reaction-img" style="background-image:url('<?= $reaction->image ?>')"></span>
+                            <span class="reaction-count"><?= htmlspecialchars($total_count) ?></span>
+                        </a>
+                <?php
+                    endforeach ?>
+                </div>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<br>
+<table>
+    <thead>
+        <tr>
+            <?php $data = $single_user_reaction_received_counts[0] ?>
+            <th align="center" class="nosort"><?= $data->total_reactions_received_count ?> Total Reactions Received By <?= htmlspecialchars($user->name_binary) ?></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td class="table-cell-reaction-list">
+                <div>
+                    <?php
+                    $emojis_output_for_this_user_count = 0;
+
+                    foreach ((array) $data->total_reactions_by_reaction_id as $reaction_id => $total_count):
+                        if ($emojis_output_for_this_user_count === 100) {
+                            break;
+                        }
+
+                        $reaction = isset($emojis_by_reaction_id[$reaction_id]) ? $emojis_by_reaction_id[$reaction_id] : null;
+
+                        if (!$reaction) {
+                            continue;
+                        }
+
+                        $emojis_output_for_this_user_count += 1;
+                        $anchor_title = $user->total_reactions_received_count ? sprintf('%s &#013;%s%% of all user\'s reactions received', htmlspecialchars($reaction->getMainAlias()->alias), round(($total_count / $user->total_reactions_received_count) * 100, 2)) : '';
+                        ?>
+                        <a class="reaction-anchor" title="<?= $anchor_title ?>" href="<?= action('ReactionController@showLeaderboardAction', [$team->domain, $reaction->getMainAlias()->alias]) ?>">
+                            <span class="reaction-img" style="background-image:url('<?= $reaction->image ?>')"></span>
+                            <span class="reaction-count"><?= htmlspecialchars($total_count) ?></span>
+                        </a>
+                        <?php
+                    endforeach ?>
+                </div>
+            </td>
+        </tr>
+    </tbody>
+</table>
 <br>
 <br>
 <hr>
