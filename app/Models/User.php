@@ -98,6 +98,11 @@ class User extends ModelAbstract
         return $user && $this->isSameAs($user);
     }
 
+    public function isOnTeam(Team $team)
+    {
+        return $this->team_id === $team->getKey();
+    }
+
     public function team()
     {
         return $this->belongsTo(Team::class);
