@@ -289,7 +289,9 @@ class SlackDataFetch extends CommandAbstract
 
 					$timestamp   = intval($meta['ts']);
 
-					if (!isset($meta['permalink'])) {
+					$is_public_channel = substr($item['channel'], 0, 1) === 'C';
+                    // skip over private channels and MPIMs/IMs
+					if (!$is_public_channel) {
 						continue;
 					}
 
