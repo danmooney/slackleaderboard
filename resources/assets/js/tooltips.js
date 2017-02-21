@@ -71,11 +71,13 @@ $('.tooltip-permalink').qtip({
                 data: data,
                 dataType: 'json'
             })
-            .then(function (linkArr) {
+            .then(function (responseObj) {
                 api.tooltip.css('visibility', 'hidden');
 
                 // Set the tooltip content upon successful retrieval
-                var htmlArr = [];
+                var htmlArr = [],
+                    linkArr = responseObj.data
+                ;
 
                 if (oldTitle) {
                     htmlArr.push(oldTitle + '<br>');
