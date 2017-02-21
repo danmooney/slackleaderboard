@@ -69,8 +69,8 @@ $current_user = User::getFromSession();
 <table>
     <thead>
         <tr>
-            <?php $data = $single_user_reaction_received_counts[0] ?>
-            <th align="center" class="nosort"><?= $data->total_reactions_received_count ?> Total Reactions Received By <?= htmlspecialchars($user->name_binary) ?></th>
+            <?php $data = $single_user_reaction_received_counts->first()  ?>
+            <th align="center" class="nosort"><?= $data ? $data->total_reactions_received_count : 0 ?> Total Reactions Received By <?= htmlspecialchars($user->name_binary) ?></th>
         </tr>
     </thead>
     <tbody>
@@ -79,8 +79,8 @@ $current_user = User::getFromSession();
                 <div>
                     <?php
                     $emojis_output_for_this_user_count = 0;
-
-                    foreach ((array) $data->total_reactions_by_reaction_id as $reaction_id => $total_count):
+                    $total_reactions_by_reaction_id = $data ? (array) $data->total_reactions_by_reaction_id : [];
+                    foreach ($total_reactions_by_reaction_id as $reaction_id => $total_count):
                         if ($emojis_output_for_this_user_count === 100) {
                             break;
                         }
