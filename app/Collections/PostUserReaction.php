@@ -213,6 +213,48 @@ class PostUserReaction extends Collection
             ->get()
         ;
 
+
+        return $rows;
+    }
+
+    public static function getPermalinksToReactionByGiverUser(ReactionModel $reaction, UserCollection $giver_users = null, UserModel $receiver_user = null, $page, $limit = 10)
+    {
+        $query = DB::table('post')
+            ->join('post_user_reaction AS pur', 'pur.post_id', '=', 'post.post_id')
+            ->where('pur.reaction_id', '=', $reaction->getKey())
+            ->select(DB::raw('DISTINCT post.url, post.slack_created_at'))
+            ->orderBy('slack_created_at', 'DESC')
+        ;
+
+        if ($giver_users) {
+            $first_giver_user = $giver_users->first();
+            foreach ($giver_users as $key => $giver_user) {
+                $is_first_giver_user = $giver_user === $first_giver_user;
+
+                if ($is_first_giver_user) {
+                    $query->where('pur.user_id', '=', $giver_user->getKey());
+                } else {
+                    $pur_table_name = "pur$key";
+                    $query
+                        ->join("post_user_reaction AS $pur_table_name", "$pur_table_name.post_id", '=', 'post.post_id')
+                        ->where("$pur_table_name.user_id", '=', $giver_user->getKey())
+                    ;
+                }
+            }
+        }
+
+        if ($receiver_user) {
+            $query->where('post.user_id', '=', $receiver_user->getKey());
+        }
+
+        // page
+        $query
+            ->offset(($page - 1) * $limit)
+            ->limit($limit)
+        ;
+
+        $rows = $query->get();
+
         return $rows;
     }
 }
