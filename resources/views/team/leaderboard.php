@@ -77,7 +77,7 @@ $users_by_id = [];
                             $emojis_output_for_this_user_count += 1;
                             $anchor_title = $user->total_reactions_given_count ? sprintf('%s &#013;%s%% of all user\'s reactions given', htmlspecialchars($reaction->getMainAlias()->alias), round(($total_count / $user->total_reactions_given_count) * 100, 2)) : '';
                         ?>
-                            <a class="reaction-anchor" title="<?= $anchor_title ?>" href="<?= action('ReactionController@showLeaderboardAction', [$team->domain, $reaction->getMainAlias()->alias]) ?>">
+                            <a data-reaction-id="<?= $reaction_id ?>" data-giver-user-id="<?= $user->getKey() ?>" class="reaction-anchor tooltip-permalink" title="<?= $anchor_title ?>" href="<?= action('ReactionController@showLeaderboardAction', [$team->domain, $reaction->getMainAlias()->alias]) ?>">
                                 <span class="reaction-img" style="background-image:url('<?= $reaction->image ?>')"></span>
                                 <span class="reaction-count"><?= htmlspecialchars($total_count) ?></span>
                             </a>
@@ -163,7 +163,7 @@ $users_by_id = [];
                             $emojis_output_for_this_user_count += 1;
                             $anchor_title = $user->total_reactions_received_count ? sprintf('%s &#013;%s%% of all user\'s reactions received', htmlspecialchars($reaction->getMainAlias()->alias), round(($total_count / $user->total_reactions_received_count) * 100, 2)) : '';
                             ?>
-                            <a class="reaction-anchor" title="<?= $anchor_title ?>" href="<?= action('ReactionController@showLeaderboardAction', [$team->domain, $reaction->getMainAlias()->alias]) ?>">
+                            <a data-reaction-id="<?= $reaction_id ?>" class="reaction-anchor tooltip-permalink" data-receiver-user-id="<?= $user->getKey() ?>" title="<?= $anchor_title ?>" href="<?= action('ReactionController@showLeaderboardAction', [$team->domain, $reaction->getMainAlias()->alias]) ?>">
                                 <span class="reaction-img" style="background-image:url('<?= $reaction->image ?>')"></span>
                                 <span class="reaction-count"><?= htmlspecialchars($total_count) ?></span>
                             </a>
@@ -215,7 +215,7 @@ $users_by_id = [];
             ?>
             <tr <?= $app->tableRow->shouldBeInvisible($total_available_reaction_count_by_reaction_id_among_all_users) ? 'style="display:none;"' : '' ?>>
                 <td class="table-cell-reaction-emoji">
-                    <a class="reaction-anchor" href="<?= action('ReactionController@showLeaderboardAction', [$team->domain, $reaction->getMainAlias()->alias]) ?>">
+                    <a data-reaction-id="<?= $reaction_id ?>" class="reaction-anchor tooltip-permalink" href="<?= action('ReactionController@showLeaderboardAction', [$team->domain, $reaction->getMainAlias()->alias]) ?>">
                         <span class="reaction-img" style="background-image:url('<?= $reaction->image ?>')"></span>
                         <span class="reaction-name">:<?= htmlspecialchars($reaction->getMainAlias()->alias) ?>:</span>
                     </a>

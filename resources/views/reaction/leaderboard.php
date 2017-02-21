@@ -72,7 +72,7 @@ $users_by_user_id = [];
                     </a>
                 </td>
                 <td class="table-cell-total-reaction-count" align="right">
-                    <?= htmlspecialchars($reaction_user->total_count_using_this_reaction) ?>
+                    <span class="tooltip-permalink" data-reaction-id="<?= $reaction->getKey() ?>" data-giver-user-id="<?= $reaction_user->user_id ?>"><?= htmlspecialchars($reaction_user->total_count_using_this_reaction) ?></span>
                 </td>
                 <td class="table-cell-percentage-reaction-count" align="right">
                     <?= ltrim($reaction_user->total_reactions_given_percentage . '%', '%') ?>
@@ -137,7 +137,7 @@ $users_by_user_id = [];
                     </a>
                 </td>
                 <td class="table-cell-total-reaction-count" align="right">
-                    <?= htmlspecialchars($reaction_user->total_count_using_this_reaction) ?>
+                    <span class="tooltip-permalink" data-reaction-id="<?= $reaction->getKey() ?>" data-receiver-user-id="<?= $reaction_user->user_id ?>"><?= htmlspecialchars($reaction_user->total_count_using_this_reaction) ?></span>
                 </td>
                 <td class="table-cell-percentage-reaction-count" align="right">
                     <?= ltrim($reaction_user->total_reactions_received_percentage . '%', '%') ?>
