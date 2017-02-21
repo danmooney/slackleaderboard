@@ -20,4 +20,5 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/{team_domain}', 'TeamController@showLeaderboardAction');
     Route::get('/{team_domain}/u/{user_handle}', 'UserController@showLeaderboardAction');
     Route::get('/{team_domain}/r/{reaction_alias}', 'ReactionController@showLeaderboardAction');
+    Route::get('/{team_domain}/permalink', 'PermalinkController@fetchAction');
 });
