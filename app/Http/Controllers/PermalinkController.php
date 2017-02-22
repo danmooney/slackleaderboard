@@ -72,6 +72,8 @@ class PermalinkController extends Controller
             // TODO
         }
 
-        return response()->json($rows->take(3)->pluck('url'));
+        return response()->json([
+            'data' => $rows->take(3)->pluck('url')
+        ]);
     }
 }
