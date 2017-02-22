@@ -69,7 +69,7 @@ deployment:
   staging:
     branch: production
     commands:
-      ./deploy_production.sh
+      - ./deploy_production.sh
 
 ## Custom notifications
 #notify:
