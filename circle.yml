@@ -1,5 +1,7 @@
 ## Customize the test machine
 machine:
+  pre:
+    - sudo apt-get install circleci-php-7.0.8
 
   php:
     version: 7.0.8
