@@ -7,14 +7,22 @@ class Reaction extends ModelAbstract
 {
     protected $guarded = [];
 
-    public static function getReactionByAlias($reaction_alias)
+    public static function getReactionByAlias($reaction_alias, Team $team = null)
     {
-        $row = DB::table('reaction AS r')
+        $query = DB::table('reaction AS r')
             ->join('reaction_alias AS ra', 'r.reaction_id', '=', 'ra.reaction_id')
             ->where('ra.alias', '=', $reaction_alias)
             ->select('r.*')
-            ->first()
         ;
+
+        if ($team) {
+            $query->orWhere(function ($subquery) use ($team) {
+                $subquery->where('r.team_id', '=', $team->getKey());
+                $subquery->where('r.team_id', '=', null);
+            });
+        }
+
+        $row = $query->first();
 
         return $row ? new static((array) $row) : $row;
     }

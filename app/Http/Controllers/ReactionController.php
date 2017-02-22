@@ -22,7 +22,11 @@ class ReactionController extends Controller
         }
 
         $users    = User::where(['team_id' => $team->team_id/*, 'handle' => $user_handle*/])->get();
-        $reaction = Reaction::getReactionByAlias($reaction_alias);
+        $reaction = Reaction::getReactionByAlias($reaction_alias, $team);
+
+        if (!$reaction) {
+            App::abort(404);
+        }
 
         PostUserReactionCollection::getTotalReactionGivenCountsByEachUserOnTeamAndAddToUsers($team, $users);
 
