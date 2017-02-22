@@ -20,9 +20,9 @@ machine:
 #    dev.mycompany.com: 127.0.0.1
 
   # Add some environment variables
-  environment:
-    CIRCLE_ENV: test
-    DATABASE_URL: postgres://ubuntu:@127.0.0.1:5432/circle_test
+#  environment:
+#    CIRCLE_ENV: test
+#    DATABASE_URL: postgres://ubuntu:@127.0.0.1:5432/circle_test
 
 ## Customize checkout
 #checkout:
@@ -42,8 +42,8 @@ dependencies:
     - "./node_modules"   # relative to the build directory
 
 ## Customize test commands
-#test:
-#  override:
+test:
+  override:
 #    - phpunit test/unit-tests # use PHPunit for testing
 #  post:
 #    - bundle exec rake jasmine:ci: # add an extra test type
