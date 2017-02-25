@@ -9,7 +9,7 @@ $current_user = User::getFromSession();
 
 ?>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <!-- Google Tag Manager -->
     <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -19,31 +19,32 @@ $current_user = User::getFromSession();
     })(window,document,'script','dataLayer','GTM-KPCSVF3');</script>
     <!-- End Google Tag Manager -->
     <meta charset="utf-8">
+    <meta http-equiv="Content-Language" content="en-US">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, minimum-scale=1.0">
+    <meta name="google" content="notranslate">
+    <meta name="description" content="An emoji reaction leaderboard for teams using Slack.  Find out who's using the most reactions and who's reacting to whom the most!">
+    <meta name="author" content="Dan Mooney">
 
-    <meta name="description" content="An emoji reaction leaderboard for teams using Slack.  Find out who's using the most reactions and who's reacting to whom the most!" />
-    <meta name="author" content="Dan Mooney" />
-
-    <meta itemprop="name" content="Slack Leaderboard" />
-    <meta itemprop="description" content="An emoji reaction leaderboard for teams using Slack.  Find out who's using the most reactions and who's reacting to whom the most!" />
-    <meta itemprop="image" content="/img/logo.png" />
+    <meta itemprop="name" content="Slack Leaderboard">
+    <meta itemprop="description" content="An emoji reaction leaderboard for teams using Slack.  Find out who's using the most reactions and who's reacting to whom the most!">
+    <meta itemprop="image" content="/img/logo.png">
     
-    <meta property="og:url" content="https://www.slackleaderboard.com" />
-    <meta property="og:title" content="Slack Leaderboard" />
-    <meta property="og:description" content="An emoji reaction leaderboard for teams using Slack.  Find out who's using the most reactions and who's reacting to whom the most!" />
-    <meta property="og:image" content="/img/logo.png" />
+    <meta property="og:url" content="https://www.slackleaderboard.com">
+    <meta property="og:title" content="Slack Leaderboard">
+    <meta property="og:description" content="An emoji reaction leaderboard for teams using Slack.  Find out who's using the most reactions and who's reacting to whom the most!">
+    <meta property="og:image" content="/img/logo.png">
 
     <?php /*
-    <link rel="canonical" href="xxx" />
+    <link rel="canonical" href="xxx" >
 
  */ ?>
-    <meta name="twitter:card" content="summary" />
-    <meta name="twitter:creator" content="@hiremephotoshop" />
-    <meta name="twitter:site" content="@reactionleaders" />
-    <meta name="twitter:title" content="Slack Leaderboard" />
-    <meta name="twitter:description" content="An emoji reaction leaderboard for teams using Slack.  Find out who's using the most reactions and who's reacting to whom the most!" />
-    <meta name="twitter:image" content="/img/logo.png" />
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:creator" content="@hiremephotoshop">
+    <meta name="twitter:site" content="@reactionleaders">
+    <meta name="twitter:title" content="Slack Leaderboard">
+    <meta name="twitter:description" content="An emoji reaction leaderboard for teams using Slack.  Find out who's using the most reactions and who's reacting to whom the most!">
+    <meta name="twitter:image" content="/img/logo.png">
 
     <?php /*
     <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
