@@ -32,12 +32,12 @@ class Application extends IlluminateApplication
         trigger_error('Call to undefined method ' . __CLASS__ . '::' . $method . '()', E_USER_ERROR);
     }
 
-    public static function setIsDemoMode($demo_mode = true)
+    public static function setDemoMode($demo_mode = true)
     {
         static::$_demo_mode = $demo_mode;
     }
 
-    public static function getIsDemoMode()
+    public static function getDemoMode()
     {
         return static::$_demo_mode;
     }
