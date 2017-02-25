@@ -4,6 +4,9 @@ namespace App\Models;
 
 class Team extends ModelAbstract
 {
+    const TEAM_DOMAIN_KEY = 'team_domain';
+    const DEMO_TEAM_DOMAIN = 'digitalsurgeons';
+
     public static function importFromSlackResponseBody(array $response_body)
     {
         $team_response = $response_body['team'];
