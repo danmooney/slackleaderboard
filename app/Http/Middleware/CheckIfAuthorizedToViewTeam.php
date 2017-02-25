@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use App\Models\User;
+use App\Models\Team;
 
 class CheckIfAuthorizedToViewTeam
 {
@@ -17,7 +18,7 @@ class CheckIfAuthorizedToViewTeam
      */
     public function handle($request, Closure $next, $guard = null)
     {
-        $team_domain = $request->team_domain;
+        $team_domain = $request->input(Team::TEAM_DOMAIN_KEY);
 
         if (!$team_domain) {
             return $next($request);
