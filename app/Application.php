@@ -7,6 +7,8 @@ class Application extends IlluminateApplication
 {
     private $_helpers = [];
 
+    private static $_demo_mode = false;
+
     public function addHelper($name, $func_or_obj)
     {
         $this->_helpers[$name] = $func_or_obj;
@@ -28,5 +30,15 @@ class Application extends IlluminateApplication
         }
 
         trigger_error('Call to undefined method ' . __CLASS__ . '::' . $method . '()', E_USER_ERROR);
+    }
+
+    public static function setIsDemoMode($demo_mode = true)
+    {
+        static::$_demo_mode = $demo_mode;
+    }
+
+    public static function getIsDemoMode()
+    {
+        return static::$_demo_mode;
     }
 }
