@@ -25,9 +25,7 @@ class UserController extends Controller
     public function logoutAction()
     {
         session()->flush();
-        return redirect()->action(
-            'SlackController@guestHomepageAction'
-        );
+        return redirect()->to('/');
     }
 
     public function showLeaderboardAction($team_domain, $user_handle)

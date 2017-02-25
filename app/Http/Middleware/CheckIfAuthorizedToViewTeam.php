@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use App\Models\User;
 use App\Models\Team;
+use App;
 
 class CheckIfAuthorizedToViewTeam
 {
@@ -18,9 +19,9 @@ class CheckIfAuthorizedToViewTeam
      */
     public function handle($request, Closure $next, $guard = null)
     {
-        $team_domain = $request->input(Team::TEAM_DOMAIN_KEY);
+        $team_domain = $request->route(Team::TEAM_DOMAIN_KEY);
 
-        if (!$team_domain) {
+        if (!$team_domain || App::getDemoMode()) {
             return $next($request);
         }
 
@@ -39,7 +40,7 @@ class CheckIfAuthorizedToViewTeam
                 );
             }
 
-            return redirect()->action('SlackController@guestHomepageAction');
+            return redirect()->to('/');
         }
 
         return $next($request);

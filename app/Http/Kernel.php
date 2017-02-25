@@ -29,6 +29,8 @@ class Kernel extends HttpKernel
             \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
             \Illuminate\Session\Middleware\StartSession::class,
             Middleware\RefreshSessionIfNecessary::class,
+            Middleware\AssignDefaultTeamDomainIfNecessary::class,
+            Middleware\CheckIfAuthorizedToViewTeam::class,
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ],

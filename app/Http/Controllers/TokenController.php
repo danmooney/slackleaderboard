@@ -41,7 +41,7 @@ class TokenController extends Controller
 
         if (!$response['ok']) {
             Log::warning('oauth.access call failed', $response);
-            return redirect()->action('SlackController@guestHomepageAction');
+            return redirect()->to('/');
         }
 
         $their_slack_access_token = isset($response['access_token']) ? $response['access_token'] : '';
@@ -72,7 +72,7 @@ class TokenController extends Controller
 
             if (!$response['ok']) {
                 Log::warning('users.info call failed', $response);
-                return redirect()->action('SlackController@guestHomepageAction');
+                return redirect()->to('/');
             }
 
             $response['members'] = [$response['user']];
