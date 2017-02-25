@@ -64,22 +64,22 @@ abstract class ModelAbstract extends Model
         return new Collection($models);
     }
 
-    public function hasGetMutator($key)
-    {
-        return false;
-    }
+//    public function hasGetMutator($key)
+//    {
+//        return false;
+//    }
 
     public function getDates()
     {
         return [];
     }
 
-    public function getAttributeValue($key)
-    {
-        $value = $this->getAttributeFromArray($key);
-
-        return $value;
-    }
+//    public function getAttributeValue($key)
+//    {
+//        $value = $this->getAttributeFromArray($key);
+//
+//        return $value;
+//    }
 
     public function isSameAs(Model $model)
     {
