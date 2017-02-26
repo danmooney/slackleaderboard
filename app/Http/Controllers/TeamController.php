@@ -17,9 +17,6 @@ class TeamController extends Controller
 {
     public function showLeaderboardAction($team_domain)
     {
-        // call guestHomepageAction to get Sign In URL
-        $this->_layout = App::call(SlackController::class . '@guestHomepageAction');
-
         $team = Team::where(['domain' => $team_domain])->first();
 
         if (!$team) {
@@ -44,12 +41,12 @@ class TeamController extends Controller
 //        $single_user_reaction_received_counts = $single_user_reaction_received_counts->sortByDesc('total_reactions_given_count');
 
         $this->_layout->team = $team;
-        $this->_layout->content = view('team.leaderboard', array_merge($this->_layout->content->getData(), [
+        $this->_layout->content = view('team.leaderboard', [
             'team'   => $team,
             'users'  => $users,
             'emojis' => $emojis,
             'single_user_reaction_received_counts' => $single_user_reaction_received_counts
-        ]));
+        ]);
 
         return $this->_layout;
     }
