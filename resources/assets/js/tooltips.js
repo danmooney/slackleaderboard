@@ -24,7 +24,7 @@ $('.tooltip-permalink').qtip({
     content: {
         text: function (e, api) {
             var $el = $(this),
-                teamDomain = window.location.pathname.split('/')[1],
+                teamDomain = window.location.pathname.split('/')[1] || SL_OPTIONS.demoTeamDomainFacade,
                 url = '/' + teamDomain + '/permalink',
                 data = {},
                 oldTitle = $el.attr('oldtitle') || '',
