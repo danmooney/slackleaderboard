@@ -1,0 +1,1 @@
+<a class="button-sign-in-with-slack" href="<?= config('app.slack_oauth_url') ?>"><img src="https://api.slack.com/img/sign_in_with_slack.png" /></a>
