@@ -30,8 +30,6 @@ class Kernel extends HttpKernel
             \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
             \Illuminate\Session\Middleware\StartSession::class,
             Middleware\RefreshSessionIfNecessary::class,
-            Middleware\AssignDefaultTeamDomainIfNecessary::class,
-            Middleware\CheckIfAuthorizedToViewTeam::class,
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ],
@@ -50,6 +48,7 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $routeMiddleware = [
+        'possible_demo_assignment' => Middleware\AssignDefaultTeamDomainIfNecessary::class,
         'auth' => Middleware\CheckIfAuthorizedToViewTeam::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'bindings' => \Illuminate\Routing\Middleware\SubstituteBindings::class,
