@@ -11,6 +11,12 @@ class TableRow
         static $output_count = 0;
         static $times_called = 0;
 
+        // if $total_count_of_rows is 0, halt further processing and assign $_has_invisible_rows to false
+        if (!$total_count_of_rows) {
+            static::$_has_invisible_rows = false;
+            return false;
+        }
+
         if ($times_called === 0) {
             static::$_has_invisible_rows = false;
         }
