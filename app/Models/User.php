@@ -152,7 +152,6 @@ class User extends ModelAbstract
         $reassigned_last_name  = $last_names[crc32($this->slack_user_id) % count($last_names)];
 
         return "$reassigned_first_name $reassigned_last_name";
-
     }
 
     public function getNameBinaryAttribute($value)
