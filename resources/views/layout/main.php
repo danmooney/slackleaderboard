@@ -7,6 +7,8 @@ use App\Models\User;
  */
 $current_user = User::getFromSession();
 
+// if user isn't logged in, use demo user for header
+$user_for_display_in_header = $current_user->isLoggedIn() ? $current_user : User::getDemoUser()
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -94,32 +96,35 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 </h1>
             </div>
             <nav>
-                <?php
-                    if ($current_user->isLoggedIn()): ?>
-                        <ul class="list">
+                <ul class="list">
+                    <li>
+                        <a href="<?= action('UserController@showLeaderboardAction', [$team->domain, $user_for_display_in_header->handle]) ?>" class="user-container">
+                            <img class="user-avatar" width="32" src="<?= $user_for_display_in_header->avatar ?>" />
+                            <span class="user-name"><?= htmlspecialchars($user_for_display_in_header->name_binary) ?></span>
+                        </a>
+                        <ul class="sublist">
+                            <li class="arrow-box"></li>
                             <li>
-                                <a href="<?= action('UserController@showLeaderboardAction', [$team->domain, $current_user->handle]) ?>" class="user-container">
-                                    <img class="user-avatar" width="32" src="<?= $current_user->avatar ?>" />
-                                    <span class="user-name"><?= htmlspecialchars($current_user->name_binary) ?></span>
+                                <a href="<?= action('TeamController@showLeaderboardAction', [$team->domain]) ?>">
+                                    <img class="user-avatar" width="32" src="<?= $team->icon ?>" />
+                                    Logged into <?= htmlspecialchars($team->name) ?>
                                 </a>
-                                <ul class="sublist">
-                                    <li class="arrow-box"></li>
-                                    <li>
-                                        <a href="<?= action('TeamController@showLeaderboardAction', [$team->domain]) ?>">
-                                            <img class="user-avatar" width="32" src="<?= $team->icon ?>" />
-                                            Logged into <?= htmlspecialchars($team->name) ?>
-                                        </a>
-                                    </li>
-                                    <li>
+                            </li>
+                            <li>
+                                <?php
+                                    if ($current_user->isLoggedIn()): ?>
                                         <form method="POST" action="<?= action('UserController@logoutAction') ?>">
                                             <button class="button-logout" type="submit">Logout</button>
                                         </form>
-                                    </li>
-                                </ul>
+                                <?php
+                                    else: ?>
+                                        <?= view('_partials.button_sign_in_with_slack', $__data) ?>
+                                <?php
+                                    endif ?>
                             </li>
                         </ul>
-                <?php
-                    endif ?>
+                    </li>
+                </ul>
                 <?php
                     if (false/*isset($team)*/): ?>
                         <h2>

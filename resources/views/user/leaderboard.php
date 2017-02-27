@@ -18,6 +18,10 @@ $users_by_user_id = [];
 
 $user_page_belongs_to = $user;
 $current_user = User::getFromSession();
+
+// if user isn't logged in, use demo user for header
+$user_for_display_in_header = $current_user->isLoggedIn() ? $current_user : User::getDemoUser();
+
 ?>
 <h3>
     User:
@@ -25,7 +29,7 @@ $current_user = User::getFromSession();
         <img class="user-avatar" width="<?= User::DEFAULT_AVATAR_SIZE ?>" src="<?= htmlspecialchars($user->getAvatar()) ?>" />
         <span class="user-name"><?= htmlspecialchars($user->name_binary) ?></span>
     </a>
-    <?= $user->isSameAs($current_user) ? '(That\'s You!)' : '' ?>
+    <?= $user->isSameAs($user_for_display_in_header) ? '(That\'s You!)' : '' ?>
 </h3>
 <table>
     <thead>
