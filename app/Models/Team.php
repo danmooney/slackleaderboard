@@ -9,6 +9,7 @@ class Team extends ModelAbstract
     const DEMO_TEAM_DOMAIN = 'digitalsurgeons';
     const DEMO_TEAM_DOMAIN_FACADE = 'demo-team';
     const DEMO_TEAM_NAME_FACADE = 'Demo Team';
+    const DEMO_TEAM_ID = 2;
 
     public static function importFromSlackResponseBody(array $response_body)
     {
