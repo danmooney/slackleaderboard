@@ -3,6 +3,7 @@
 namespace App\Collections;
 use App\Collections\User as UserCollection;
 use App\Models\Team;
+use App\Models\Post as PostModel;
 use App\Models\User as UserModel;
 use App\Models\Reaction as ReactionModel;
 use DB;
@@ -255,6 +256,6 @@ class PostUserReaction extends Collection
 
         $rows = $query->get();
 
-        return $rows;
+        return PostModel::hydrate($rows->toArray());
     }
 }
