@@ -32,7 +32,7 @@ class AssignDefaultTeamDomainIfNecessary
         $demo_team_domain_is_only_segment_in_url_and_needs_to_redirect_back_to_homepage = (
             $team_domain === Team::DEMO_TEAM_DOMAIN_FACADE &&
             $is_on_team_leaderboard_route &&
-            !$user->isLoggedIn()
+            (!$user->isLoggedIn() || ($user->isLoggedIn() && $user->team->domain !== $team_domain))
         );
 
         if ($demo_team_domain_is_only_segment_in_url_and_needs_to_redirect_back_to_homepage) {

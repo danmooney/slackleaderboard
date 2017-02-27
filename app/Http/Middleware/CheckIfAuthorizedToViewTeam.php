@@ -33,11 +33,17 @@ class CheckIfAuthorizedToViewTeam
             $current_user->team->domain !== $team_domain
         );
 
-        if ($current_user_is_banned_from_looking_at_this_team_page) {
+        $no_segments_exist_in_url = $request->getPathInfo() === '/';
+
+        if ($current_user_is_banned_from_looking_at_this_team_page || $no_segments_exist_in_url) {
             if ($current_user->team && $current_user->team->domain) {
                 return redirect()->action(
                     'TeamController@showLeaderboardAction', ['domain' => $current_user->team->domain]
                 );
+            }
+
+            if ($request->wantsJson()) {
+                return response()->json(['error' => true, 'message' => 'Not authorized to view team'], 403);
             }
 
             return redirect()->to('/');
