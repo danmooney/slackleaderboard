@@ -1,11 +1,14 @@
 <?php
 
 namespace App\Models;
+use App;
 
 class Team extends ModelAbstract
 {
     const TEAM_DOMAIN_KEY = 'team_domain';
     const DEMO_TEAM_DOMAIN = 'digitalsurgeons';
+    const DEMO_TEAM_DOMAIN_FACADE = 'demo-team';
+    const DEMO_TEAM_NAME_FACADE = 'Demo Team';
 
     public static function importFromSlackResponseBody(array $response_body)
     {
@@ -23,5 +26,32 @@ class Team extends ModelAbstract
         $team->save();
 
         return $team;
+    }
+
+    public function getIconAttribute($value)
+    {
+        if (!App::getDemoMode()) {
+            return $value;
+        }
+
+        return '/img/logo-team-demo.png';
+    }
+
+    public function getDomainAttribute($value)
+    {
+        if (!App::getDemoMode()) {
+            return $value;
+        }
+
+        return Team::DEMO_TEAM_DOMAIN_FACADE;
+    }
+
+    public function getNameAttribute($value)
+    {
+        if (!App::getDemoMode()) {
+            return $value;
+        }
+
+        return static::DEMO_TEAM_NAME_FACADE;
     }
 }
