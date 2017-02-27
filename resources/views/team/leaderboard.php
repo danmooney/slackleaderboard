@@ -12,6 +12,11 @@ $emojis_by_reaction_id = $emojis->generateFlatArrayByKey();
 $total_reaction_count_among_all_users = $users->getTotalReactionCountAmongAllUsers();
 $total_reaction_count_by_reaction_id_among_all_users = $users->getTotalReactionCountByReactionIdAmongAllUsers();
 $users_by_id = [];
+
+if (!User::getFromSession()->isLoggedIn()) {
+    echo view('guest/homepage', $__data);
+}
+
 ?>
 <h3>
     Team:
