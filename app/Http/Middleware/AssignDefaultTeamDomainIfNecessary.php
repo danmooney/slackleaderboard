@@ -22,6 +22,8 @@ class AssignDefaultTeamDomainIfNecessary
     {
         $team_domain = $request->route(Team::TEAM_DOMAIN_KEY);
 
+        $user = User::getFromSession();
+
         $team_domain_altered_to_be_demo_team = false;
 
         $team_leaderboard_route_name = TeamController::class . '@showLeaderboardAction';
@@ -29,7 +31,8 @@ class AssignDefaultTeamDomainIfNecessary
 
         $demo_team_domain_is_only_segment_in_url_and_needs_to_redirect_back_to_homepage = (
             $team_domain === Team::DEMO_TEAM_DOMAIN_FACADE &&
-            $is_on_team_leaderboard_route
+            $is_on_team_leaderboard_route &&
+            !$user->isLoggedIn()
         );
 
         if ($demo_team_domain_is_only_segment_in_url_and_needs_to_redirect_back_to_homepage) {
@@ -43,7 +46,6 @@ class AssignDefaultTeamDomainIfNecessary
             $team_domain_altered_to_be_demo_team = true;
         }
 
-        $user = User::getFromSession();
         $is_demo_mode = $team_domain_altered_to_be_demo_team && !$user->isLoggedIn();
         App::setDemoMode($is_demo_mode);
 
