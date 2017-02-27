@@ -236,18 +236,24 @@ return [
     'slack_client_secret' => env('SLACK_CLIENT_SECRET'),
     'slack_oauth_url'     => env('SLACK_OAUTH_URL', sprintf('https://slack.com/oauth/authorize?client_id=%s&scope=identify users:read reactions:read team:read emoji:read&redirect_uri=http://%s/c', env('SLACK_CLIENT_ID'), isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : null)),
 
-    'slack_default_avatar_urls' => [
-        'https://a.slack-edge.com/7fa9/img/avatars/ava_0003-192.png',
-        'https://a.slack-edge.com/7fa9/img/avatars/ava_0006-192.png',
-        'https://a.slack-edge.com/7fa9/img/avatars/ava_0008-192.png',
-        'https://a.slack-edge.com/7fa9/img/avatars/ava_0011-192.png',
-        'https://a.slack-edge.com/7fa9/img/avatars/ava_0012-192.png',
-        'https://a.slack-edge.com/7fa9/img/avatars/ava_0019-192.png',
-        'https://a.slack-edge.com/7fa9/img/avatars/ava_0020-192.png',
-        'https://a.slack-edge.com/7fa9/img/avatars/ava_0021-192.png',
-        'https://a.slack-edge.com/7fa9/img/avatars/ava_0022-192.png',
-        'https://a.slack-edge.com/7fa9/img/avatars/ava_0026-192.png',
+    'demo' => [
+        'demo_user_id' => 32,
+        'first_names' => json_decode(file_get_contents(resource_path('demo/first_names.json'))),
+        'last_names' => json_decode(file_get_contents(resource_path('demo/last_names.json'))),
+        'slack_default_avatar_urls' => [
+            'https://a.slack-edge.com/7fa9/img/avatars/ava_0003-192.png',
+            'https://a.slack-edge.com/7fa9/img/avatars/ava_0006-192.png',
+            'https://a.slack-edge.com/7fa9/img/avatars/ava_0008-192.png',
+            'https://a.slack-edge.com/7fa9/img/avatars/ava_0011-192.png',
+            'https://a.slack-edge.com/7fa9/img/avatars/ava_0012-192.png',
+            'https://a.slack-edge.com/7fa9/img/avatars/ava_0019-192.png',
+            'https://a.slack-edge.com/7fa9/img/avatars/ava_0020-192.png',
+            'https://a.slack-edge.com/7fa9/img/avatars/ava_0021-192.png',
+            'https://a.slack-edge.com/7fa9/img/avatars/ava_0022-192.png',
+            'https://a.slack-edge.com/7fa9/img/avatars/ava_0026-192.png',
+        ],
     ],
+
 
     'options' => [
         'demoTeamDomainFacade' => Team::DEMO_TEAM_DOMAIN_FACADE,
