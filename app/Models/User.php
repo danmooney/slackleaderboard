@@ -2,6 +2,7 @@
 
 namespace App\Models;
 use App\Collections\User as Collection;
+use App;
 
 class User extends ModelAbstract
 {
@@ -24,6 +25,17 @@ class User extends ModelAbstract
         return $user;
     }
 
+    public static function getDemoUser()
+    {
+        static $demo_user;
+
+        if (!$demo_user) {
+            $demo_user = User::find(config('app.demo.demo_user_id'));
+        }
+
+        return $demo_user;
+    }
+
     public function isEligibleToBeOnLeaderBoard()
     {
         return (
@@ -42,8 +54,10 @@ class User extends ModelAbstract
 
         if ($is_gravatar) {
             $avatar = preg_replace('#\?s=\d+#', "?s=$size", $this->avatar);
-        } else {
+        } elseif (!App::getDemoMode()) {
             $avatar = preg_replace('#(192|original)\.(png|jpe?g)$#', "$size.$2", $this->avatar);
+        } else {
+            $avatar = $this->avatar;
         }
 
         return $avatar;
@@ -67,6 +81,9 @@ class User extends ModelAbstract
         $refreshed_user = $this->fresh();
 
         if (!$refreshed_user) {
+            // TODO - exception
+            // flush the session.. maybe the team/user got removed from the DB; TLDR something weird and unexpected happened
+            session()->flush();
             return false;
         }
 
@@ -106,5 +123,53 @@ class User extends ModelAbstract
     public function team()
     {
         return $this->belongsTo(Team::class);
+    }
+
+    public function getAvatarAttribute($value)
+    {
+        if (!App::getDemoMode()) {
+            return $value;
+        }
+
+        $slack_default_avatar_urls = config('app.demo.slack_default_avatar_urls');
+        return $slack_default_avatar_urls[$this->getKey() % count($slack_default_avatar_urls)];
+    }
+
+    public function getNameAttribute($value)
+    {
+        if (!App::getDemoMode()) {
+            return $value;
+        }
+
+        if ($this->getKey() === config('app.demo.demo_user_id')) {
+            return "Leaderboard Lover";
+        }
+
+        $first_names = config('app.demo.first_names');
+        $last_names  = config('app.demo.first_names');
+
+        $reassigned_first_name = $first_names[crc32($this->getKey()) % count($first_names)];
+        $reassigned_last_name  = $last_names[crc32($this->slack_user_id) % count($last_names)];
+
+        return "$reassigned_first_name $reassigned_last_name";
+
+    }
+
+    public function getNameBinaryAttribute($value)
+    {
+        if (!App::getDemoMode()) {
+            return $value;
+        }
+
+        return $this->getNameAttribute($value);
+    }
+
+    public function getHandleAttribute($value)
+    {
+        if (!App::getDemoMode()) {
+            return $value;
+        }
+
+        return strtolower(str_replace(' ', '.', $this->name)). '-' . $this->getKey();
     }
 }
