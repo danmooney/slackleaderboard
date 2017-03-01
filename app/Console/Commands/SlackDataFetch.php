@@ -236,7 +236,7 @@ class SlackDataFetch extends CommandAbstract
                         break; // hooray, made it to the end for this team, don't need to use any of the other tokens!
                     } catch (Exception $e) {
                         if ($e->getMessage() === self::FORBIDDEN_RESPONSE_RECEIVED) {  // expired token; delete
-                            DB::table('token')->where('token', '=', $slack_token)->delete();
+                            DB::table('token')->where('token', '=', $slack_token->token)->delete();
                         }
                     }
                 }
