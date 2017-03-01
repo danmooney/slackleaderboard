@@ -10,3 +10,7 @@
     display: block;
     padding: 5px 35px;
 }
+
+.button-sign-in-with-slack * {
+    pointer-events: none;
+}
