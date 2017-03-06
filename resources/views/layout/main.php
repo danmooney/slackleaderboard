@@ -150,7 +150,17 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </main>
 </div>
 <footer>
-    <div class="u-outerContainer"></div>
+    <div class="u-outerContainer">
+        <a data-size="large" class="twitter-share-button" href="https://twitter.com/intent/tweet?text=<?= urlencode('See who\'s reacting with the most emojis on your #slack team! #slackleaderboard') ?>">
+            Tweet
+        </a>
+        <a target="_blank" href="https://twitter.com/reactionleaders">
+            @reactionleaders
+        </a>
+        <a href="mailto:&#115;&#108;&#097;&#099;&#107;&#108;&#101;&#097;&#100;&#101;&#114;&#098;&#111;&#097;&#114;&#100;&#064;&#103;&#109;&#097;&#105;&#108;&#046;&#099;&#111;&#109;">
+            Contact
+        </a>
+    </div>
 </footer>
 <script>window.SL_OPTIONS = <?= json_encode(config('app.options')) ?>;</script>
 <script src="/js/main.js"></script>

@@ -10,4 +10,5 @@ window._ = {
  */
 
 window.$ = window.jQuery = require('jquery');
+require('./vendor/twitter-widgets');
 // require('bootstrap-sass');
