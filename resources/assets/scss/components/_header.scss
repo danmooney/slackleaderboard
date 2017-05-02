@@ -1,0 +1,115 @@
+header {
+    background: $black;
+    color: $white;
+    position: relative;
+    @extend %rowPadd;
+}
+
+header h1, header h2 {
+    margin: 0;
+}
+
+header .icon {
+    background: url('/img/logo.png') no-repeat;
+    background-size: contain;
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    vertical-align: middle;
+}
+
+header .nav-container {
+    padding-top: .5em;
+    padding-bottom: .5em;
+}
+
+header .logo-container {
+    float: left;
+}
+
+header nav {
+    margin-top: 5px;
+    float: right;
+
+    span {
+        //cursor: default;
+    }
+
+    .sublist {
+        display: none;
+        background: $black;
+        border: 1px solid $white;
+        position: absolute;
+        z-index: 2;
+        right: 0;
+    }
+
+    .list {
+        &:hover .sublist, &.hover .sublist {
+            display: block;
+            top: 57px;
+        }
+    }
+
+    .sublist li {
+        padding: 5px;
+    }
+}
+
+header a {
+    color: $white;
+
+    &:hover, &:focus {
+        text-decoration: none;
+        color: inherit;
+    }
+}
+
+header nav .sublist .arrow-box {
+    padding: 2px;
+}
+
+.arrow-box {
+    position: relative;
+    background: $black;
+}
+
+.arrow-box:after, .arrow-box:before {
+    bottom: 100%;
+    left: 70%;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+}
+
+.arrow-box:after {
+    border-color: rgba(0, 0, 0, 0);
+    border-bottom-color: $black;
+    border-width: 10px;
+    margin-left: -10px;
+}
+
+.arrow-box:before {
+    border-color: rgba(255, 255, 255, 0);
+    border-bottom-color: $white;
+    border-width: 11px;
+    margin-left: -11px;
+}
+
+header .button-sign-in-with-slack {
+    text-align: center;
+    display: inline-block;
+    width: 100%;
+}
+
+@media screen and (min-width: $large-screen) {
+    header nav .sublist {
+        right: auto;
+    }
+    .arrow-box:after, .arrow-box:before {
+        left: 16px;
+    }
+}

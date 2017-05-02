@@ -1,6 +1,7 @@
-const elixir = require('laravel-elixir');
+process.env.DISABLE_NOTIFIER = true;
 
-require('laravel-elixir-vue');
+const elixir = require('laravel-elixir');
+require('laravel-browser-sync');
 
 /*
  |--------------------------------------------------------------------------
@@ -13,7 +14,22 @@ require('laravel-elixir-vue');
  |
  */
 
-elixir(mix => {
-    mix.sass('app.scss')
-       .webpack('app.js');
+elixir.config.css.sass.folder = 'scss';
+
+elixir(function (mix) {
+    mix.sass('main.scss'/*, undefined, 'resources/assets/scss'*/);
+    mix.webpack('main.js');
+    mix.browserSync({
+        proxy: 'slackleaderboard.local',
+        js: [
+            'public/**/*.js'
+        ],
+        css: [
+            'public/**/*.css'
+        ],
+        views: [
+            'resources/views/**/*'
+        ],
+        open: false // don't open the browser window initially
+    });
 });

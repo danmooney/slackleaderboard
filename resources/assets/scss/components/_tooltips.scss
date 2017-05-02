@@ -1,0 +1,28 @@
+.qtip {
+    margin-bottom: 20px;
+}
+
+.qtip-content {
+    font-size: 12px;
+    line-height: 15px;
+}
+
+.qtip-content a {
+    font-weight: bold;
+    color: $white;
+    display: block;
+    padding: 2px 0;
+}
+
+.qtip-dark {
+    background-color: $black;
+}
+
+.tooltip-permalink {
+    cursor: pointer;
+}
+
+.tooltip-reaction-name, .tooltip-reaction-percentage {
+    display: block;
+    text-align: center;
+}

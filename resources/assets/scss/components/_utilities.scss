@@ -1,0 +1,28 @@
+.u-hideOnDesktop {
+    @media screen and (min-width: $large-screen) {
+        display: none !important;
+    }
+}
+
+.u-hideOnMobile {
+    @media screen and (max-width: $small-screen) {
+        display: none !important;
+    }
+}
+
+.u-outerContainer {
+    @include outer-container();
+}
+
+%rowPadd {
+    padding-left: $rowPadd;
+    padding-right: $rowPadd;
+
+    @media screen and (min-width: $medium-screen) {
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    //@include media($medium-screen-up + em($rowPadd * 2)) {
+    //}
+}

@@ -29,7 +29,7 @@ return [
     |
     */
 
-    'lifetime' => 120,
+    'lifetime' => 60 * 60 * 24 * 100,
 
     'expire_on_close' => false,
 
@@ -122,7 +122,7 @@ return [
     |
     */
 
-    'cookie' => 'laravel_session',
+    'cookie' => 'leaderboard_sess',
 
     /*
     |--------------------------------------------------------------------------

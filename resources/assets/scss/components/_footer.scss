@@ -1,0 +1,40 @@
+footer {
+    @extend %rowPadd;
+
+    background: $black;
+    padding: 20px 0;
+}
+
+footer .u-outerContainer {
+    padding-left: 20px;
+    padding-right: 20px;
+    display: flex;
+    align-items: center;
+}
+
+@media screen and (min-width: $medium-screen) {
+    footer .u-outerContainer {
+        padding-left: 0;
+        padding-right: 0;
+    }
+}
+
+footer .u-outerContainer * {
+    vertical-align: middle;
+}
+
+footer .twitter-share-button {
+    margin-right: 20px;
+}
+
+footer a {
+    font-weight: bold;
+    &:hover {
+        color: $white;
+        text-decoration: none;
+    }
+
+    &:last-child {
+        margin-left: auto;
+    }
+}

@@ -1,0 +1,22 @@
+html {
+    height: 100%;
+}
+
+body {
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+ul, li {
+    list-style-type: none;
+    margin: 0;
+}
+
+em {
+    font-style: italic;
+}
+
+a:focus {
+    outline: 0;
+}
